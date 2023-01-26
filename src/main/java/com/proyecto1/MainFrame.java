@@ -12,7 +12,7 @@ public class MainFrame extends javax.swing.JFrame {
     final int MIN_WIDTH = 960;
     final int MIN_HEIGHT= 720;
 
-    JPanel mainPanel = new MainPanel();
+    JPanel mainPanel = new MainPanel(this);
 
     /**
      * Creates new form MainFrame
