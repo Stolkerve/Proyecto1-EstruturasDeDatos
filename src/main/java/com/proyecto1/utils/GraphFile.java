@@ -50,9 +50,9 @@ public class GraphFile {
                                 var sID = match.group(2);
                                 try {
                                     var id = Integer.parseInt(sID, 16);
-                                } catch (NumberFormatException e) {}
-                            }
-                            else {
+                                } catch (NumberFormatException e) {
+                                }
+                            } else {
                                 // No son grafos?
                                 if (!line.equals("Rutas;")) {
                                     JOptionPane.showMessageDialog(null, "Error leyendo el archivo. Nombre del almacen invalido", "ERROR", JOptionPane.ERROR_MESSAGE);
