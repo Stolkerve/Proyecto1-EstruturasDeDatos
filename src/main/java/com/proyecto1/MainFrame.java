@@ -2,9 +2,13 @@ package com.proyecto1;
 
 import javax.swing.*;
 
+import com.proyecto1.gui.AssetsLoader;
 import com.proyecto1.gui.MainPanel;
+import com.proyecto1.utils.AssetsManager;
 
 /**
+ * Clase main del programa, esta hereda la clase Jframe para inicializar directamente
+ * con un ventana.
  * @author sebas
  */
 public class MainFrame extends javax.swing.JFrame {
@@ -14,18 +18,36 @@ public class MainFrame extends javax.swing.JFrame {
     JPanel mainPanel;
 
     /**
-     * Creates new form MainFrame
+     * El contructor instancia la clase MainPanel que servira como la base donde
+     * instanciar los distintos componentes de las difernete vistas del programa.
+     * Ademas de cargar los distintos recursos que necesita el programa
      */
     public MainFrame() {
+        new AssetsLoader();
+
+        // reproducir la musica de fondo
+        var backgroundMusic = AssetsManager.getInstance().getMusic("background-music");
+        if (backgroundMusic != null) {
+            backgroundMusic.setVolume(0.1f);
+            backgroundMusic.play(true);
+        }
+
         this.mainPanel = new MainPanel(this);
         initComponents();
     }
 
     private void initComponents() {
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(this.MIN_WIDTH, MIN_HEIGHT));
-        setPreferredSize(new java.awt.Dimension(this.MIN_WIDTH, MIN_HEIGHT));
-        setSize(new java.awt.Dimension(this.MIN_WIDTH, MIN_HEIGHT));
+        // Setear las dimenciones de la ventana
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        this.setMinimumSize(new java.awt.Dimension(this.MIN_WIDTH, MIN_HEIGHT));
+        this.setPreferredSize(new java.awt.Dimension(this.MIN_WIDTH, MIN_HEIGHT));
+        this.setSize(new java.awt.Dimension(this.MIN_WIDTH, MIN_HEIGHT));
+        this.setResizable(false);
+
+        var icon = AssetsManager.getInstance().getImage("amazon-icon");
+        if (icon != null) {
+            this.setIconImage(icon.image.getImage());
+        }
 
         this.add(mainPanel);
 

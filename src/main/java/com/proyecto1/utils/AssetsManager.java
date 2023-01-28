@@ -1,9 +1,11 @@
 package com.proyecto1.utils;
 
-import java.awt.*;
-import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Singleton que contiene todos los recursos usados por el programa
+ * @author sebas
+ */
 public class AssetsManager {
     private static AssetsManager instance;
     private static Object mutex = new Object();
@@ -25,6 +27,11 @@ public class AssetsManager {
         return instance;
     }
 
+    /**
+     * @param path Direccion relativa al directorio del proyecto
+     * @param name Nombre del recurso
+     * @return Retorna el recurso agregado
+     */
     public MusicAsset addMusic(String path, String name) {
         try {
             var newAsset = new MusicAsset(path, name);
@@ -35,6 +42,11 @@ public class AssetsManager {
         }
     }
 
+    /**
+     * @param path Direccion relativa al directorio del proyecto
+     * @param name Nombre del recurso
+     * @return Retorna el recurso agregado
+     */
     public ImageAsset addImage(String path, String name) {
         var newAsset = new ImageAsset(path, name);
         if (newAsset.image.getIconWidth() > 0)
@@ -44,6 +56,10 @@ public class AssetsManager {
         return newAsset;
     }
 
+    /**
+     * @param name Nombre del recurso a buscar
+     * @return Retorna el recurso se si encontro, de lo contrario Null
+     */
     public MusicAsset getMusic(String name) {
         for (var a : this.musicAssets) {
             if (a.name.equals(name)) return a;
@@ -51,6 +67,10 @@ public class AssetsManager {
         return null;
     }
 
+    /**
+     * @param name Nombre del recurso a buscar
+     * @return Retorna el recurso se si encontro, de lo contrario Null
+     */
     public ImageAsset getImage(String name) {
         for (var a : this.imageAssets) {
             if (a.name.equals(name)) return a;

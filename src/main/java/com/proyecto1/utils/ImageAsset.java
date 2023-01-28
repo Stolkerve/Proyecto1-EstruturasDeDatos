@@ -1,18 +1,18 @@
 package com.proyecto1.utils;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
+/**
+ * @author sebas
+ */
 public class ImageAsset {
     String name;
     public ImageIcon image;
 
+    /**
+     * @param path Direccion relativa al directorio del proyecto
+     * @param name Nombre del recurso
+     */
     ImageAsset(String path, String name) {
         this.name = name;
         this.image = new ImageIcon(path);

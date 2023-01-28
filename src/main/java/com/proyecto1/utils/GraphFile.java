@@ -8,6 +8,10 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+/**
+ * Estado de carga del arhcivo de grafos
+ * @author sebas
+ */
 enum FileState {
     Init,
     BeginWearhouse,
@@ -15,7 +19,15 @@ enum FileState {
     OnGraph
 };
 
+/**
+ * Clase con metodos estaticos para cargar y guardar el archivo de grafos y alamacenes
+ * @author sebas
+ */
 public class GraphFile {
+
+    /**
+     * Metodo estatico para cargar el archivo de grafos y almacenes
+     */
     public static void loadFileDialog() {
         var fileDialog = new JFileChooser("./", FileSystemView.getFileSystemView());
         fileDialog.setAcceptAllFileFilterUsed(false);
