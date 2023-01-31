@@ -21,7 +21,7 @@ public class MusicAsset {
      */
     MusicAsset(String path, String name) throws Exception {
         this.name = name;
-        var file = new File(path);
+        File file = new File(path);
         this.sound = AudioSystem.getAudioInputStream(file);
         this.clip = AudioSystem.getClip();
         clip.open(sound);

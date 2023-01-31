@@ -1,6 +1,8 @@
 package com.proyecto1.gui;
 
 import com.proyecto1.utils.AssetsManager;
+import com.proyecto1.utils.GraphFile;
+import com.proyecto1.utils.ImageAsset;
 
 import javax.swing.*;
 
@@ -17,23 +19,32 @@ public class MainPanel extends javax.swing.JPanel {
     public MainPanel(JFrame mainFrame) {
         this.mainFrame = mainFrame;
 
-        //GraphFile.loadFileDialog();
-
-        var backgroundMusic = AssetsManager.getInstance().getMusic("background-music");
-        if (backgroundMusic != null) {
-            backgroundMusic.setVolume(0.1f);
-            backgroundMusic.play(true);
-        }
-
         initComponents();
     }
 
     private void initComponents() {
-        this.add(new JLabel("Hola mundo"));
-        var catKiss = AssetsManager.getInstance().getImage("cat-kiss");
+        ImageAsset catKiss = AssetsManager.getInstance().getImage("cat-kiss");
         if (catKiss != null) {
             JLabel label = new JLabel(catKiss.image);
             this.add(label);
         }
+        JButton cargarArchivoBtn = new JButton("Cargar archivo de almacenes");
+        cargarArchivoBtn.addActionListener(e -> {
+            cargarArchivoBtn.setEnabled(false);
+            SwingWorker<Void, Void> sw = new SwingWorker<Void, Void>() {
+                @Override
+                protected Void doInBackground() throws Exception {
+                    GraphFile.loadFileDialog();
+                    return null;
+                }
+                
+                @Override
+                protected void done() {
+                    cargarArchivoBtn.setEnabled(true);
+                }
+            };
+            sw.execute();
+        });
+        this.add(cargarArchivoBtn);
     }
 }

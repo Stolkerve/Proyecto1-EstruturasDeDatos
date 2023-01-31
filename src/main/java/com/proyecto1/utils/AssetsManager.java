@@ -8,7 +8,6 @@ import java.util.ArrayList;
  */
 public class AssetsManager {
     private static AssetsManager instance;
-    private static Object mutex = new Object();
     private ArrayList<MusicAsset> musicAssets;
     private ArrayList<ImageAsset> imageAssets;
 
@@ -34,7 +33,7 @@ public class AssetsManager {
      */
     public MusicAsset addMusic(String path, String name) {
         try {
-            var newAsset = new MusicAsset(path, name);
+            MusicAsset newAsset = new MusicAsset(path, name);
             this.musicAssets.add(newAsset);
             return newAsset;
         } catch (Exception e) {
@@ -48,7 +47,7 @@ public class AssetsManager {
      * @return Retorna el recurso agregado
      */
     public ImageAsset addImage(String path, String name) {
-        var newAsset = new ImageAsset(path, name);
+        ImageAsset newAsset = new ImageAsset(path, name);
         if (newAsset.image.getIconWidth() > 0)
             this.imageAssets.add(newAsset);
         else
@@ -61,7 +60,7 @@ public class AssetsManager {
      * @return Retorna el recurso se si encontro, de lo contrario Null
      */
     public MusicAsset getMusic(String name) {
-        for (var a : this.musicAssets) {
+        for (MusicAsset a : this.musicAssets) {
             if (a.name.equals(name)) return a;
         }
         return null;
@@ -72,7 +71,7 @@ public class AssetsManager {
      * @return Retorna el recurso se si encontro, de lo contrario Null
      */
     public ImageAsset getImage(String name) {
-        for (var a : this.imageAssets) {
+        for (ImageAsset a : this.imageAssets) {
             if (a.name.equals(name)) return a;
         }
         return null;

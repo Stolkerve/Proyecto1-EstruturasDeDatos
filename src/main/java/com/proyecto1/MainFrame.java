@@ -5,6 +5,8 @@ import javax.swing.*;
 import com.proyecto1.gui.AssetsLoader;
 import com.proyecto1.gui.MainPanel;
 import com.proyecto1.utils.AssetsManager;
+import com.proyecto1.utils.ImageAsset;
+import com.proyecto1.utils.MusicAsset;
 
 /**
  * Clase main del programa, esta hereda la clase Jframe para inicializar directamente
@@ -26,7 +28,7 @@ public class MainFrame extends javax.swing.JFrame {
         new AssetsLoader();
 
         // reproducir la musica de fondo
-        var backgroundMusic = AssetsManager.getInstance().getMusic("background-music");
+        MusicAsset backgroundMusic = AssetsManager.getInstance().getMusic("background-music");
         if (backgroundMusic != null) {
             backgroundMusic.setVolume(0.1f);
             backgroundMusic.play(true);
@@ -44,7 +46,7 @@ public class MainFrame extends javax.swing.JFrame {
         this.setSize(new java.awt.Dimension(this.MIN_WIDTH, MIN_HEIGHT));
         this.setResizable(false);
 
-        var icon = AssetsManager.getInstance().getImage("amazon-icon");
+        ImageAsset icon = AssetsManager.getInstance().getImage("amazon-icon");
         if (icon != null) {
             this.setIconImage(icon.image.getImage());
         }
@@ -52,6 +54,8 @@ public class MainFrame extends javax.swing.JFrame {
         this.add(mainPanel);
 
         pack();
+
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -60,8 +64,7 @@ public class MainFrame extends javax.swing.JFrame {
     public static void main(String[] args) {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            var frame = new MainFrame();
-            frame.setVisible(true);
+            new MainFrame().setVisible(true);
         });
     }
 }

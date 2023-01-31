@@ -3,9 +3,9 @@ package com.proyecto1.utils;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
-import java.awt.*;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -29,74 +29,76 @@ public class GraphFile {
      * Metodo estatico para cargar el archivo de grafos y almacenes
      */
     public static void loadFileDialog() {
-        var fileDialog = new JFileChooser("./", FileSystemView.getFileSystemView());
+        JFileChooser fileDialog = new JFileChooser("./", FileSystemView.getFileSystemView());
         fileDialog.setAcceptAllFileFilterUsed(false);
         fileDialog.setDialogTitle("Selectciona el archivo de guardado de almacenes");
         fileDialog.addChoosableFileFilter(new FileNameExtensionFilter("Solo archivos .txt", "txt"));
-        var res = fileDialog.showOpenDialog(null);
+        int res = fileDialog.showOpenDialog(null);
 
         if (res != JFileChooser.CANCEL_OPTION) {
             try {
-                var scanner = new Scanner(fileDialog.getSelectedFile());
-                var state = FileState.Init;
+                Scanner scanner = new Scanner(fileDialog.getSelectedFile());
+                FileState state = FileState.Init;
 
-                var wearhouseIdPattern = Pattern.compile("(Almacen) ([a-zA-Z0-9])+(:)");
-                var wearhouseProductPattern = Pattern.compile("([a-zA-Z0-9]+),([0-9]+)(;?)");
-                var graphRoutePattern = Pattern.compile("([a-zA-Z0-9]+),([a-zA-Z0-9]+),([0-9]+)");
+                Pattern wearhouseIdPattern = Pattern.compile("(Almacen) ([a-zA-Z0-9])+(:)");
+                Pattern wearhouseProductPattern = Pattern.compile("([a-zA-Z0-9]+),([0-9]+)(;?)");
+                Pattern graphRoutePattern = Pattern.compile("([a-zA-Z0-9]+),([a-zA-Z0-9]+),([0-9]+)");
 
                 while (scanner.hasNextLine()) {
-                    var line = scanner.nextLine();
+                    String line = scanner.nextLine();
                     switch (state) {
-                        case Init -> {
+                        case Init:
                             if (!line.equals("Almacenes;")) {
                                 JOptionPane.showMessageDialog(null, "No se puede leer el archivo. Ingrese un archivo valido", "ERROR", JOptionPane.ERROR_MESSAGE);
                                 return;
                             }
                             state = FileState.BeginWearhouse;
-                        }
-                        case BeginWearhouse -> {
+                            break;
+                        case BeginWearhouse:
                             // Ver si la linea es un almacen o son los grafos
                             // La posicion 2 del match tiene el ID del almacen
-                            var match = wearhouseIdPattern.matcher(line);
-                            if (match.matches()) {
-                                var sID = match.group(2);
-                                try {
-                                    var id = Integer.parseInt(sID, 16);
-                                } catch (NumberFormatException e) {
+                            {
+                                Matcher match = wearhouseIdPattern.matcher(line);
+                                if (match.matches()) {
+                                    String sID = match.group(2);
+                                    int id = Integer.parseInt(sID, 16);
+                                } else {
+                                    // No son grafos?
+                                    if (!line.equals("Rutas;")) {
+                                        JOptionPane.showMessageDialog(null, "Error leyendo el archivo. Nombre del almacen invalido", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                        return;
+                                    }
+                                    state = FileState.OnGraph;
+                                    continue;
                                 }
-                            } else {
-                                // No son grafos?
-                                if (!line.equals("Rutas;")) {
-                                    JOptionPane.showMessageDialog(null, "Error leyendo el archivo. Nombre del almacen invalido", "ERROR", JOptionPane.ERROR_MESSAGE);
-                                    return;
-                                }
-                                state = FileState.OnGraph;
-                                continue;
+                                state = FileState.OnLoadProducts;
                             }
-                            state = FileState.OnLoadProducts;
-                        }
-                        case OnLoadProducts -> {
+                            break;
+                        case OnLoadProducts:
                             // Obtener los productos
-                            var match = wearhouseProductPattern.matcher(line);
-                            if (match.matches()) {
-                                var name = match.group(1);
-                                var amount = Integer.parseInt(match.group(2));
-                                var endChar = match.group(3);
+                            {
+                                Matcher match = wearhouseProductPattern.matcher(line);
+                                if (match.matches()) {
+                                    String name = match.group(1);
+                                    int amount = Integer.parseInt(match.group(2));
+                                    String endChar = match.group(3);
 
-                                if (endChar.length() != 0) {
-                                    state = FileState.BeginWearhouse;
+                                    if (endChar.length() != 0) {
+                                        state = FileState.BeginWearhouse;
+                                    }
                                 }
                             }
-                        }
-                        case OnGraph -> {
-                            var match = graphRoutePattern.matcher(line);
-                            if (match.matches()) {
-                                var graphNode1 = match.group(1);
-                                var graphNode2 = match.group(2);
-                                var distante = match.group(3);
+                            break;
+                        case OnGraph:
+                            {
+                                Matcher match = graphRoutePattern.matcher(line);
+                                if (match.matches()) {
+                                    String graphNode1 = match.group(1);
+                                    String graphNode2 = match.group(2);
+                                    String distante = match.group(3);
+                                }
                             }
-                        }
-                        default -> throw new IllegalStateException("Unexpected value: " + state);
+                            break;
                     }
                 }
                 // Ir al menu principal
