@@ -2,6 +2,7 @@ package com.proyecto1;
 
 import javax.swing.*;
 
+import com.formdev.flatlaf.FlatDarculaLaf;
 import com.proyecto1.gui.AssetsLoader;
 import com.proyecto1.gui.MainPanel;
 import com.proyecto1.utils.AssetsManager;
@@ -62,6 +63,12 @@ public class MainFrame extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        try {
+            UIManager.setLookAndFeel(new FlatDarculaLaf());
+        } catch (UnsupportedLookAndFeelException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
             new MainFrame().setVisible(true);
