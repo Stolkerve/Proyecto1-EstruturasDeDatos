@@ -1,6 +1,12 @@
 package com.proyecto1;
 
-import javax.swing.*;
+import java.util.Enumeration;
+
+import javax.swing.JPanel;
+import javax.swing.UIDefaults;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.FontUIResource;
 
 import com.formdev.flatlaf.FlatDarculaLaf;
 import com.proyecto1.gui.AssetsLoader;
@@ -65,8 +71,17 @@ public class MainFrame extends javax.swing.JFrame {
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel(new FlatDarculaLaf());
+            UIDefaults defaults = UIManager.getLookAndFeelDefaults();
+            // UIDefaults defaults = UIManager.getLookAndFeelDefaults();
+            Enumeration<Object> keys = defaults.keys();
+            while (keys.hasMoreElements()) {
+                Object key = keys.nextElement();
+                if ((key instanceof String) && (((String) key).endsWith(".font"))) {
+                    FontUIResource font = (FontUIResource) UIManager.get(key);
+                    defaults.put(key, new FontUIResource(font.getFontName(), font.getStyle(), 20));
+                }
+            }
         } catch (UnsupportedLookAndFeelException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         /* Create and display the form */

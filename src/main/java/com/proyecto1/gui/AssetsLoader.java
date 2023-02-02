@@ -43,7 +43,7 @@ public class AssetsLoader {
     public AssetsLoader() {
         JDialog dialog = new JDialog();
         dialog.setModal(true);
-        dialog.setSize(200, 120);
+        dialog.setSize(320, 180);
         dialog.setLayout(new BorderLayout());
         dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         dialog.setLocationRelativeTo(null);
