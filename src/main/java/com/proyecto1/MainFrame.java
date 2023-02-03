@@ -38,7 +38,7 @@ public class MainFrame extends javax.swing.JFrame {
         MusicAsset backgroundMusic = AssetsManager.getInstance().getMusic("background-music");
         if (backgroundMusic != null) {
             backgroundMusic.setVolume(0.1f);
-            backgroundMusic.play(true);
+            //backgroundMusic.play(true);
         }
 
         this.mainPanel = new MainPanel(this);
