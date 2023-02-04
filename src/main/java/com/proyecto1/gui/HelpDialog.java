@@ -1,5 +1,6 @@
 package com.proyecto1.gui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -13,28 +14,40 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+class Cell {
+	int alive;
+	int color;
+
+	Cell(int alive, int color) {
+		this.alive = alive;
+		this.color = color;
+	}
+}
+
 class GameOfLife extends JPanel {
     int nXCells;
     int nYCells;
     int cellWidth;
     int cellHeight;
 
-    boolean[] world;
+    Cell[] world;
+	Cell[] renderedWord;
 
     GameOfLife(int scrWidth, int scrHeight) {
 		this.setSize(scrWidth, scrHeight);
         this.setPreferredSize(new Dimension(scrWidth, scrHeight));
         this.setMinimumSize(new Dimension(scrWidth, scrHeight));
 
-        this.cellWidth = 10;
-        this.cellHeight = 10;
+        this.cellWidth = 5;
+        this.cellHeight = 5;
         this.nXCells = scrWidth / this.cellWidth;
         this.nYCells = scrHeight / this.cellHeight;
 
-        this.world = new boolean[this.nXCells * this.nYCells];
+        this.world = new Cell[this.nXCells * this.nYCells];
         Random random = new Random();
 		for (int i = 0; i < this.world.length; i++) {
-			this.world[i] = random.nextBoolean();
+			int alive = random.nextBoolean() ? 1 : 0;
+			this.world[i] = new Cell(alive, 0xff) ;
 		}
 		
 		this.addMouseListener(new MouseListener() {
@@ -73,7 +86,9 @@ class GameOfLife extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        boolean[] renderedWord = this.world.clone();
+        this.renderedWord = new Cell[this.nXCells * this.nYCells];
+		for (int i = 0; i < this.world.length; i++)
+			this.renderedWord[i] = new Cell(this.world[i].alive, this.world[i].color);
 
         for (int x = 0; x < this.nXCells; x++) {
             for (int y = 0; y < this.nYCells; y++) {
@@ -83,35 +98,46 @@ class GameOfLife extends JPanel {
 				int _y = y - 1 < 0 ? this.nYCells - 1 : y - 1;
 				int y_ = y + 1 > this.nYCells ? 0 : y + 1;
 
-				int neighbors = getCell((_x) % this.nXCells, (_y) % this.nYCells, renderedWord) + getCell(( x) % this.nXCells, (_y) % this.nYCells, renderedWord) +
-								getCell((x_) % this.nXCells, (_y) % this.nYCells, renderedWord) + getCell((x_) % this.nXCells, ( y) % this.nYCells, renderedWord) +
-								getCell((x_) % this.nXCells, (y_) % this.nYCells, renderedWord) + getCell(( x) % this.nXCells, (y_) % this.nYCells, renderedWord) +
-								getCell((_x) % this.nXCells, (y_) % this.nYCells, renderedWord) + getCell((_x) % this.nXCells, ( y) % this.nYCells, renderedWord);
-				if (getCell(x, y, this.world) == 1)
+				int neighbors = getCell((_x) % this.nXCells, (_y) % this.nYCells, this.renderedWord).alive + getCell(( x) % this.nXCells, (_y) % this.nYCells, this.renderedWord).alive +
+								getCell((x_) % this.nXCells, (_y) % this.nYCells, this.renderedWord).alive + getCell((x_) % this.nXCells, ( y) % this.nYCells, this.renderedWord).alive +
+								getCell((x_) % this.nXCells, (y_) % this.nYCells, this.renderedWord).alive + getCell(( x) % this.nXCells, (y_) % this.nYCells, this.renderedWord).alive +
+								getCell((_x) % this.nXCells, (y_) % this.nYCells, this.renderedWord).alive + getCell((_x) % this.nXCells, ( y) % this.nYCells, this.renderedWord).alive;
+				Cell wCell = getCell(x, y, this.world);
+				if (wCell.alive == 1)
 					setCell(x, y, neighbors == 2 || neighbors == 3);
 				else
 					setCell(x, y, neighbors == 3);
+				if (wCell.alive == 1)
+					wCell.color = 0xff - 40;
+				else
+					wCell.color = wCell.color == 0 || (wCell.color - 2) < 0 ? wCell.color : wCell.color - 2;
 
-				if (this.getCell(x, y, renderedWord) == 1) {
+				Cell cell = getCell(x, y, this.renderedWord);
+				if (cell.alive == 1) {
+					g.setColor(new Color(0x00, 0xff, 0x00));
+					g.fillRect(this.cellWidth * x, this.cellHeight * y, this.cellWidth, this.cellHeight);
+				}
+				else {
+					g.setColor(new Color(0x00, cell.color, 0x00));
 					g.fillRect(this.cellWidth * x, this.cellHeight * y, this.cellWidth, this.cellHeight);
 				}
             }
         }
     }
 
-    int getCell(int x, int y, boolean[] a) {
-        return a[y * this.nXCells + x] ? 1 : 0; // Odio java
+    Cell getCell(int x, int y, Cell[] a) {
+        return a[y * this.nXCells + x];
     }
 
     void setCell(int x, int y, boolean v) {
-        this.world[y * this.nXCells + x] = v;
+        this.world[y * this.nXCells + x].alive = (v ? 1 : 0);
     }
 }
 
 public class HelpDialog {
     HelpDialog() {
-        int width = 400;
-        int height = 400;
+        int width = 800;
+        int height = 600;
         JDialog dialog = new JDialog();
         dialog.setModal(true);
 		dialog.setResizable(false);
@@ -123,7 +149,7 @@ public class HelpDialog {
 				game.repaint();
 			}
 		};
-		Timer timer=new Timer(150,al);//create the timer which calls the actionperformed method for every 1000 millisecond(1 second=1000 millisecond)
+		Timer timer=new Timer(50,al);//create the timer which calls the actionperformed method for every 1000 millisecond(1 second=1000 millisecond)
 		timer.setRepeats(true);
 		timer.start();
 

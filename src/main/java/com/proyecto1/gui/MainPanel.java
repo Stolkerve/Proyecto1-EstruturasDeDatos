@@ -79,9 +79,12 @@ public class MainPanel extends javax.swing.JPanel {
         manageStockBtn.addActionListener(e -> {});
 
         JButton showGraphBtn = new JButton("Mostrar grafico");
-        showGraphBtn.addActionListener(e -> {new HelpDialog();});
+        showGraphBtn.addActionListener(e -> {});
 
-        Collections.addAll(menuBtns, loadGraphBtn, saveGraphBtn, producsStockBtn, requestBtn, addWearhouseBtn, addPathBtn, manageStockBtn, showGraphBtn);
+        JButton helpBtn = new JButton("???");
+        helpBtn.addActionListener(e -> {new HelpDialog();});
+
+        Collections.addAll(menuBtns, loadGraphBtn, saveGraphBtn, producsStockBtn, requestBtn, addWearhouseBtn, addPathBtn, manageStockBtn, showGraphBtn, helpBtn);
 
         JPanel colsPanel = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
