@@ -1,4 +1,4 @@
-package com.proyecto1.utils;
+package com.proyecto1.gui;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -23,7 +23,7 @@ enum FileState {
  * Clase con metodos estaticos para cargar y guardar el archivo de grafos y alamacenes
  * @author sebas
  */
-public class GraphFile {
+public class GraphFileDialog {
 
     /**
      * Metodo estatico para cargar el archivo de grafos y almacenes

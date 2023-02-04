@@ -14,7 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingWorker;
 
 import com.proyecto1.utils.AssetsManager;
-import com.proyecto1.utils.GraphFile;
 import com.proyecto1.utils.ImageAsset;
 
 /**
@@ -47,7 +46,7 @@ public class MainPanel extends javax.swing.JPanel {
             SwingWorker<Void, Void> sw = new SwingWorker<Void, Void>() {
                 @Override
                 protected Void doInBackground() throws Exception {
-                    GraphFile.loadFileDialog();
+                    GraphFileDialog.loadFileDialog();
                     return null;
                 }
                 
