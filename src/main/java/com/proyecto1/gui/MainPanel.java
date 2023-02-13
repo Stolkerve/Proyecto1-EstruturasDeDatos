@@ -66,7 +66,12 @@ public class MainPanel extends javax.swing.JPanel {
         producsStockBtn.addActionListener(e -> {});
 
         JButton requestBtn = new JButton("Realizar pedido de producto");
-        requestBtn.addActionListener(e -> {});
+        requestBtn.addActionListener(e -> {
+            this.removeAll();
+            this.add(new RequestOrder(this));
+            this.repaint();
+            this.validate();
+        });
 
         JButton addWearhouseBtn = new JButton("Agregar almacen");
         addWearhouseBtn.addActionListener(e -> {});
