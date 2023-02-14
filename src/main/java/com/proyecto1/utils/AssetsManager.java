@@ -1,6 +1,6 @@
 package com.proyecto1.utils;
 
-import java.util.ArrayList;
+import com.proyecto1.containers.Vector;
 
 /**
  * Singleton que contiene todos los recursos usados por el programa
@@ -8,12 +8,12 @@ import java.util.ArrayList;
  */
 public class AssetsManager {
     private static AssetsManager instance;
-    private ArrayList<MusicAsset> musicAssets;
-    private ArrayList<ImageAsset> imageAssets;
+    private Vector<MusicAsset> musicAssets;
+    private Vector<ImageAsset> imageAssets;
 
     AssetsManager() {
-        this.musicAssets = new ArrayList<>();
-        this.imageAssets = new ArrayList<>();
+        this.musicAssets = new Vector<>();
+        this.imageAssets = new Vector<>();
     }
 
     public static AssetsManager getInstance() {
@@ -34,7 +34,7 @@ public class AssetsManager {
     public MusicAsset addMusic(String path, String name) {
         try {
             MusicAsset newAsset = new MusicAsset(path, name);
-            this.musicAssets.add(newAsset);
+            this.musicAssets.pushBack(newAsset);
             return newAsset;
         } catch (Exception e) {
             return null;
@@ -49,7 +49,7 @@ public class AssetsManager {
     public ImageAsset addImage(String path, String name) {
         ImageAsset newAsset = new ImageAsset(path, name);
         if (newAsset.image.getIconWidth() > 0)
-            this.imageAssets.add(newAsset);
+            this.imageAssets.pushBack(newAsset);
         else
             return null;
         return newAsset;

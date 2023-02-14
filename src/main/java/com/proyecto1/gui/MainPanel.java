@@ -4,8 +4,6 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.util.ArrayList;
-import java.util.Collections;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,6 +13,7 @@ import javax.swing.SwingWorker;
 
 import com.proyecto1.utils.AssetsManager;
 import com.proyecto1.utils.ImageAsset;
+import com.proyecto1.containers.Vector;
 
 /**
  * @author sebas
@@ -38,7 +37,7 @@ public class MainPanel extends javax.swing.JPanel {
     private void initComponents() {
         this.setLayout(new FlowLayout(FlowLayout.CENTER));
 
-        final ArrayList<JButton> menuBtns = new ArrayList<JButton>();
+        final Vector<JButton> menuBtns = new Vector<JButton>();
         JButton loadGraphBtn = new JButton("Cargar archivo de almacenes");
         loadGraphBtn.addActionListener(e -> {
             for (JButton btn : menuBtns)
@@ -88,7 +87,15 @@ public class MainPanel extends javax.swing.JPanel {
         JButton helpBtn = new JButton("???");
         helpBtn.addActionListener(e -> {new HelpDialog();});
 
-        Collections.addAll(menuBtns, loadGraphBtn, saveGraphBtn, producsStockBtn, requestBtn, addWearhouseBtn, addPathBtn, manageStockBtn, showGraphBtn, helpBtn);
+        menuBtns.pushBack(loadGraphBtn);   
+        menuBtns.pushBack(saveGraphBtn);
+        menuBtns.pushBack(producsStockBtn);
+        menuBtns.pushBack(requestBtn);
+        menuBtns.pushBack(addWearhouseBtn);
+        menuBtns.pushBack(addPathBtn);
+        menuBtns.pushBack(manageStockBtn);
+        menuBtns.pushBack(showGraphBtn);
+        menuBtns.pushBack(helpBtn);
 
         JPanel colsPanel = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
