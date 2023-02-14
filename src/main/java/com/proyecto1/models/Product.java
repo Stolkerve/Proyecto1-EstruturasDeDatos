@@ -5,10 +5,11 @@ package com.proyecto1.models;
  */
 public class Product {
     public String name;
-    public int amount;
+    public int stock;
+    public int id;
 
-    Product(String name, int amount) {
+    Product(String name, int stock) {
         this.name = name;
-        this.amount = amount;
+        this.stock = stock;
     }
 }
