@@ -101,12 +101,13 @@ public class Vector<T> implements Iterable<T> {
         return true;
     }
 
-    public boolean popFront() {
-        if (this.size == 0) return false;
+    public T popFront() {
+        if (this.size == 0) return null;
 
+        T poped = this.data[0];
         System.arraycopy(this.data, 1, this.data, 0, this.data.length - 1);
         this.size--;
-        return true;
+        return poped;
     }
 
     private void needCapacity() {
