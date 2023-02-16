@@ -150,8 +150,8 @@ public class GraphFileDialog {
 
             } catch (FileNotFoundException e) {
                 JOptionPane.showMessageDialog(fileDialog,
-                    "No se pudo abrir archivo", "ERROR",
-                    JOptionPane.ERROR_MESSAGE);
+                        "No se pudo abrir archivo", "ERROR",
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             }
         }
@@ -164,17 +164,22 @@ public class GraphFileDialog {
         int res = fileDialog.showOpenDialog(null);
 
         if (res != JFileChooser.CANCEL_OPTION) {
-            String name = JOptionPane.showInputDialog(fileDialog, "Nombre del archivo");
-            while (name.length() == 0 ) {
-                name = JOptionPane.showInputDialog(fileDialog, "Nombre del archivo");
-            }
+            String msg = "Nombre del archivo (Se sobre escribira los archivos con el mismo nombre)";
+            String name = JOptionPane.showInputDialog(fileDialog, msg);
+
+            if (name == null)
+                return false;
+
+            while (name.length() == 0)
+                name = JOptionPane.showInputDialog(fileDialog, msg);
+
             try (FileWriter output = new FileWriter(name + ".txt")) {
                 output.write("Almacenes;\n");
                 String rutas = "";
-                for(Wearhouse w : Grafo.getInstance().almacenes) {
+                for (Wearhouse w : Grafo.getInstance().almacenes) {
                     output.write(String.format("Almacen %s:\n", w.name));
                     int i = 0;
-                    for(Product p : w.products) {
+                    for (Product p : w.products) {
                         if (i == w.products.size() - 1) {
                             output.write(String.format("%s,%d;\n", p.name, p.stock));
                             continue;
@@ -182,16 +187,16 @@ public class GraphFileDialog {
                         output.write(String.format("%s,%d\n", p.name, p.stock));
                         i++;
                     }
-                    for (Edge e : w.edges) {
+                    for (Edge e : w.edges)
                         rutas += String.format("%s,%s,%d\n", e.almacen.name, e.almacenVecino.name, e.distancia);
-                    }
                 }
                 output.write("Rutas;\n" + rutas);
                 output.close();
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(fileDialog,
-                    "No se pudo crear el archivo", "ERROR",
-                    JOptionPane.ERROR_MESSAGE);
+                        "No se pudo crear el archivo", "ERROR",
+                        JOptionPane.ERROR_MESSAGE);
+                return false;
             }
         }
         return true;
