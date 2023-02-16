@@ -6,6 +6,7 @@ import com.proyecto1.models.Wearhouse;
 
 public class Grafo {
     public boolean iniciado = false;
+    public boolean necesitaGuardar = false;
     public Vector<Wearhouse> almacenes;
     private static Grafo instancia;
 

@@ -1,6 +1,14 @@
 package com.proyecto1.gui;
 
-import javax.swing.*;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
@@ -9,11 +17,6 @@ import com.proyecto1.containers.Vector;
 import com.proyecto1.models.Edge;
 import com.proyecto1.models.Product;
 import com.proyecto1.models.Wearhouse;
-
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Estado de carga del arhcivo de grafos
@@ -65,7 +68,7 @@ public class GraphFileDialog {
                     switch (state) {
                         case Init: {
                             if (!line.equals("Almacenes;")) {
-                                JOptionPane.showMessageDialog(null,
+                                JOptionPane.showMessageDialog(fileDialog,
                                         "No se puede leer el archivo. Ingrese un archivo valido", "ERROR",
                                         JOptionPane.ERROR_MESSAGE);
                                 return;
@@ -86,7 +89,7 @@ public class GraphFileDialog {
                             } else {
                                 // No son grafos?
                                 if (!line.equals("Rutas;")) {
-                                    JOptionPane.showMessageDialog(null,
+                                    JOptionPane.showMessageDialog(fileDialog,
                                             "Error leyendo el archivo. Nombre del almacen invalido", "ERROR",
                                             JOptionPane.ERROR_MESSAGE);
                                     return;
@@ -146,12 +149,51 @@ public class GraphFileDialog {
                     Grafo.getInstance().almacenes.pushBack(w);
 
             } catch (FileNotFoundException e) {
+                JOptionPane.showMessageDialog(fileDialog,
+                    "No se pudo abrir archivo", "ERROR",
+                    JOptionPane.ERROR_MESSAGE);
                 return;
             }
         }
         // Ir al menu principal
     }
 
-    public static void saveFileDialog() {
+    public static boolean saveFileDialog() {
+        JFileChooser fileDialog = new JFileChooser("./", FileSystemView.getFileSystemView());
+        fileDialog.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int res = fileDialog.showOpenDialog(null);
+
+        if (res != JFileChooser.CANCEL_OPTION) {
+            String name = JOptionPane.showInputDialog(fileDialog, "Nombre del archivo");
+            while (name.length() == 0 ) {
+                name = JOptionPane.showInputDialog(fileDialog, "Nombre del archivo");
+            }
+            try (FileWriter output = new FileWriter(name + ".txt")) {
+                output.write("Almacenes;\n");
+                String rutas = "";
+                for(Wearhouse w : Grafo.getInstance().almacenes) {
+                    output.write(String.format("Almacen %s:\n", w.name));
+                    int i = 0;
+                    for(Product p : w.products) {
+                        if (i == w.products.size() - 1) {
+                            output.write(String.format("%s,%d;\n", p.name, p.stock));
+                            continue;
+                        }
+                        output.write(String.format("%s,%d\n", p.name, p.stock));
+                        i++;
+                    }
+                    for (Edge e : w.edges) {
+                        rutas += String.format("%s,%s,%d\n", e.almacen.name, e.almacenVecino.name, e.distancia);
+                    }
+                }
+                output.write("Rutas;\n" + rutas);
+                output.close();
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(fileDialog,
+                    "No se pudo crear el archivo", "ERROR",
+                    JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        return true;
     }
 }

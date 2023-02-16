@@ -41,10 +41,6 @@ public class MainPanel extends javax.swing.JPanel {
         final Vector<JButton> menuBtns = new Vector<JButton>();
         JButton loadGraphBtn = new JButton("Cargar archivo de almacenes");
         loadGraphBtn.addActionListener(e -> {
-            for (JButton btn : menuBtns)
-                btn.setEnabled(false);
-            loadGraphBtn.setEnabled(true);
-
             GraphFileDialog.loadFileDialog();
 
             if (Grafo.getInstance().iniciado) {
@@ -55,6 +51,12 @@ public class MainPanel extends javax.swing.JPanel {
 
         JButton saveGraphBtn = new JButton("Guardar archivo de almacenes");
         saveGraphBtn.addActionListener(e -> {
+            GraphFileDialog.saveFileDialog();
+
+            // if (Grafo.getInstance().iniciado) {
+            //     for (JButton btn : menuBtns)
+            //         btn.setEnabled(true);
+            // }
         });
 
         JButton producsStockBtn = new JButton("Stock de productos");
