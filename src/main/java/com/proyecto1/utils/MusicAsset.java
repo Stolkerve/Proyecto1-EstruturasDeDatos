@@ -17,7 +17,8 @@ public class MusicAsset {
     /**
      * @param path Direccion relativa al directorio del proyecto
      * @param name Nombre del recurso
-     * @throws Exception Exepcion provocoda por un error en la carga del archivo de audio
+     * @throws Exception Exepcion provocoda por un error en la carga del archivo de
+     *                   audio
      */
     MusicAsset(String path, String name) throws Exception {
         this.name = name;
@@ -49,7 +50,8 @@ public class MusicAsset {
      * @param volume Volumen en decibeles entre 0.0f a 1.0f
      */
     public void setVolume(float volume) {
-        if (volume < 0.f || volume > 1.0f) return;
+        if (volume < 0.f || volume > 1.0f)
+            return;
         FloatControl gainControl = (FloatControl) this.clip.getControl(FloatControl.Type.MASTER_GAIN);
         gainControl.setValue(20f * (float) Math.log10(volume));
     }

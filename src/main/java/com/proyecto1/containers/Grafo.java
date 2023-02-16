@@ -5,11 +5,11 @@ import com.proyecto1.models.Product;
 import com.proyecto1.models.Wearhouse;
 
 public class Grafo {
-
+    public boolean iniciado = false;
     public Vector<Wearhouse> almacenes;
     private static Grafo instancia;
 
-    private class DistanciaDijsktra{
+    private class DistanciaDijsktra {
         Vector<Wearhouse> almacenes;
         int distanciaTotal;
     }
@@ -38,11 +38,6 @@ public class Grafo {
         return null;
     }
 
-    // public DistanciaDijsktra dijkstra(Wearhouse almacen, Wearhouse h) {
-    //     Vector<Wearhouse> almacenesRecorridos;
-
-    // }
-
     public DistanciaDijsktra dijkstra(Wearhouse almacenOrigen, Wearhouse almacenDestino) {
         almacenOrigen.distanciaMin = 0;
         Vector<Wearhouse> almacenesRecorridos = new Vector<>();
@@ -57,7 +52,7 @@ public class Grafo {
                 int minDistance = node.distanciaMin + weight;
 
                 if (minDistance < n.distanciaMin) {
-                    for (int i=0;i<priorityQueue.size();i++){
+                    for (int i = 0; i < priorityQueue.size(); i++) {
                         if (priorityQueue.Get(i).id == node.id) {
                             priorityQueue.remove(i);
                         }
@@ -72,32 +67,27 @@ public class Grafo {
         DistanciaDijsktra trayectoria = new DistanciaDijsktra();
         Wearhouse almacen = almacenDestino;
         while (almacen != null) {
-            trayectoria.add(almacen);
-            almacen = almacen.getNodoAnterior();
+            // trayectoria.add(almacen);
+            // almacen = almacen.getNodoAnterior();
         }
 
-        invertir(trayectoria.getAlmacenes());
-        return almacenDestino;
+        return null;
     }
-
 
     public Product buscarEnOtroAlmacen(String productoNombre, Wearhouse almacenOrigen) {
         Vector<Wearhouse> almacenesEncontrados = new Vector<>();
-        
         for (Wearhouse almacen : this.almacenes) {
             if (almacen.id != almacenOrigen.id) {
                 for (Product producto : almacen.products) {
                     if (producto.name.equalsIgnoreCase(productoNombre)) {
                         if (producto.stock > 0) {
-                            almacenesEncontrados.pushBack(dijkstra(almacen, almacenOrigen));
+                            // almacenesEncontrados.pushBack(dijkstra(almacen, almacenOrigen));
                         }
                     }
                 }
             }
         }
-
-
-
+        return null;
     }
 
 }

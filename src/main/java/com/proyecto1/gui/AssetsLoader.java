@@ -31,14 +31,18 @@ class AssetInfo {
 
 /**
  * Clase que carga los distintos recursos usados por el programa
+ * 
  * @author sebas
  */
 public class AssetsLoader {
 
     /**
-     * Prepara un modal que bloquea todos los hilos de ejecucion cuando se hace visible,
-     * por lo que se ejecuta un hilo de Swing donde controlara la ui de carga, la carga
-     * de los distintos recursos y matar el modal para que la ejecucion del programa vuela
+     * Prepara un modal que bloquea todos los hilos de ejecucion cuando se hace
+     * visible,
+     * por lo que se ejecuta un hilo de Swing donde controlara la ui de carga, la
+     * carga
+     * de los distintos recursos y matar el modal para que la ejecucion del programa
+     * vuela
      */
     public AssetsLoader() {
         JDialog dialog = new JDialog();
@@ -64,7 +68,7 @@ public class AssetsLoader {
         SwingWorker<Void, Void> sw = new SwingWorker<Void, Void>() {
             @Override
             protected Void doInBackground() throws Exception {
-                AssetInfo[] assetsLoadInfo = new AssetInfo[]{
+                AssetInfo[] assetsLoadInfo = new AssetInfo[] {
                         new AssetInfo("./assets/cat-kiss.gif", "cat-kiss", AssetType.Image),
                         new AssetInfo("./assets/Amazon_icon.png", "amazon-icon", AssetType.Image),
                         new AssetInfo("./assets/cat-dance.gif", "cat-dance", AssetType.Image),
@@ -74,18 +78,21 @@ public class AssetsLoader {
                 int i = 0;
                 for (AssetInfo assetInfo : assetsLoadInfo) {
                     assetLabel.setText(assetInfo.path);
-                    float porc = ((float) (assetsLoadInfo.length - (assetsLoadInfo.length - i)) / assetsLoadInfo.length) * 100;
+                    float porc = ((float) (assetsLoadInfo.length - (assetsLoadInfo.length - i)) / assetsLoadInfo.length)
+                            * 100;
                     bar.setValue((int) porc);
 
                     switch (assetInfo.type) {
                         case Image:
                             if (AssetsManager.getInstance().addImage(assetInfo.path, assetInfo.name) == null) {
-                                JOptionPane.showMessageDialog(null, "No se encontro el recurso " + assetInfo.path, "ERROR", JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(null, "No se encontro el recurso " + assetInfo.path,
+                                        "ERROR", JOptionPane.ERROR_MESSAGE);
                             }
-                           break;
+                            break;
                         case Music:
                             if (AssetsManager.getInstance().addMusic(assetInfo.path, assetInfo.name) == null) {
-                                JOptionPane.showMessageDialog(null, "No se encontro el recurso " + assetInfo.path, "ERROR", JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(null, "No se encontro el recurso " + assetInfo.path,
+                                        "ERROR", JOptionPane.ERROR_MESSAGE);
                             }
                             break;
                         case Video:
@@ -105,7 +112,7 @@ public class AssetsLoader {
 
             @Override
             protected void done() {
-                dialog.dispose();//close the modal dialog
+                dialog.dispose();// close the modal dialog
             }
         };
         sw.execute();

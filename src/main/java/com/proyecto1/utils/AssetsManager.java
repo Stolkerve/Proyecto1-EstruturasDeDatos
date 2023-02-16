@@ -4,6 +4,7 @@ import com.proyecto1.containers.Vector;
 
 /**
  * Singleton que contiene todos los recursos usados por el programa
+ * 
  * @author sebas
  */
 public class AssetsManager {
@@ -61,7 +62,8 @@ public class AssetsManager {
      */
     public MusicAsset getMusic(String name) {
         for (MusicAsset a : this.musicAssets) {
-            if (a.name.equals(name)) return a;
+            if (a.name.equals(name))
+                return a;
         }
         return null;
     }
@@ -72,7 +74,8 @@ public class AssetsManager {
      */
     public ImageAsset getImage(String name) {
         for (ImageAsset a : this.imageAssets) {
-            if (a.name.equals(name)) return a;
+            if (a.name.equals(name))
+                return a;
         }
         return null;
     }

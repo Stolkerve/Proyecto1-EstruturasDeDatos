@@ -10,11 +10,12 @@ public class Wearhouse {
     public int id;
     public Vector<Product> products;
     public Vector<Edge> edges;
-    public int distanciaMin=Integer.MAX_VALUE;
-    
+    public int distanciaMin = Integer.MAX_VALUE;
 
-    Wearhouse(int id, Vector<Product> products) {
+    public Wearhouse(int id, String name) {
         this.id = id;
-        this.products = products;
+        this.name = name;
+        this.products = new Vector<>();
+        this.edges = new Vector<>();
     }
 }

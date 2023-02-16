@@ -9,10 +9,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingWorker;
 
 import com.proyecto1.utils.AssetsManager;
 import com.proyecto1.utils.ImageAsset;
+import com.proyecto1.containers.Grafo;
 import com.proyecto1.containers.Vector;
 
 /**
@@ -23,6 +23,7 @@ public class MainPanel extends javax.swing.JPanel {
 
     /**
      * Crear el panel principal, instancia los componentes del menu principal
+     * 
      * @param mainFrame es la instancia del JFrame padre
      */
     public MainPanel(JFrame mainFrame) {
@@ -42,27 +43,23 @@ public class MainPanel extends javax.swing.JPanel {
         loadGraphBtn.addActionListener(e -> {
             for (JButton btn : menuBtns)
                 btn.setEnabled(false);
-            SwingWorker<Void, Void> sw = new SwingWorker<Void, Void>() {
-                @Override
-                protected Void doInBackground() throws Exception {
-                    GraphFileDialog.loadFileDialog();
-                    return null;
-                }
-                
-                @Override
-                protected void done() {
-                    for (JButton btn : menuBtns)
-                        btn.setEnabled(true);
-                }
-            };
-            sw.execute();
+            loadGraphBtn.setEnabled(true);
+
+            GraphFileDialog.loadFileDialog();
+
+            if (Grafo.getInstance().iniciado) {
+                for (JButton btn : menuBtns)
+                    btn.setEnabled(true);
+            }
         });
 
         JButton saveGraphBtn = new JButton("Guardar archivo de almacenes");
-        saveGraphBtn.addActionListener(e -> {});
+        saveGraphBtn.addActionListener(e -> {
+        });
 
         JButton producsStockBtn = new JButton("Stock de productos");
-        producsStockBtn.addActionListener(e -> {});
+        producsStockBtn.addActionListener(e -> {
+        });
 
         JButton requestBtn = new JButton("Realizar pedido de producto");
         requestBtn.addActionListener(e -> {
@@ -73,21 +70,27 @@ public class MainPanel extends javax.swing.JPanel {
         });
 
         JButton addWearhouseBtn = new JButton("Agregar almacen");
-        addWearhouseBtn.addActionListener(e -> {});
+        addWearhouseBtn.addActionListener(e -> {
+        });
 
         JButton addPathBtn = new JButton("Agregar camino a almacen");
-        addPathBtn.addActionListener(e -> {});
+        addPathBtn.addActionListener(e -> {
+        });
 
         JButton manageStockBtn = new JButton("Gestionar stock de almacenes");
-        manageStockBtn.addActionListener(e -> {});
+        manageStockBtn.addActionListener(e -> {
+        });
 
         JButton showGraphBtn = new JButton("Mostrar grafico");
-        showGraphBtn.addActionListener(e -> {});
+        showGraphBtn.addActionListener(e -> {
+        });
 
         JButton helpBtn = new JButton("???");
-        helpBtn.addActionListener(e -> {new HelpDialog();});
+        helpBtn.addActionListener(e -> {
+            new HelpDialog();
+        });
 
-        menuBtns.pushBack(loadGraphBtn);   
+        menuBtns.pushBack(loadGraphBtn);
         menuBtns.pushBack(saveGraphBtn);
         menuBtns.pushBack(producsStockBtn);
         menuBtns.pushBack(requestBtn);
@@ -95,13 +98,16 @@ public class MainPanel extends javax.swing.JPanel {
         menuBtns.pushBack(addPathBtn);
         menuBtns.pushBack(manageStockBtn);
         menuBtns.pushBack(showGraphBtn);
-        menuBtns.pushBack(helpBtn);
+
+        for (JButton btn : menuBtns)
+            btn.setEnabled(false);
+        loadGraphBtn.setEnabled(true);
 
         JPanel colsPanel = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
         JPanel leftCol = new JPanel(new GridLayout(3, 0));
-        JPanel centerCol = new JPanel(new GridLayout(menuBtns.size(), 0, 0, 10));
+        JPanel centerCol = new JPanel(new GridLayout(menuBtns.size() + 1, 0, 0, 10));
         JPanel rightCol = new JPanel(new GridLayout(3, 0));
 
         ImageAsset catKiss = AssetsManager.getInstance().getImage("cat-kiss");
@@ -121,6 +127,7 @@ public class MainPanel extends javax.swing.JPanel {
 
         for (JButton btn : menuBtns)
             centerCol.add(btn);
+        centerCol.add(helpBtn);
 
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
@@ -130,7 +137,7 @@ public class MainPanel extends javax.swing.JPanel {
         c.ipadx = 80;
         colsPanel.add(centerCol, c);
         c.gridx = 2;
-        colsPanel.add(rightCol,c);
+        colsPanel.add(rightCol, c);
 
         this.add(colsPanel);
     }

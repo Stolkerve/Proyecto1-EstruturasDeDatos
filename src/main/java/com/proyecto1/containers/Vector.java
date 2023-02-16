@@ -5,8 +5,9 @@ import java.util.Iterator;
 
 /**
  * @author sebas
- * Esta clase Vector es una estructura secuencial que permite funcionalidades
- * de colas, pilas y vectores
+ *         Esta clase Vector es una estructura secuencial que permite
+ *         funcionalidades
+ *         de colas, pilas y vectores
  */
 public class Vector<T> implements Iterable<T> {
     T[] data;
@@ -17,7 +18,7 @@ public class Vector<T> implements Iterable<T> {
     public Vector() {
         this.size = 0;
         this.capacity = Vector.NEW_SIZE;
-        this.data = (T[])new Object[this.capacity];
+        this.data = (T[]) new Object[this.capacity];
     }
 
     public Iterator<T> iterator() {
@@ -44,7 +45,8 @@ public class Vector<T> implements Iterable<T> {
     }
 
     public boolean remove(int pos) {
-        if (this.empty() || pos > (this.size - 1) || pos < 0) return false;
+        if (this.empty() || pos > (this.size - 1) || pos < 0)
+            return false;
 
         System.arraycopy(this.data, pos + 1, this.data, pos, this.data.length - pos - 1);
 
@@ -82,7 +84,8 @@ public class Vector<T> implements Iterable<T> {
     }
 
     public boolean insert(T v, int pos) {
-        if (pos > (this.size - 1) || pos < 0) return false;
+        if (pos > (this.size - 1) || pos < 0)
+            return false;
 
         this.needCapacity();
 
@@ -93,7 +96,8 @@ public class Vector<T> implements Iterable<T> {
     }
 
     public boolean popBack() {
-        if (this.size == 0) return false;
+        if (this.size == 0)
+            return false;
 
         this.size--;
         this.data[this.size] = null;
@@ -102,7 +106,8 @@ public class Vector<T> implements Iterable<T> {
     }
 
     public T popFront() {
-        if (this.size == 0) return null;
+        if (this.size == 0)
+            return null;
 
         T poped = this.data[0];
         System.arraycopy(this.data, 1, this.data, 0, this.data.length - 1);
@@ -122,6 +127,7 @@ class VectorIterator<T> implements Iterator<T> {
     int i;
     int size;
     T[] data;
+
     public VectorIterator(Vector<T> vector) {
         this.data = vector.data;
         this.i = 0;

@@ -16,8 +16,10 @@ import com.proyecto1.utils.ImageAsset;
 import com.proyecto1.utils.MusicAsset;
 
 /**
- * Clase main del programa, esta hereda la clase Jframe para inicializar directamente
+ * Clase main del programa, esta hereda la clase Jframe para inicializar
+ * directamente
  * con un ventana.
+ * 
  * @author sebas
  */
 public class MainFrame extends javax.swing.JFrame {
@@ -38,7 +40,7 @@ public class MainFrame extends javax.swing.JFrame {
         MusicAsset backgroundMusic = AssetsManager.getInstance().getMusic("background-music");
         if (backgroundMusic != null) {
             backgroundMusic.setVolume(0.1f);
-            //backgroundMusic.play(true);
+            // backgroundMusic.play(true);
         }
 
         this.mainPanel = new MainPanel(this);
