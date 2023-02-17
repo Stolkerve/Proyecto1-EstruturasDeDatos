@@ -75,8 +75,9 @@ public class MainPanel extends javax.swing.JPanel {
         manageStockBtn.addActionListener(e -> {
         });
 
-        JButton showGraphBtn = new JButton("Mostrar grafico");
+        JButton showGraphBtn = new JButton("Mostrar mapa de almacenes");
         showGraphBtn.addActionListener(e -> {
+            this.addCustomComponent(new GraphTheGraph(this));
         });
 
         JButton helpBtn = new JButton("???");

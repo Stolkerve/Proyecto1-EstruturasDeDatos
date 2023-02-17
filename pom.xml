@@ -13,32 +13,15 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <exec.mainClass>com.proyecto1.MainFrame</exec.mainClass>
     </properties>
-    <!-- <repositories>
-        <repository>
-            <id>netbeans</id>
-            <name>Netbeans rep</name>
-            <url>http://bits.netbeans.org/maven2/</url>
-        </repository>
-    </repositories> -->
-
-    <!-- <repositories>
-        <repository>
-            <id>netbeans</id>
-            <name>Netbeans rep</name>
-            <url>http://bits.netbeans.org/maven2/</url>
-        </repository>
-        <repository>
-            <id>central</id>
-            <name>Maven Central</name>
-            <layout>default</layout>
-            <url>https://repo1.maven.org/maven2</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories> -->
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.jgrapht</groupId>
+            <artifactId>jgrapht-ext</artifactId>
+            <version>1.5.1</version>
+        </dependency>
+
         <dependency>
             <groupId>com.formdev</groupId>
             <artifactId>flatlaf</artifactId>
@@ -49,6 +32,10 @@
             <artifactId>AbsoluteLayout</artifactId>
             <version>RELEASE140</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.jgrapht</groupId>
+            <artifactId>jgrapht-core</artifactId>
+            <version>1.5.1</version>
+        </dependency>
     </dependencies>
 </project>

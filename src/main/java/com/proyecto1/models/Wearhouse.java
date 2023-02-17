@@ -1,5 +1,7 @@
 package com.proyecto1.models;
 
+import org.jgrapht.graph.DefaultWeightedEdge;
+
 import com.proyecto1.containers.Vector;
 
 /**

@@ -5,8 +5,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,44 +18,25 @@ import com.proyecto1.containers.Vector;
 import com.proyecto1.models.Edge;
 import com.proyecto1.models.Product;
 import com.proyecto1.models.Wearhouse;
-import com.proyecto1.utils.AssetsManager;
-import com.proyecto1.utils.ImageAsset;
 
 public class ShowStock extends CustomComponent {
     public ShowStock(MainPanel mainMenuPanel) {
-        super(mainMenuPanel);
+        super(mainMenuPanel, "Stock de los almacenes");
     }
 
     @Override
     protected void initComponent() {
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         GridBagConstraints c = new GridBagConstraints();
         JPanel wearhouseProductsPanel = new JPanel(new GridBagLayout());
         c.gridx = 0;
         c.weightx = 1.0;
         c.weighty = 1.0;
         c.fill = GridBagConstraints.BOTH;
-
-        {
-            JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-            topPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
-            ImageAsset leftArrow = AssetsManager.getInstance().getImage("left-arrow");
-            JButton backToMenuBtn = new JButton(leftArrow.image);
-            backToMenuBtn.addActionListener(e -> this.backToMainMenu());
-            topPanel.add(backToMenuBtn);
-            topPanel.add(new JLabel("Stock de productos"));
-            this.add(topPanel);
-        }
-
-        {
-            wearhouseProductsPanel.add(this.createTable(true), c);
-        }
+        wearhouseProductsPanel.add(this.createTable(true), c);
 
         c.gridx = 1;
         c.fill = GridBagConstraints.BOTH;
-        {
-            wearhouseProductsPanel.add(this.createTable(false), c);
-        }
+        wearhouseProductsPanel.add(this.createTable(false), c);
 
         this.add(wearhouseProductsPanel);
     }
