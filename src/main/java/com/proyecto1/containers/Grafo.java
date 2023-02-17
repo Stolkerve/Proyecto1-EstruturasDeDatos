@@ -40,7 +40,7 @@ public class Grafo {
     }
 
     public DistanciaDijsktra dijkstra(Wearhouse almacenOrigen, Wearhouse almacenDestino) {
-        almacenOrigen.distanciaMin = 0;
+        // almacenOrigen.distanciaMin = 0;
         Vector<Wearhouse> almacenesRecorridos = new Vector<>();
         Vector<Wearhouse> priorityQueue = new Vector<>();
         priorityQueue.pushBack(almacenOrigen);
@@ -50,18 +50,18 @@ public class Grafo {
             for (Edge edge : node.edges) {
                 Wearhouse n = edge.almacenVecino;
                 int weight = edge.distancia;
-                int minDistance = node.distanciaMin + weight;
+                // int minDistance = node.distanciaMin + weight;
 
-                if (minDistance < n.distanciaMin) {
-                    for (int i = 0; i < priorityQueue.size(); i++) {
-                        if (priorityQueue.Get(i).id == node.id) {
-                            priorityQueue.remove(i);
-                        }
-                    }
-                    almacenesRecorridos.pushBack(node); // !! Nodos recorridos
-                    n.distanciaMin = minDistance; // !!!
-                    priorityQueue.pushBack(n);
-                }
+                // if (minDistance < n.distanciaMin) {
+                //     for (int i = 0; i < priorityQueue.size(); i++) {
+                //         if (priorityQueue.Get(i).id == node.id) {
+                //             priorityQueue.remove(i);
+                //         }
+                //     }
+                //     almacenesRecorridos.pushBack(node); // !! Nodos recorridos
+                //     n.distanciaMin = minDistance; // !!!
+                //     priorityQueue.pushBack(n);
+                // }
             }
         }
 

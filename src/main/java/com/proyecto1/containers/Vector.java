@@ -25,7 +25,7 @@ public class Vector<T> implements Iterable<T> {
         return new VectorIterator<>(this);
     }
 
-    public T Get(int pos) {
+    public T get(int pos) {
         if (pos < 0 || pos > (this.size - 1)) {
             return null;
         }

@@ -35,7 +35,7 @@ public class MainPanel extends javax.swing.JPanel {
     /**
      * 
      */
-    private void initComponents() {
+    public void initComponents() {
         this.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         final Vector<JButton> menuBtns = new Vector<JButton>();
@@ -52,23 +52,15 @@ public class MainPanel extends javax.swing.JPanel {
         JButton saveGraphBtn = new JButton("Guardar archivo de almacenes");
         saveGraphBtn.addActionListener(e -> {
             GraphFileDialog.saveFileDialog();
-
-            // if (Grafo.getInstance().iniciado) {
-            //     for (JButton btn : menuBtns)
-            //         btn.setEnabled(true);
-            // }
         });
 
         JButton producsStockBtn = new JButton("Stock de productos");
         producsStockBtn.addActionListener(e -> {
+            this.addCustomComponent(new ShowStock(this));
         });
 
         JButton requestBtn = new JButton("Realizar pedido de producto");
         requestBtn.addActionListener(e -> {
-            this.removeAll();
-            this.add(new RequestOrder(this));
-            this.repaint();
-            this.validate();
         });
 
         JButton addWearhouseBtn = new JButton("Agregar almacen");
@@ -101,9 +93,11 @@ public class MainPanel extends javax.swing.JPanel {
         menuBtns.pushBack(manageStockBtn);
         menuBtns.pushBack(showGraphBtn);
 
-        for (JButton btn : menuBtns)
-            btn.setEnabled(false);
-        loadGraphBtn.setEnabled(true);
+        if (!Grafo.getInstance().iniciado) {
+            for (JButton btn : menuBtns)
+                btn.setEnabled(false);
+            loadGraphBtn.setEnabled(true);
+        }
 
         JPanel colsPanel = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -142,5 +136,12 @@ public class MainPanel extends javax.swing.JPanel {
         colsPanel.add(rightCol, c);
 
         this.add(colsPanel);
+    }
+
+    void addCustomComponent(CustomComponent c) {
+        this.removeAll();
+        this.add(c);
+        this.repaint();
+        this.validate();
     }
 }

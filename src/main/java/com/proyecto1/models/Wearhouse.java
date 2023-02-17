@@ -10,7 +10,6 @@ public class Wearhouse {
     public int id;
     public Vector<Product> products;
     public Vector<Edge> edges;
-    public int distanciaMin = Integer.MAX_VALUE;
 
     public Wearhouse(int id, String name) {
         this.id = id;
