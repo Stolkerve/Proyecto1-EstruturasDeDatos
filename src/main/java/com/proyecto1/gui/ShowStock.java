@@ -60,6 +60,7 @@ public class ShowStock extends CustomComponent {
         else
             this.dfs(model);
         JTable table = new JTable(model);
+        table.setEnabled(false);
         JScrollPane sp = new JScrollPane(table);
         tablePanel.add(sp);
 
