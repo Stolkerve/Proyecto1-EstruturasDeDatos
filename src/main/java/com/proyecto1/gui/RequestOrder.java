@@ -45,10 +45,6 @@ public class RequestOrder extends CustomComponent {
         left.add(backToMenuBtn);
         topPanel.add(left);
 
-        // JPanel center = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        // center.add(new JLabel("Pedidos"));
-        // topPanel.add(center);
-
         JPanel right = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JComboBox wearhousesComboBox = new JComboBox<String>(wearhousesNames);
         wearhousesComboBox.setSelectedIndex(-1);

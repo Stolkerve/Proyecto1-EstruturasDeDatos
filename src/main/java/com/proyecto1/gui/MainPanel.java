@@ -63,6 +63,7 @@ public class MainPanel extends javax.swing.JPanel {
 
         JButton addWearhouseBtn = new JButton("Agregar almacen");
         addWearhouseBtn.addActionListener(e -> {
+            this.addCustomComponent(new AgregarAlmacen());
         });
 
         JButton addPathBtn = new JButton("Agregar camino a almacen");
@@ -143,7 +144,7 @@ public class MainPanel extends javax.swing.JPanel {
         this.add(colsPanel);
     }
 
-    void addCustomComponent(CustomComponent c) {
+    void addCustomComponent(JPanel c) {
         this.removeAll();
         this.add(c);
         this.repaint();

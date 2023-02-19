@@ -48,7 +48,7 @@ public class AgregarRuta extends javax.swing.JPanel {
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botonRetroceder.setFont(new java.awt.Font("Silom", 0, 14)); // NOI18N
-        botonRetroceder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/retroceder.png"))); // NOI18N
+        botonRetroceder.setIcon(new javax.swing.ImageIcon(getClass().getResource("./assets/left-arrow.png"))); // NOI18N
         botonRetroceder.setBorder(null);
         botonRetroceder.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonRetroceder.addActionListener(new java.awt.event.ActionListener() {
