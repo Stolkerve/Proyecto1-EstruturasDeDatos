@@ -1,9 +1,6 @@
 package com.proyecto1.gui;
 
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
+import java.awt.*;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -61,6 +58,7 @@ public class MainPanel extends javax.swing.JPanel {
 
         JButton requestBtn = new JButton("Realizar pedido de producto");
         requestBtn.addActionListener(e -> {
+            this.addCustomComponent(new RequestOrder(this));
         });
 
         JButton addWearhouseBtn = new JButton("Agregar almacen");
@@ -77,7 +75,13 @@ public class MainPanel extends javax.swing.JPanel {
 
         JButton showGraphBtn = new JButton("Mostrar mapa de almacenes");
         showGraphBtn.addActionListener(e -> {
-            this.addCustomComponent(new GraphTheGraph(this));
+            CustomComponent a = new GraphTheGraph(this);
+            this.addCustomComponent(a);
+            System.out.println();
+            System.out.println(a.getPreferredSize());
+            System.out.println(a.getSize());
+            System.out.println(a.getMinimumSize());
+            System.out.println(a.getMaximumSize());
         });
 
         JButton helpBtn = new JButton("???");

@@ -44,7 +44,7 @@ public class ShowStock extends CustomComponent {
     private JComponent createTable(boolean type) {
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
-        panel.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
+        // panel.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
         GridBagConstraints c2 = new GridBagConstraints();
 
         JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));

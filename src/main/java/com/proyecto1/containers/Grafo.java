@@ -34,8 +34,8 @@ public class Grafo {
         return null;
     }
 
-    public Vector<Wearhouse> dijkstra(Wearhouse almacenOrigen) {
-        // almacenOrigen.distanciaMin = 0;
+    public Vector<Wearhouse> dijkstra(Wearhouse wearhouseOrigen) {
+        // wearhouseOrigen.distanciaMin = 0;
 
         class Vertex {
             int index; int distance;
@@ -52,7 +52,7 @@ public class Grafo {
 
         int indexOrigin = 0;
         for (int i = 0; i < this.almacenes.size(); i++) {
-            if (almacenOrigen.name.equals(this.almacenes.get(i).name))
+            if (wearhouseOrigen.name.equals(this.almacenes.get(i).name))
                 indexOrigin = i;
             dist.pushBack(Integer.MAX_VALUE);
             done.pushBack(false);
@@ -94,27 +94,26 @@ public class Grafo {
 
         for (int i = 0; i < this.almacenes.size(); i++)
         {
-            if (!(almacenOrigen.name.equals(this.almacenes.get(i).name)) && dist.get(i) != Integer.MAX_VALUE) {
+            if (!(wearhouseOrigen.name.equals(this.almacenes.get(i).name)) && dist.get(i) != Integer.MAX_VALUE) {
                 System.out.printf("Path (%s —> %s): Minimum cost = %d\n",
-                                almacenOrigen.name, this.almacenes.get(i).name, dist.get(i));
+                                wearhouseOrigen.name, this.almacenes.get(i).name, dist.get(i));
+                almacenesRecorridos.pushBack(this.almacenes.get(i));
             }
         }
         return almacenesRecorridos;
     }
 
-    public Product buscarEnOtroAlmacen(String productoNombre, int amount, Wearhouse almacenOrigen) {
-        Vector<Wearhouse> almacenesEncontrados = new Vector<>();
-        // for (Wearhouse almacen : this.almacenes) {
-        //     if (almacen.id != almacenOrigen.id) {
-        //         for (Product producto : almacen.products) {
-        //             if (producto.name.equalsIgnoreCase(productoNombre)) {
-        //                 if (producto.stock > 0) {
-        //                     // almacenesEncontrados.pushBack(dijkstra(almacen, almacenOrigen));
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
+    public Product buscarEnOtroAlmacen(String productName, Wearhouse wearhouseOrigen) {
+        Vector<Wearhouse> wearhousesNeared = dijkstra(wearhouseOrigen);
+        for (Wearhouse almacen : wearhousesNeared) {
+            for (Product producto : almacen.products) {
+                if (producto.name.equals(productName)) {
+                    if (producto.stock > 0) {
+                        return producto;
+                    }
+                }
+            }
+        }
         return null;
     }
 

@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.Collection;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -17,7 +18,6 @@ import com.mxgraph.layout.mxCircleLayout;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGeometry;
 import com.mxgraph.model.mxGraphModel;
-import com.mxgraph.model.mxGraphModel.mxStyleChange;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxUtils;
@@ -78,6 +78,7 @@ public class GraphTheGraph extends CustomComponent {
                 cells.toArray(), mxConstants.STYLE_ENDARROW, mxConstants.NONE);
         JPanel panel = new JPanel(new GridLayout());
         JScrollPane sp = new JScrollPane(component);
+        sp.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
         panel.add(sp);
         this.add(panel);
 

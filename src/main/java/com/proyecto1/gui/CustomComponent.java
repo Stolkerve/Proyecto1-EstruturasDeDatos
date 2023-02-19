@@ -18,7 +18,12 @@ public class CustomComponent extends JPanel {
         this.mainMenuPanel = mainMenuPanel;
 
         Dimension d = this.mainMenuPanel.mainFrame.getSize();
-        this.setPreferredSize(new Dimension(d.width, d.height - 42));
+        System.out.println(this.mainMenuPanel.getMinimumSize());
+        System.out.println(this.mainMenuPanel.getMaximumSize());
+        this.setPreferredSize(new Dimension(d.width, d.height));
+        this.setSize(new Dimension(d.width, d.height));
+        this.setMaximumSize(new Dimension(d.width, d.height));
+        this.setMinimumSize(new Dimension(d.width, d.height));
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         ImageAsset leftArrow = AssetsManager.getInstance().getImage("left-arrow");
@@ -34,6 +39,18 @@ public class CustomComponent extends JPanel {
         this.add(topPanel);
 
         this.initComponent();
+    }
+
+    protected CustomComponent(MainPanel mainMenuPanel) {
+        this.mainMenuPanel = mainMenuPanel;
+
+        Dimension d = this.mainMenuPanel.mainFrame.getSize();
+        System.out.println(this.mainMenuPanel.getMinimumSize());
+        System.out.println(this.mainMenuPanel.getMaximumSize());
+        this.setPreferredSize(new Dimension(d.width, d.height));
+        this.setSize(new Dimension(d.width, d.height));
+        this.setMaximumSize(new Dimension(d.width, d.height));
+        this.setMinimumSize(new Dimension(d.width, d.height));
     }
 
     protected void initComponent() {}
