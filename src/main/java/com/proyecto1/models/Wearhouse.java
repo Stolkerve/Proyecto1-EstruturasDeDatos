@@ -1,7 +1,5 @@
 package com.proyecto1.models;
 
-import org.jgrapht.graph.DefaultWeightedEdge;
-
 import com.proyecto1.containers.Vector;
 
 /**
@@ -9,12 +7,11 @@ import com.proyecto1.containers.Vector;
  */
 public class Wearhouse {
     public String name;
-    public int id;
     public Vector<Product> products;
     public Vector<Edge> edges;
+    // public int minDist = 2147483647; // Para la busqueda de grafos
 
-    public Wearhouse(int id, String name) {
-        this.id = id;
+    public Wearhouse(String name) {
         this.name = name;
         this.products = new Vector<>();
         this.edges = new Vector<>();

@@ -101,8 +101,8 @@ public class ShowStock extends CustomComponent {
                     for (int j = 0; j < visited.length; j++){
                         boolean a = false;
                         for (Edge e : w.edges)
-                            a = e.almacenVecino.id == wearhouses.get(j).id;
-                        if ((w.id != wearhouses.get(j).id) && (a && (!visited[j]))) {
+                            a = e.almacenVecino.name.equals(wearhouses.get(j).name);
+                        if (!(w.name.equals(wearhouses.get(j).name)) && (a && (!visited[j]))) {
                             queue.pushBack(wearhouses.get(j));
                             visited[j] = true;
                         }
@@ -114,6 +114,9 @@ public class ShowStock extends CustomComponent {
 
     private void dfs(DefaultTableModel model) {
         Vector<Wearhouse> wearhouses = Grafo.getInstance().almacenes;
+
+        for (int i = 0; i < Grafo.getInstance().almacenes.size(); i++)
+            Grafo.getInstance().dijkstra(wearhouses.get(i));
         boolean[] visited = new boolean [wearhouses.size()];
         for (boolean v : visited)
             v = false;
@@ -133,7 +136,7 @@ public class ShowStock extends CustomComponent {
         for (int i = 0; i < wearhouses.size(); i++) {
             boolean a = false;
             for (Edge e : wearhouse.edges)
-                a = e.almacenVecino.id == wearhouses.get(i).id;
+                a = e.almacenVecino.name.equals(wearhouses.get(i).name);
             if ((w != i) && (!visited[i]) && (a))
                 recursiveDfs(i, wearhouses, visited, model);
         }

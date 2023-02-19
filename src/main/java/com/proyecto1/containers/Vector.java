@@ -10,7 +10,7 @@ import java.util.Iterator;
  *         de colas, pilas y vectores
  */
 public class Vector<T> implements Iterable<T> {
-    T[] data;
+    public T[] data;
     private static final int NEW_SIZE = 4;
     private int size;
     private int capacity;
@@ -30,6 +30,13 @@ public class Vector<T> implements Iterable<T> {
             return null;
         }
         return this.data[pos];
+    }
+
+    public T set(int pos, T value) {
+        if (pos < 0 || pos > (this.size - 1)) {
+            return null;
+        }
+        return this.data[pos] = value;
     }
 
     public int size() {

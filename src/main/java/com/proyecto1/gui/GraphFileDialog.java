@@ -57,7 +57,6 @@ public class GraphFileDialog {
                 Pattern wearhouseProductPattern = Pattern.compile("([a-zA-Z0-9]+),([0-9]+)(;?)");
                 Pattern graphRoutePattern = Pattern.compile("([a-zA-Z0-9]+),([a-zA-Z0-9]+),([0-9]+)");
 
-                int wearhouseIdCounter = 0;
                 Vector<Wearhouse> wearhouses = new Vector<>();
                 Wearhouse wearhouse = null;
 
@@ -82,9 +81,16 @@ public class GraphFileDialog {
                             Matcher match = wearhouseIdPattern.matcher(line);
                             if (match.matches()) {
                                 String name = match.group(2);
-                                wearhouse = new Wearhouse(wearhouseIdCounter, name);
+                                for (Wearhouse w : wearhouses) {
+                                    if (w.name.equals(name)) {
+                                        JOptionPane.showMessageDialog(fileDialog,
+                                            String.format("Ya existe un almacen con nombre %. Se procede a ignoralo", name), "ERROR",
+                                            JOptionPane.ERROR_MESSAGE);
+                                        continue;
+                                    }
+                                }
+                                wearhouse = new Wearhouse(name);
                                 wearhouses.pushBack(wearhouse);
-                                wearhouseIdCounter++;
                                 productIdCounter = 0;
                             } else {
                                 // No son grafos?
