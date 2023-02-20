@@ -149,16 +149,16 @@ public class ModificarStock extends javax.swing.JPanel {
 
     private void fieldPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldPrecioActionPerformed
         try{
-            int stock=Integer.parseInt(fieldNombre.getText());
-            for (Wearhouse almacen : listaAlmacenesS) {
-                if(listaAlmacenes.getSelectedItem().equals(almacen.name)){
-                    for (Product producto : almacen.products){
-                        if(fieldNombre.getText().equals(producto.name)){
-                            producto.stock+=stock;
-                        }
-                    }
-                }    
-            }
+            // int stock=Integer.parseInt(fieldNombre.getText());
+            // for (Wearhouse almacen : listaAlmacenesS) {
+            //     if(listaAlmacenes.getSelectedItem().equals(almacen.name)){
+            //         for (Product producto : almacen.products){
+            //             if(fieldNombre.getText().equals(producto.name)){
+            //                 producto.stock+=stock;
+            //             }
+            //         }
+            //     }    
+            // }
         }catch(Exception e){
             JOptionPane.showMessageDialog(this, " ERROR LA CANTIDAD INGRESADA NO ES VALIDA ");
         }

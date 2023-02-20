@@ -8,7 +8,6 @@ public class Grafo {
     public boolean iniciado = false;
     public boolean necesitaGuardar = false;
     public Vector<Wearhouse> almacenes;
-
     private static Grafo instancia;
 
     public Grafo() {
@@ -20,6 +19,10 @@ public class Grafo {
             instancia = new Grafo();
         }
         return instancia;
+    }
+
+    public void agregarAlmacen(Wearhouse nuevo){
+        almacenes.pushBack(nuevo);
     }
 
     public Product buscarProducto(int productoId, String almacenName) {
@@ -35,13 +38,16 @@ public class Grafo {
         return null;
     }
 
-    public void agregarAlmacen(Wearhouse nuevo){
-        almacenes.pushBack(nuevo);
-    }
+    public Vector<Wearhouse> dijkstra(Wearhouse wearhouseOrigen) {
+        class Vertex {
+            int index; int distance;
+            public Vertex(int index, int distance) {
+                this.index = index;
+                this.distance = distance;
+            }
+        }
 
-    public Vector<Wearhouse> dijkstra(int almacenOrigen, Wearhouse almacenDestino) {
-
-        Vector<Wearhouse> almacenesRecorridos = new Vector<>(this.almacenes.size());
+        Vector<Wearhouse> wearhousePath = new Vector<>(this.almacenes.size());
         Vector<Vertex> queue = new Vector<>(this.almacenes.size());
         Vector<Integer> dist = new Vector<>(this.almacenes.size());
         Vector<Boolean> done = new Vector<>(this.almacenes.size());
@@ -93,10 +99,10 @@ public class Grafo {
             if (!(wearhouseOrigen.name.equals(this.almacenes.get(i).name)) && dist.get(i) != Integer.MAX_VALUE) {
                 System.out.printf("Path (%s —> %s): Minimum cost = %d\n",
                                 wearhouseOrigen.name, this.almacenes.get(i).name, dist.get(i));
-                almacenesRecorridos.pushBack(this.almacenes.get(i));
+                wearhousePath.pushBack(this.almacenes.get(i));
             }
         }
-        return almacenesRecorridos;
+        return wearhousePath;
     }
 
     public Product buscarEnOtroAlmacen(String productName, Wearhouse wearhouseOrigen) {
@@ -112,5 +118,4 @@ public class Grafo {
         }
         return null;
     }
-
 }
