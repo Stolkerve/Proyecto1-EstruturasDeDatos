@@ -1,13 +1,15 @@
 package com.proyecto1.gui;
 
-import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -18,17 +20,22 @@ import javax.swing.JScrollPane;
 
 import com.proyecto1.containers.Grafo;
 import com.proyecto1.containers.Vector;
+import com.proyecto1.models.Product;
 import com.proyecto1.models.Wearhouse;
 import com.proyecto1.utils.AssetsManager;
 import com.proyecto1.utils.ImageAsset;
 
 public class RequestOrder extends CustomComponent {
     Vector<Wearhouse> wearhouses; 
-    JList<String> wearhouseProductsList = new JList<>();
-    JList<String> orderProductsList = new JList<>();
+    JList<String> wearhouseProductsList;
+    DefaultListModel<String> wearhouseProductsListModel;
+    JList<String> orderProductsList;
+    JComboBox<String> wearhousesComboBox;
+    Pattern productListPattern;
 
     RequestOrder(MainPanel mainPanel) {
         super(mainPanel);
+        this.productListPattern = Pattern.compile("([a-zA-Z0-9]+)\\(([0-9]+)\\)"); 
 
         this.setBorder(BorderFactory.createEmptyBorder(-5,0,0,0));
 
@@ -47,9 +54,9 @@ public class RequestOrder extends CustomComponent {
         topPanel.add(left);
 
         JPanel right = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JComboBox<String> wearhousesComboBox = new JComboBox<String>(wearhousesNames);
+        this.wearhousesComboBox = new JComboBox<String>(wearhousesNames);
         wearhousesComboBox.setSelectedIndex(-1);
-        wearhousesComboBox.addActionListener(e -> {this.onComboBox();});
+        wearhousesComboBox.addActionListener(e -> {this.onWearhousesSelectionComboBox();});
         right.add(new JLabel("Almacenes"));
         right.add(wearhousesComboBox);
         JButton finishOrderBtn = new JButton("Realizar pedido");
@@ -74,7 +81,7 @@ public class RequestOrder extends CustomComponent {
 
         c.gridx = 1;
         JButton addProductBtn = new JButton("->");
-        addProductBtn.addActionListener(e -> this.onAddProduct());
+        addProductBtn.addActionListener(e -> this.onAddProductToOrderList());
         addProductBtn.setBorder(BorderFactory.createEmptyBorder(0,5,0,5));
         wearhouseProductsPanel.add(addProductBtn);
 
@@ -94,11 +101,13 @@ public class RequestOrder extends CustomComponent {
         JPanel listPanel = new JPanel(new GridLayout());
         JScrollPane sp = new JScrollPane();
         if (left) {
-            sp.add(this.wearhouseProductsList);
+            this.wearhouseProductsList = new JList<>();
+            sp.setViewportView(this.wearhouseProductsList);
             titlePanel.add(new JLabel("Productos del almacen"));
         }
         else {
-            sp.add(this.orderProductsList);
+            this.orderProductsList = new JList<>();
+            sp.setViewportView(this.orderProductsList);
             titlePanel.add(new JLabel("Lista del pedido"));
         }
         listPanel.add(sp);
@@ -118,10 +127,24 @@ public class RequestOrder extends CustomComponent {
         return panel;
     }
 
-    private void onComboBox() {
+    private void onWearhousesSelectionComboBox() {
+        String wearhouseName = (String) this.wearhousesComboBox.getSelectedItem();
+        this.wearhouseProductsListModel = new DefaultListModel<>();
+        for (Wearhouse w : this.wearhouses)
+            if (w.name.equals(wearhouseName)) {
+                for (Product p : w.products)
+                    this.wearhouseProductsListModel.addElement(String.format("%s(%d)", p.name, p.stock));
+                break;
+            }
+        this.wearhouseProductsList.setModel(this.wearhouseProductsListModel);
     }
 
-    private void onAddProduct() {
+    private void onAddProductToOrderList() {
+        int index = this.wearhouseProductsList.getSelectedIndex();
+        String product = this.wearhouseProductsList.getSelectedValue();
+        Matcher match = this.productListPattern.matcher(product);
+        String productName = match.group(2);
+        String productStock = match.group(2);
     }
 
     private void onFinishOrder() {
