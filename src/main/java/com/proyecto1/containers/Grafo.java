@@ -11,11 +11,6 @@ public class Grafo {
 
     private static Grafo instancia;
 
-    private class DistanciaDijsktra {
-        Vector<Wearhouse> almacenes;
-        int distanciaTotal;
-    }
-
     public Grafo() {
         this.almacenes = new Vector<>();
     }
@@ -27,9 +22,9 @@ public class Grafo {
         return instancia;
     }
 
-    public Product buscarProducto(int productoId, int almacenId) {
+    public Product buscarProducto(int productoId, String almacenName) {
         for (Wearhouse almacen : this.almacenes) {
-            if (almacen.id == almacenId) {
+            if (almacen.name.equals(almacenName)) {
                 for (Product producto : almacen.products) {
                     if (producto.id == productoId) {
                         return producto;
@@ -45,63 +40,73 @@ public class Grafo {
         almacenes.pushBack(nuevo);
     }
 
-    public DistanciaDijsktra dijkstra(int almacenOrigen, Wearhouse almacenDestino) {
-        // almacenOrigen.distanciaMin = 0;
+    public Vector<Wearhouse> dijkstra(int almacenOrigen, Wearhouse almacenDestino) {
 
-        Vector<Wearhouse> cola = new Vector<>();
-        cola.pushBack(almacenes.get(almacenOrigen));
-        Vector<Integer> dist=new  Vector<>();
-        Vector<Wearhouse> prev=new Vector<>();
+        Vector<Wearhouse> almacenesRecorridos = new Vector<>(this.almacenes.size());
+        Vector<Vertex> queue = new Vector<>(this.almacenes.size());
+        Vector<Integer> dist = new Vector<>(this.almacenes.size());
+        Vector<Boolean> done = new Vector<>(this.almacenes.size());
 
+        int indexOrigin = 0;
         for (int i = 0; i < this.almacenes.size(); i++) {
-            dist.pushBack(Integer.MAX_VALUE); 
-        }
-        Vector<Boolean> done=new  Vector<>();
-        
-        for (int i = 0; i < this.almacenes.size(); i++) {
+            if (wearhouseOrigen.name.equals(this.almacenes.get(i).name))
+                indexOrigin = i;
+            dist.pushBack(Integer.MAX_VALUE);
             done.pushBack(false);
         }
+        dist.set(indexOrigin, 0);
+        done.set(indexOrigin, true);
 
+        queue.pushBack(new Vertex(indexOrigin, 0));
+        
+        while (!queue.empty()) {
+            // sort
+            for (int i = 0; i < queue.size(); i++) {
+                for (int e = 0; e < queue.size(); e++) {
+                    if (queue.get(i).distance < queue.get(e).distance) {
+                        Vertex a = new Vertex(queue.get(i).index, queue.get(i).distance);
+                        queue.set(i, queue.get(e));
+                        queue.set(e, a);
+                    }
+                }
+            }
+            int u = queue.popFront().index;
+            for (Edge e : this.almacenes.get(u).edges) {
+                int vIndex = 0;
+                Wearhouse v = e.almacenVecino;
+                int weight = e.distancia;
 
-        while (!cola.empty()) {
-            Wearhouse node = cola.popFront();
-            for (Edge edge : node.edges) {
-                Wearhouse n = edge.almacenVecino;
-                int weight = edge.distancia;
-                // int minDistance = node.distanciaMin + weight;
+                for (int i = 0; i < this.almacenes.size(); i++)
+                    if (v.name.equals(this.almacenes.get(i).name))
+                        vIndex = i;
 
-                // if (minDistance < n.distanciaMin) {
-                //     for (int i = 0; i < cola.size(); i++) {
-                //         if (cola.Get(i).id == node.id) {
-                //             cola.remove(i);
-                //         }
-                //     }
-                //     almacenesRecorridos.pushBack(node); // !! Nodos recorridos
-                //     n.distanciaMin = minDistance; // !!!
-                //     cola.pushBack(n);
-                // }
+                if (!done.get(vIndex) && (dist.get(u) + weight) < dist.get(vIndex)) {
+                    dist.set(vIndex, dist.get(u) + weight);
+                    queue.pushBack(new Vertex(vIndex, dist.get(vIndex)));
+                }
+            }
+
+            done.set(u, true);
+        }
+
+        for (int i = 0; i < this.almacenes.size(); i++)
+        {
+            if (!(wearhouseOrigen.name.equals(this.almacenes.get(i).name)) && dist.get(i) != Integer.MAX_VALUE) {
+                System.out.printf("Path (%s —> %s): Minimum cost = %d\n",
+                                wearhouseOrigen.name, this.almacenes.get(i).name, dist.get(i));
+                almacenesRecorridos.pushBack(this.almacenes.get(i));
             }
         }
-
-        DistanciaDijsktra trayectoria = new DistanciaDijsktra();
-        Wearhouse almacen = almacenDestino;
-        while (almacen != null) {
-            // trayectoria.add(almacen);
-            // almacen = almacen.getNodoAnterior();
-        }
-
-        return null;
+        return almacenesRecorridos;
     }
 
-    public Product buscarEnOtroAlmacen(String productoNombre, Wearhouse almacenOrigen) {
-        Vector<Wearhouse> almacenesEncontrados = new Vector<>();
-        for (Wearhouse almacen : this.almacenes) {
-            if (almacen.id != almacenOrigen.id) {
-                for (Product producto : almacen.products) {
-                    if (producto.name.equalsIgnoreCase(productoNombre)) {
-                        if (producto.stock > 0) {
-                            // almacenesEncontrados.pushBack(dijkstra(almacen, almacenOrigen));
-                        }
+    public Product buscarEnOtroAlmacen(String productName, Wearhouse wearhouseOrigen) {
+        Vector<Wearhouse> wearhousesNeared = dijkstra(wearhouseOrigen);
+        for (Wearhouse almacen : wearhousesNeared) {
+            for (Product producto : almacen.products) {
+                if (producto.name.equals(productName)) {
+                    if (producto.stock > 0) {
+                        return producto;
                     }
                 }
             }

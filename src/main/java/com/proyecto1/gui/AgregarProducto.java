@@ -43,12 +43,23 @@ public class AgregarProducto extends javax.swing.JPanel {
         botonComprobar3 = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JSeparator();
         botonGuardar = new javax.swing.JButton();
-        botonRetroceder = new javax.swing.JButton();
+
 
         setMaximumSize(new java.awt.Dimension(630, 450));
         setMinimumSize(new java.awt.Dimension(630, 450));
         setPreferredSize(new java.awt.Dimension(630, 450));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        botonRetroceder.setFont(new java.awt.Font("Silom", 0, 14)); // NOI18N
+        botonRetroceder.setIcon(new javax.swing.ImageIcon("./assets/left-arrow.png")); // NOI18N
+        botonRetroceder.setBorder(null);
+        botonRetroceder.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botonRetroceder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonRetrocederActionPerformed(evt);
+            }
+        });
+        add(botonRetroceder, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
 
         titulo1.setFont(new java.awt.Font("Silom", 0, 48)); // NOI18N
         titulo1.setText("AGREGAR PRODUCTO");

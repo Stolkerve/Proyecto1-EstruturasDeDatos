@@ -2,6 +2,7 @@ package com.proyecto1;
 
 import java.util.Enumeration;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
@@ -65,6 +66,10 @@ public class MainFrame extends javax.swing.JFrame {
         pack();
 
         this.setLocationRelativeTo(null);
+        this.mainPanel.setMinimumSize(this.getSize());
+        this.mainPanel.setMaximumSize(this.getSize());
+        this.mainPanel.setPreferredSize(this.getSize());
+        this.mainPanel.setSize(this.getSize());
     }
 
     /**

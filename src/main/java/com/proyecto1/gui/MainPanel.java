@@ -1,9 +1,6 @@
 package com.proyecto1.gui;
 
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
+import java.awt.*;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -36,9 +33,10 @@ public class MainPanel extends javax.swing.JPanel {
      * 
      */
     public void initComponents() {
-        this.setLayout(new FlowLayout(FlowLayout.CENTER));
+        this.setLayout(new GridLayout());
 
         final Vector<JButton> menuBtns = new Vector<JButton>();
+
         JButton loadGraphBtn = new JButton("Cargar archivo de almacenes");
         loadGraphBtn.addActionListener(e -> {
             GraphFileDialog.loadFileDialog();
@@ -54,17 +52,19 @@ public class MainPanel extends javax.swing.JPanel {
             GraphFileDialog.saveFileDialog();
         });
 
-        JButton producsStockBtn = new JButton("Stock de productos");
+        JButton producsStockBtn = new JButton("Reporte de stock de productos");
         producsStockBtn.addActionListener(e -> {
             this.addCustomComponent(new ShowStock(this));
         });
 
         JButton requestBtn = new JButton("Realizar pedido de producto");
         requestBtn.addActionListener(e -> {
+            this.addCustomComponent(new RequestOrder(this));
         });
 
         JButton addWearhouseBtn = new JButton("Agregar almacen");
         addWearhouseBtn.addActionListener(e -> {
+            this.addCustomComponent(new AgregarAlmacen());
         });
 
         JButton addPathBtn = new JButton("Agregar camino a almacen");
@@ -77,7 +77,8 @@ public class MainPanel extends javax.swing.JPanel {
 
         JButton showGraphBtn = new JButton("Mostrar mapa de almacenes");
         showGraphBtn.addActionListener(e -> {
-            this.addCustomComponent(new GraphTheGraph(this));
+            CustomComponent a = new GraphTheGraph(this);
+            this.addCustomComponent(a);
         });
 
         JButton helpBtn = new JButton("???");
@@ -85,14 +86,11 @@ public class MainPanel extends javax.swing.JPanel {
             new HelpDialog();
         });
 
-        menuBtns.pushBack(loadGraphBtn);
-        menuBtns.pushBack(saveGraphBtn);
-        menuBtns.pushBack(producsStockBtn);
-        menuBtns.pushBack(requestBtn);
-        menuBtns.pushBack(addWearhouseBtn);
-        menuBtns.pushBack(addPathBtn);
-        menuBtns.pushBack(manageStockBtn);
-        menuBtns.pushBack(showGraphBtn);
+        menuBtns.pushBack(new JButton[] {
+            loadGraphBtn, saveGraphBtn, producsStockBtn,
+            requestBtn, addWearhouseBtn, addPathBtn,
+            manageStockBtn, showGraphBtn
+        });
 
         if (!Grafo.getInstance().iniciado) {
             for (JButton btn : menuBtns)
@@ -139,7 +137,7 @@ public class MainPanel extends javax.swing.JPanel {
         this.add(colsPanel);
     }
 
-    void addCustomComponent(CustomComponent c) {
+    void addCustomComponent(JPanel c) {
         this.removeAll();
         this.add(c);
         this.repaint();
