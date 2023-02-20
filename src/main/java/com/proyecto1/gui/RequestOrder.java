@@ -1,5 +1,6 @@
 package com.proyecto1.gui;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -11,9 +12,9 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.border.Border;
 
 import com.proyecto1.containers.Grafo;
 import com.proyecto1.containers.Vector;
@@ -23,10 +24,13 @@ import com.proyecto1.utils.ImageAsset;
 
 public class RequestOrder extends CustomComponent {
     Vector<Wearhouse> wearhouses; 
+    JList<String> wearhouseProductsList = new JList<>();
+    JList<String> orderProductsList = new JList<>();
+
     RequestOrder(MainPanel mainPanel) {
         super(mainPanel);
-        Border a = this.getBorder();
-        System.out.println(a.toString());
+
+        this.setBorder(BorderFactory.createEmptyBorder(-5,0,0,0));
 
         this.wearhouses = Grafo.getInstance().almacenes;
         String[] wearhousesNames = new String[this.wearhouses.size()];
@@ -48,7 +52,9 @@ public class RequestOrder extends CustomComponent {
         wearhousesComboBox.addActionListener(e -> {this.onComboBox();});
         right.add(new JLabel("Almacenes"));
         right.add(wearhousesComboBox);
-        right.add(new JButton("Realizar pedido"));
+        JButton finishOrderBtn = new JButton("Realizar pedido");
+        finishOrderBtn.addActionListener(e -> this.onFinishOrder());
+        right.add(finishOrderBtn);
         topPanel.add(right);
 
         this.add(topPanel);
@@ -64,32 +70,38 @@ public class RequestOrder extends CustomComponent {
         c.weightx = 1.0;
         c.weighty = 1.0;
         c.fill = GridBagConstraints.BOTH;
-        wearhouseProductsPanel.add(this.createTable(), c);
+        wearhouseProductsPanel.add(this.createList(true), c);
 
         c.gridx = 1;
         JButton addProductBtn = new JButton("->");
+        addProductBtn.addActionListener(e -> this.onAddProduct());
         addProductBtn.setBorder(BorderFactory.createEmptyBorder(0,5,0,5));
         wearhouseProductsPanel.add(addProductBtn);
 
         c.gridx = 2;
         c.fill = GridBagConstraints.BOTH;
-        wearhouseProductsPanel.add(this.createTable(), c);
+        wearhouseProductsPanel.add(this.createList(false), c);
 
         this.add(wearhouseProductsPanel);
     }
 
-    JComponent createTable() {
+    JComponent createList(boolean left) {
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
-        // panel.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
         GridBagConstraints c2 = new GridBagConstraints();
 
         JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        titlePanel.add(new JLabel("BFS"));
-
-        JPanel tablePanel = new JPanel(new GridLayout());
+        JPanel listPanel = new JPanel(new GridLayout());
         JScrollPane sp = new JScrollPane();
-        tablePanel.add(sp);
+        if (left) {
+            sp.add(this.wearhouseProductsList);
+            titlePanel.add(new JLabel("Productos del almacen"));
+        }
+        else {
+            sp.add(this.orderProductsList);
+            titlePanel.add(new JLabel("Lista del pedido"));
+        }
+        listPanel.add(sp);
 
         c2.fill = GridBagConstraints.HORIZONTAL;
         c2.gridy = 0;
@@ -101,12 +113,17 @@ public class RequestOrder extends CustomComponent {
         c2.weightx = 1.0;
         c2.weighty = 1.0;
 
-        panel.add(tablePanel, c2);
+        panel.add(listPanel, c2);
 
         return panel;
     }
 
-    void onComboBox() {
+    private void onComboBox() {
+    }
 
+    private void onAddProduct() {
+    }
+
+    private void onFinishOrder() {
     }
 }

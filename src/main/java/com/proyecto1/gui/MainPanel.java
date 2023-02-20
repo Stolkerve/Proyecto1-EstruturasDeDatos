@@ -33,7 +33,7 @@ public class MainPanel extends javax.swing.JPanel {
      * 
      */
     public void initComponents() {
-        this.setLayout(new FlowLayout(FlowLayout.CENTER));
+        this.setLayout(new GridLayout());
 
         final Vector<JButton> menuBtns = new Vector<JButton>();
 

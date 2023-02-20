@@ -2,6 +2,7 @@ package com.proyecto1.gui;
 
 import java.awt.Dimension;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -16,12 +17,7 @@ public class CustomComponent extends JPanel {
 
     protected CustomComponent(MainPanel mainMenuPanel, String title) {
         this.mainMenuPanel = mainMenuPanel;
-
-        Dimension d = this.mainMenuPanel.mainFrame.getSize();
-        this.setPreferredSize(new Dimension(d.width, d.height));
-        this.setSize(new Dimension(d.width, d.height));
-        this.setMaximumSize(new Dimension(d.width, d.height));
-        this.setMinimumSize(new Dimension(d.width, d.height));
+        this.initSize();
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         ImageAsset leftArrow = AssetsManager.getInstance().getImage("left-arrow");
@@ -41,12 +37,7 @@ public class CustomComponent extends JPanel {
 
     protected CustomComponent(MainPanel mainMenuPanel) {
         this.mainMenuPanel = mainMenuPanel;
-
-        Dimension d = this.mainMenuPanel.mainFrame.getSize();
-        this.setPreferredSize(new Dimension(d.width, d.height));
-        this.setSize(new Dimension(d.width, d.height));
-        this.setMaximumSize(new Dimension(d.width, d.height));
-        this.setMinimumSize(new Dimension(d.width, d.height));
+        this.initSize();
     }
 
     protected void initComponent() {}
@@ -56,5 +47,13 @@ public class CustomComponent extends JPanel {
         this.mainMenuPanel.initComponents();
         this.mainMenuPanel.repaint();
         this.mainMenuPanel.validate();
+    }
+
+    private void initSize() {
+        Dimension d = this.mainMenuPanel.mainFrame.getSize();
+        this.setPreferredSize(new Dimension(d.width, d.height));
+        this.setSize(new Dimension(d.width, d.height));
+        this.setMaximumSize(new Dimension(d.width, d.height));
+        this.setMinimumSize(new Dimension(d.width, d.height));
     }
 }

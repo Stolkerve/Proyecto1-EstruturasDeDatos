@@ -70,7 +70,6 @@ public class MainFrame extends javax.swing.JFrame {
         this.mainPanel.setMaximumSize(this.getSize());
         this.mainPanel.setPreferredSize(this.getSize());
         this.mainPanel.setSize(this.getSize());
-        this.mainPanel.setBorder(BorderFactory.createEmptyBorder(-5,0,0,0));
     }
 
     /**
