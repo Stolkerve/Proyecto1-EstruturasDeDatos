@@ -8,6 +8,7 @@ public class Grafo {
     public boolean iniciado = false;
     public boolean necesitaGuardar = false;
     public Vector<Wearhouse> almacenes;
+
     private static Grafo instancia;
 
     private class DistanciaDijsktra {
@@ -39,28 +40,45 @@ public class Grafo {
         return null;
     }
 
-    public DistanciaDijsktra dijkstra(Wearhouse almacenOrigen, Wearhouse almacenDestino) {
-        // almacenOrigen.distanciaMin = 0;
-        Vector<Wearhouse> almacenesRecorridos = new Vector<>();
-        Vector<Wearhouse> priorityQueue = new Vector<>();
-        priorityQueue.pushBack(almacenOrigen);
+    public void agregarAlmacen(Wearhouse nuevo){
+        
+        almacenes.pushBack(nuevo);
+    }
 
-        while (!priorityQueue.empty()) {
-            Wearhouse node = priorityQueue.popFront();
+    public DistanciaDijsktra dijkstra(int almacenOrigen, Wearhouse almacenDestino) {
+        // almacenOrigen.distanciaMin = 0;
+
+        Vector<Wearhouse> cola = new Vector<>();
+        cola.pushBack(almacenes.get(almacenOrigen));
+        Vector<Integer> dist=new  Vector<>();
+        Vector<Wearhouse> prev=new Vector<>();
+
+        for (int i = 0; i < this.almacenes.size(); i++) {
+            dist.pushBack(Integer.MAX_VALUE); 
+        }
+        Vector<Boolean> done=new  Vector<>();
+        
+        for (int i = 0; i < this.almacenes.size(); i++) {
+            done.pushBack(false);
+        }
+
+
+        while (!cola.empty()) {
+            Wearhouse node = cola.popFront();
             for (Edge edge : node.edges) {
                 Wearhouse n = edge.almacenVecino;
                 int weight = edge.distancia;
                 // int minDistance = node.distanciaMin + weight;
 
                 // if (minDistance < n.distanciaMin) {
-                //     for (int i = 0; i < priorityQueue.size(); i++) {
-                //         if (priorityQueue.Get(i).id == node.id) {
-                //             priorityQueue.remove(i);
+                //     for (int i = 0; i < cola.size(); i++) {
+                //         if (cola.Get(i).id == node.id) {
+                //             cola.remove(i);
                 //         }
                 //     }
                 //     almacenesRecorridos.pushBack(node); // !! Nodos recorridos
                 //     n.distanciaMin = minDistance; // !!!
-                //     priorityQueue.pushBack(n);
+                //     cola.pushBack(n);
                 // }
             }
         }
