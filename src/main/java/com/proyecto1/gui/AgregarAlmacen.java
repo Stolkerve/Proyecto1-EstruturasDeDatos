@@ -185,6 +185,10 @@ public class AgregarAlmacen extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_botonGuardarActionPerformed
 
+    private void botonRetroceder1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRetroceder1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonRetroceder1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAgregarAlmacen;

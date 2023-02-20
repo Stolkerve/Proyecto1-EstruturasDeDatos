@@ -45,10 +45,13 @@ public class AgregarRuta extends javax.swing.JPanel {
         comentario3 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
 
+        setMaximumSize(new java.awt.Dimension(630, 450));
+        setMinimumSize(new java.awt.Dimension(630, 450));
+        setPreferredSize(new java.awt.Dimension(630, 450));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botonRetroceder.setFont(new java.awt.Font("Silom", 0, 14)); // NOI18N
-        botonRetroceder.setIcon(new javax.swing.ImageIcon(getClass().getResource("./assets/left-arrow.png"))); // NOI18N
+        botonRetroceder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/proyecto1/assets/retroceder.png"))); // NOI18N
         botonRetroceder.setBorder(null);
         botonRetroceder.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonRetroceder.addActionListener(new java.awt.event.ActionListener() {
@@ -170,7 +173,7 @@ public class AgregarRuta extends javax.swing.JPanel {
     private javax.swing.JButton botonAgregarAlmacen;
     private javax.swing.JButton botonAgregarRuta;
     private javax.swing.JButton botonGuardar;
-    private javax.swing.JButton botonRetroceder1;
+    private javax.swing.JButton botonRetroceder;
     private javax.swing.JTextArea comentario1;
     private javax.swing.JLabel comentario2;
     private javax.swing.JLabel comentario3;
