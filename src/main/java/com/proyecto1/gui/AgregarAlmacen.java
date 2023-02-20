@@ -4,12 +4,18 @@
  */
 package com.proyecto1.gui;
 
+import com.proyecto1.models.Product;
+import com.proyecto1.models.Wearhouse;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author andresbucarello
  */
 public class AgregarAlmacen extends javax.swing.JPanel {
-
+    
+    int cantidad = 5;
+    Wearhouse[] listaAlmacenesS = new Wearhouse[cantidad];
     /**
      * Creates new form Prubea
      */
@@ -51,6 +57,7 @@ public class AgregarAlmacen extends javax.swing.JPanel {
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botonRetroceder.setFont(new java.awt.Font("Silom", 0, 14)); // NOI18N
+        botonRetroceder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/proyecto1/assets/retroceder.png"))); // NOI18N
         botonRetroceder.setBorder(null);
         botonRetroceder.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonRetroceder.addActionListener(new java.awt.event.ActionListener() {
@@ -166,7 +173,23 @@ public class AgregarAlmacen extends javax.swing.JPanel {
     }//GEN-LAST:event_botonRetrocederActionPerformed
 
     private void fieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldNombreActionPerformed
-        // TODO add your handling code here:
+        try{
+            String nombre=fieldNombre.getText();
+            boolean encontrado=false;
+            for (Wearhouse almacen : listaAlmacenesS) {
+                if(nombre.equals(almacen.name)){
+                    encontrado=true;    
+                    }
+                }
+            if(encontrado){
+                System.out.println(" SI EXISTE, EL NOMBRE NO ES VALIDO");
+                fieldNombre.setText("");
+            }else{
+                System.out.println(" NO EXISTE, EL NOMBRE ES VALIDO ");
+            }   
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, " ERROR EL NOMBRE INGRSADO NO ES VALIDO ");
+        }
     }//GEN-LAST:event_fieldNombreActionPerformed
 
     private void botonComprobarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonComprobarActionPerformed
@@ -178,7 +201,8 @@ public class AgregarAlmacen extends javax.swing.JPanel {
     }//GEN-LAST:event_botonAgregarRutaActionPerformed
 
     private void botonAgregarAlmacenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarAlmacenActionPerformed
-        // TODO add your handling code here:
+        Wearhouse almacen=new Wearhouse(fieldNombre.getText());
+        // wearhouses.pushback(almacen);
     }//GEN-LAST:event_botonAgregarAlmacenActionPerformed
 
     private void botonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActionPerformed

@@ -4,6 +4,8 @@
  */
 package com.proyecto1.gui;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author andresbucarello
@@ -153,7 +155,8 @@ public class AgregarRuta extends javax.swing.JPanel {
     }//GEN-LAST:event_botonRetrocederActionPerformed
 
     private void botonAgregarRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarRutaActionPerformed
-        // TODO add your handling code here:
+        int distancia=Integer.parseInt(JOptionPane.showInputDialog(null, " INGRESE LA DISTANCIA CON EL ALMACEN " + rutasDisponibles.getSelectedValue(), "Agregar DISTANCIA"));
+        
     }//GEN-LAST:event_botonAgregarRutaActionPerformed
 
     private void botonAgregarAlmacenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarAlmacenActionPerformed

@@ -36,7 +36,6 @@ public class Grafo {
     }
 
     public void agregarAlmacen(Wearhouse nuevo){
-        
         almacenes.pushBack(nuevo);
     }
 

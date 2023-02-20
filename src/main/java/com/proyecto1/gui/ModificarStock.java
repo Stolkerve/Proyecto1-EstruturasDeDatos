@@ -4,6 +4,10 @@
  */
 package com.proyecto1.gui;
 
+import com.proyecto1.models.Product;
+import com.proyecto1.models.Wearhouse;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author andresbucarello
@@ -144,7 +148,20 @@ public class ModificarStock extends javax.swing.JPanel {
     }//GEN-LAST:event_botonRetrocederActionPerformed
 
     private void fieldPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldPrecioActionPerformed
-        // TODO add your handling code here:
+        try{
+            int stock=Integer.parseInt(fieldNombre.getText());
+            for (Wearhouse almacen : listaAlmacenesS) {
+                if(listaAlmacenes.getSelectedItem().equals(almacen.name)){
+                    for (Product producto : almacen.products){
+                        if(fieldNombre.getText().equals(producto.name)){
+                            producto.stock+=stock;
+                        }
+                    }
+                }    
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, " ERROR LA CANTIDAD INGRESADA NO ES VALIDA ");
+        }
     }//GEN-LAST:event_fieldPrecioActionPerformed
 
     private void botonComprobar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonComprobar1ActionPerformed
