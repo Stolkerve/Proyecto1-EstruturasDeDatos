@@ -1,11 +1,9 @@
 package com.proyecto1.gui;
 
-import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.event.*;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -16,7 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.Border;
-import javax.swing.border.EtchedBorder;
 
 import com.proyecto1.containers.Grafo;
 import com.proyecto1.containers.Vector;
@@ -46,7 +43,7 @@ public class RequestOrder extends CustomComponent {
         topPanel.add(left);
 
         JPanel right = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JComboBox wearhousesComboBox = new JComboBox<String>(wearhousesNames);
+        JComboBox<String> wearhousesComboBox = new JComboBox<String>(wearhousesNames);
         wearhousesComboBox.setSelectedIndex(-1);
         wearhousesComboBox.addActionListener(e -> {this.onComboBox();});
         right.add(new JLabel("Almacenes"));

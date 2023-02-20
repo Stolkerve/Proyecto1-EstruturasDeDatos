@@ -45,10 +45,10 @@ public class Grafo {
             }
         }
 
-        Vector<Wearhouse> almacenesRecorridos = new Vector<>();
-        Vector<Vertex> queue = new Vector<>();
-        Vector<Integer> dist = new Vector<>();
-        Vector<Boolean> done = new Vector<>();
+        Vector<Wearhouse> almacenesRecorridos = new Vector<>(this.almacenes.size());
+        Vector<Vertex> queue = new Vector<>(this.almacenes.size());
+        Vector<Integer> dist = new Vector<>(this.almacenes.size());
+        Vector<Boolean> done = new Vector<>(this.almacenes.size());
 
         int indexOrigin = 0;
         for (int i = 0; i < this.almacenes.size(); i++) {

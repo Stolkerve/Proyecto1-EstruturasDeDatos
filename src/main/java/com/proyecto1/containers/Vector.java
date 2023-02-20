@@ -16,6 +16,21 @@ public class Vector<T> implements Iterable<T> {
     private int capacity;
 
     public Vector() {
+        init();
+    }
+
+    public Vector(int c) {
+        init();
+        this.reserve(c);
+    }
+
+    public void pushBack(T[] arr) {
+        this.reserve(arr.length);
+        for (T v : arr)
+            this.pushBack(v);
+    }
+
+    private void init() {
         this.size = 0;
         this.capacity = Vector.NEW_SIZE;
         this.data = (T[]) new Object[this.capacity];
@@ -73,6 +88,7 @@ public class Vector<T> implements Iterable<T> {
 
     public void clear() {
         Arrays.fill(this.data, null);
+        this.size = 0;
     }
 
     public void pushBack(T v) {

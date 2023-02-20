@@ -18,8 +18,6 @@ public class CustomComponent extends JPanel {
         this.mainMenuPanel = mainMenuPanel;
 
         Dimension d = this.mainMenuPanel.mainFrame.getSize();
-        System.out.println(this.mainMenuPanel.getMinimumSize());
-        System.out.println(this.mainMenuPanel.getMaximumSize());
         this.setPreferredSize(new Dimension(d.width, d.height));
         this.setSize(new Dimension(d.width, d.height));
         this.setMaximumSize(new Dimension(d.width, d.height));
@@ -45,8 +43,6 @@ public class CustomComponent extends JPanel {
         this.mainMenuPanel = mainMenuPanel;
 
         Dimension d = this.mainMenuPanel.mainFrame.getSize();
-        System.out.println(this.mainMenuPanel.getMinimumSize());
-        System.out.println(this.mainMenuPanel.getMaximumSize());
         this.setPreferredSize(new Dimension(d.width, d.height));
         this.setSize(new Dimension(d.width, d.height));
         this.setMaximumSize(new Dimension(d.width, d.height));

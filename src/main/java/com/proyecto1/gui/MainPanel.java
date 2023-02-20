@@ -36,6 +36,7 @@ public class MainPanel extends javax.swing.JPanel {
         this.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         final Vector<JButton> menuBtns = new Vector<JButton>();
+
         JButton loadGraphBtn = new JButton("Cargar archivo de almacenes");
         loadGraphBtn.addActionListener(e -> {
             GraphFileDialog.loadFileDialog();
@@ -51,7 +52,7 @@ public class MainPanel extends javax.swing.JPanel {
             GraphFileDialog.saveFileDialog();
         });
 
-        JButton producsStockBtn = new JButton("Stock de productos");
+        JButton producsStockBtn = new JButton("Reporte de stock de productos");
         producsStockBtn.addActionListener(e -> {
             this.addCustomComponent(new ShowStock(this));
         });
@@ -78,11 +79,6 @@ public class MainPanel extends javax.swing.JPanel {
         showGraphBtn.addActionListener(e -> {
             CustomComponent a = new GraphTheGraph(this);
             this.addCustomComponent(a);
-            System.out.println();
-            System.out.println(a.getPreferredSize());
-            System.out.println(a.getSize());
-            System.out.println(a.getMinimumSize());
-            System.out.println(a.getMaximumSize());
         });
 
         JButton helpBtn = new JButton("???");
@@ -90,14 +86,11 @@ public class MainPanel extends javax.swing.JPanel {
             new HelpDialog();
         });
 
-        menuBtns.pushBack(loadGraphBtn);
-        menuBtns.pushBack(saveGraphBtn);
-        menuBtns.pushBack(producsStockBtn);
-        menuBtns.pushBack(requestBtn);
-        menuBtns.pushBack(addWearhouseBtn);
-        menuBtns.pushBack(addPathBtn);
-        menuBtns.pushBack(manageStockBtn);
-        menuBtns.pushBack(showGraphBtn);
+        menuBtns.pushBack(new JButton[] {
+            loadGraphBtn, saveGraphBtn, producsStockBtn,
+            requestBtn, addWearhouseBtn, addPathBtn,
+            manageStockBtn, showGraphBtn
+        });
 
         if (!Grafo.getInstance().iniciado) {
             for (JButton btn : menuBtns)

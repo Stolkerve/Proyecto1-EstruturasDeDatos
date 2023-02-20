@@ -147,13 +147,18 @@ public class GraphFileDialog {
                 scanner.close();
                 // Si se llego aqui significa que se abrio el archivo y no salto ningun error de
                 // carga
-                Grafo.getInstance().iniciado = true;
 
-                // No se guardan directamente en el grafo los almacenes durante la carga por
-                // casos de error
+                Grafo instace = Grafo.getInstance();
+
+                if (!instace.iniciado) {
+                    instace.iniciado = true;
+                    instace.almacenes.reserve(wearhouses.capacity());
+                }
+                else {
+                    instace.almacenes.clear();
+                }
                 for (Wearhouse w : wearhouses)
-                    Grafo.getInstance().almacenes.pushBack(w);
-
+                    instace.almacenes.pushBack(w);
             } catch (FileNotFoundException e) {
                 JOptionPane.showMessageDialog(fileDialog,
                         "No se pudo abrir archivo", "ERROR",
@@ -161,7 +166,6 @@ public class GraphFileDialog {
                 return;
             }
         }
-        // Ir al menu principal
     }
 
     public static boolean saveFileDialog() {

@@ -4,13 +4,13 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.util.Arrays;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 
 import com.proyecto1.containers.Grafo;
@@ -81,11 +81,11 @@ public class ShowStock extends CustomComponent {
 
     private void bfs(DefaultTableModel model) {
         Vector<Wearhouse> wearhouses = Grafo.getInstance().almacenes;
-        Vector<Wearhouse> queue = new Vector<>();
+        Vector<Wearhouse> queue = new Vector<>(wearhouses.size());
         boolean[] visited = new boolean [wearhouses.size()];
         Wearhouse w; //vértice actual
-        for (boolean v : visited)
-            v = false;
+
+        Arrays.fill(visited, false);
 
         for (int i = 0; i < visited.length; i++) {
             if (!visited[i]){
@@ -118,8 +118,8 @@ public class ShowStock extends CustomComponent {
         for (int i = 0; i < Grafo.getInstance().almacenes.size(); i++)
             Grafo.getInstance().dijkstra(wearhouses.get(i));
         boolean[] visited = new boolean [wearhouses.size()];
-        for (boolean v : visited)
-            v = false;
+        Arrays.fill(visited, false);
+
         for (int i = 0; i < wearhouses.size(); i++)
             if (!visited[i])
                 recursiveDfs(i, wearhouses, visited, model);
