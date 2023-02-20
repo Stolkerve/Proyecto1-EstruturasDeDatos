@@ -39,13 +39,16 @@ public class ModificarStock extends javax.swing.JPanel {
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         listaAlmacenes1 = new javax.swing.JComboBox<>();
+        botonRetroceder2 = new javax.swing.JButton();
+        botonRetroceder1 = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(630, 450));
         setMinimumSize(new java.awt.Dimension(630, 450));
+        setPreferredSize(new java.awt.Dimension(630, 450));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botonRetroceder.setFont(new java.awt.Font("Silom", 0, 14)); // NOI18N
-        botonRetroceder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/retroceder.png"))); // NOI18N
+        botonRetroceder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/./assets/left-arrow.png"))); // NOI18N
         botonRetroceder.setBorder(null);
         botonRetroceder.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonRetroceder.addActionListener(new java.awt.event.ActionListener() {
@@ -112,6 +115,28 @@ public class ModificarStock extends javax.swing.JPanel {
 
         listaAlmacenes1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         add(listaAlmacenes1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 110, 150, -1));
+
+        botonRetroceder2.setFont(new java.awt.Font("Silom", 0, 14)); // NOI18N
+        botonRetroceder2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/proyecto1/images/retroceder.png"))); // NOI18N
+        botonRetroceder2.setBorder(null);
+        botonRetroceder2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botonRetroceder2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonRetroceder2ActionPerformed(evt);
+            }
+        });
+        add(botonRetroceder2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
+
+        botonRetroceder1.setFont(new java.awt.Font("Silom", 0, 14)); // NOI18N
+        botonRetroceder1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/proyecto1/assets/retroceder.png"))); // NOI18N
+        botonRetroceder1.setBorder(null);
+        botonRetroceder1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botonRetroceder1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonRetroceder1ActionPerformed(evt);
+            }
+        });
+        add(botonRetroceder1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonRetrocederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRetrocederActionPerformed
@@ -130,11 +155,21 @@ public class ModificarStock extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_botonGuardarActionPerformed
 
+    private void botonRetroceder2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRetroceder2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonRetroceder2ActionPerformed
+
+    private void botonRetroceder1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRetroceder1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonRetroceder1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonComprobar1;
     private javax.swing.JButton botonGuardar;
     private javax.swing.JButton botonRetroceder;
+    private javax.swing.JButton botonRetroceder1;
+    private javax.swing.JButton botonRetroceder2;
     private javax.swing.JTextField fieldPrecio;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;

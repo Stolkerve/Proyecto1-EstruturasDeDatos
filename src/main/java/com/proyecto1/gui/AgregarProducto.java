@@ -44,6 +44,8 @@ public class AgregarProducto extends javax.swing.JPanel {
         botonComprobar3 = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JSeparator();
         botonGuardar = new javax.swing.JButton();
+        botonRetroceder1 = new javax.swing.JButton();
+        botonRetroceder2 = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(630, 450));
         setMinimumSize(new java.awt.Dimension(630, 450));
@@ -51,7 +53,7 @@ public class AgregarProducto extends javax.swing.JPanel {
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botonRetroceder.setFont(new java.awt.Font("Silom", 0, 14)); // NOI18N
-        botonRetroceder.setIcon(new javax.swing.ImageIcon("./assets/left-arrow.png")); // NOI18N
+        botonRetroceder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/./assets/left-arrow.png"))); // NOI18N
         botonRetroceder.setBorder(null);
         botonRetroceder.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonRetroceder.addActionListener(new java.awt.event.ActionListener() {
@@ -156,11 +158,29 @@ public class AgregarProducto extends javax.swing.JPanel {
             }
         });
         add(botonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 400, 120, -1));
-    }// </editor-fold>//GEN-END:initComponents
 
-    private void botonRetrocederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRetrocederActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botonRetrocederActionPerformed
+        botonRetroceder1.setFont(new java.awt.Font("Silom", 0, 14)); // NOI18N
+        botonRetroceder1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/proyecto1/images/retroceder.png"))); // NOI18N
+        botonRetroceder1.setBorder(null);
+        botonRetroceder1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botonRetroceder1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonRetrocederActionPerformed(evt);
+            }
+        });
+        add(botonRetroceder1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
+
+        botonRetroceder2.setFont(new java.awt.Font("Silom", 0, 14)); // NOI18N
+        botonRetroceder2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/proyecto1/assets/retroceder.png"))); // NOI18N
+        botonRetroceder2.setBorder(null);
+        botonRetroceder2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botonRetroceder2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonRetroceder2ActionPerformed(evt);
+            }
+        });
+        add(botonRetroceder2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
+    }// </editor-fold>//GEN-END:initComponents
 
     private void fieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldNombreActionPerformed
         // TODO add your handling code here:
@@ -190,6 +210,14 @@ public class AgregarProducto extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_botonGuardarActionPerformed
 
+    private void botonRetrocederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRetrocederActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonRetrocederActionPerformed
+
+    private void botonRetroceder2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRetroceder2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonRetroceder2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonComprobar1;
@@ -197,6 +225,8 @@ public class AgregarProducto extends javax.swing.JPanel {
     private javax.swing.JButton botonComprobar3;
     private javax.swing.JButton botonGuardar;
     private javax.swing.JButton botonRetroceder;
+    private javax.swing.JButton botonRetroceder1;
+    private javax.swing.JButton botonRetroceder2;
     private javax.swing.JTextField fieldCantidad;
     private javax.swing.JTextField fieldNombre;
     private javax.swing.JTextField fieldPrecio;

@@ -69,14 +69,14 @@ public class AssetsLoader {
             @Override
             protected Void doInBackground() throws Exception {
                 AssetInfo[] assetsLoadInfo = new AssetInfo[] {
-                        new AssetInfo("./assets/cat-kiss.gif", "cat-kiss", AssetType.Image),
-                        new AssetInfo("./assets/Amazon_icon.png", "amazon-icon", AssetType.Image),
-                        new AssetInfo("./assets/left-arrow.png", "left-arrow", AssetType.Image),
-                        new AssetInfo("./assets/xd.jpg", "xd", AssetType.Image),
-                        new AssetInfo("./assets/xd2.jpg", "xd2", AssetType.Image),
-                        new AssetInfo("./assets/xd3.jpg", "xd3", AssetType.Image),
-                        new AssetInfo("./assets/cat-dance.gif", "cat-dance", AssetType.Image),
-                        new AssetInfo("./assets/BetterCallSaulRemix.wav", "background-music", AssetType.Music),
+                        new AssetInfo("./src/main/java/com/proyecto1/assets/cat-kiss.gif", "cat-kiss", AssetType.Image),
+                        new AssetInfo("./src/main/java/com/proyecto1/assets/Amazon_icon.png", "amazon-icon", AssetType.Image),
+                        new AssetInfo("./src/main/java/com/proyecto1/assets/left-arrow.png", "left-arrow", AssetType.Image),
+                        new AssetInfo("./src/main/java/com/proyecto1/assets/xd.jpg", "xd", AssetType.Image),
+                        new AssetInfo("./src/main/java/com/proyecto1/assets/xd2.jpg", "xd2", AssetType.Image),
+                        new AssetInfo("./src/main/java/com/proyecto1/assets/xd3.jpg", "xd3", AssetType.Image),
+                        new AssetInfo("./src/main/java/com/proyecto1/assets/cat-dance.gif", "cat-dance", AssetType.Image),
+                        new AssetInfo("./src/main/java/com/proyecto1/assets/BetterCallSaulRemix.wav", "background-music", AssetType.Music),
                 };
 
                 int i = 0;

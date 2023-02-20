@@ -45,10 +45,13 @@ public class AgregarRuta extends javax.swing.JPanel {
         comentario3 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
 
+        setMaximumSize(new java.awt.Dimension(630, 450));
+        setMinimumSize(new java.awt.Dimension(630, 450));
+        setPreferredSize(new java.awt.Dimension(630, 450));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botonRetroceder.setFont(new java.awt.Font("Silom", 0, 14)); // NOI18N
-        botonRetroceder.setIcon(new javax.swing.ImageIcon(getClass().getResource("./assets/left-arrow.png"))); // NOI18N
+        botonRetroceder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/proyecto1/assets/retroceder.png"))); // NOI18N
         botonRetroceder.setBorder(null);
         botonRetroceder.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonRetroceder.addActionListener(new java.awt.event.ActionListener() {
@@ -160,6 +163,10 @@ public class AgregarRuta extends javax.swing.JPanel {
     private void botonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_botonGuardarActionPerformed
+
+    private void botonRetroceder1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRetroceder1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonRetroceder1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

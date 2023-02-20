@@ -8,6 +8,7 @@ public class Grafo {
     public boolean iniciado = false;
     public boolean necesitaGuardar = false;
     public Vector<Wearhouse> almacenes;
+
     private static Grafo instancia;
 
     public Grafo() {
@@ -34,16 +35,12 @@ public class Grafo {
         return null;
     }
 
-    public Vector<Wearhouse> dijkstra(Wearhouse wearhouseOrigen) {
-        // wearhouseOrigen.distanciaMin = 0;
+    public void agregarAlmacen(Wearhouse nuevo){
+        
+        almacenes.pushBack(nuevo);
+    }
 
-        class Vertex {
-            int index; int distance;
-            public Vertex(int index, int distance) {
-                this.index = index;
-                this.distance = distance;
-            }
-        }
+    public Vector<Wearhouse> dijkstra(int almacenOrigen, Wearhouse almacenDestino) {
 
         Vector<Wearhouse> almacenesRecorridos = new Vector<>(this.almacenes.size());
         Vector<Vertex> queue = new Vector<>(this.almacenes.size());
