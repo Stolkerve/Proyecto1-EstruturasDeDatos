@@ -15,6 +15,7 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -30,7 +31,9 @@ public class RequestOrder extends CustomComponent {
     JList<String> wearhouseProductsList;
     DefaultListModel<String> wearhouseProductsListModel;
     JList<String> orderProductsList;
+    DefaultListModel<String> orderProductsListModel;
     JComboBox<String> wearhousesComboBox;
+    JButton addProductBtn;
     Pattern productListPattern;
 
     RequestOrder(MainPanel mainPanel) {
@@ -80,9 +83,10 @@ public class RequestOrder extends CustomComponent {
         wearhouseProductsPanel.add(this.createList(true), c);
 
         c.gridx = 1;
-        JButton addProductBtn = new JButton("->");
-        addProductBtn.addActionListener(e -> this.onAddProductToOrderList());
-        addProductBtn.setBorder(BorderFactory.createEmptyBorder(0,5,0,5));
+        this.addProductBtn = new JButton("->");
+        this.addProductBtn.addActionListener(e -> this.onAddProductToOrderList());
+        this.addProductBtn.setBorder(BorderFactory.createEmptyBorder(0,5,0,5));
+        this.addProductBtn.setEnabled(false);
         wearhouseProductsPanel.add(addProductBtn);
 
         c.gridx = 2;
@@ -128,6 +132,7 @@ public class RequestOrder extends CustomComponent {
     }
 
     private void onWearhousesSelectionComboBox() {
+        this.addProductBtn.setEnabled(true);
         String wearhouseName = (String) this.wearhousesComboBox.getSelectedItem();
         this.wearhouseProductsListModel = new DefaultListModel<>();
         for (Wearhouse w : this.wearhouses)
@@ -137,16 +142,59 @@ public class RequestOrder extends CustomComponent {
                 break;
             }
         this.wearhouseProductsList.setModel(this.wearhouseProductsListModel);
+
+        this.orderProductsListModel = new DefaultListModel<>();
+        this.orderProductsList.setModel(this.orderProductsListModel);
     }
 
     private void onAddProductToOrderList() {
         int index = this.wearhouseProductsList.getSelectedIndex();
-        String product = this.wearhouseProductsList.getSelectedValue();
-        Matcher match = this.productListPattern.matcher(product);
-        String productName = match.group(2);
-        String productStock = match.group(2);
+        if (index < 0) return;
+
+        int amount = 0;
+        String amountString = JOptionPane.showInputDialog(this, "Cantidad");
+        if (amountString == null) return;
+        try {
+            amount = Integer.parseInt(amountString);
+        } catch (Exception e) {}
+        while (amount <= 0) {
+            amountString = JOptionPane.showInputDialog(this, "Ingrese una cantidad valida");
+            if (amountString == null) return;
+            try {
+                amount = Integer.parseInt(amountString);
+            } catch (Exception e) {}
+        }
+
+        String selectedProduct = this.wearhouseProductsList.getSelectedValue();
+        Matcher match = this.productListPattern.matcher(selectedProduct); match.matches();
+        String selectedProductName = match.group(1);
+        int selectedProductStock = Integer.parseInt(match.group(2));
+        if (selectedProductStock < amount) {
+            JOptionPane.showMessageDialog(this, "La cantidad pedida es mayor a la que esta disponible", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int diff = selectedProductStock - amount;
+        if (diff > 0)
+            this.wearhouseProductsListModel.setElementAt(String.format("%s(%d)", selectedProductName, diff), index);
+        else
+            this.wearhouseProductsListModel.removeElementAt(index);
+        
+        for (int i = 0; i < this.orderProductsListModel.size(); i++) {
+            String listElement = this.orderProductsListModel.get(i);
+            Matcher m = this.productListPattern.matcher(listElement); m.matches();
+            String name = m.group(1);
+            int stock = Integer.parseInt(m.group(2));
+            if (name.equals(selectedProductName)) {
+                this.orderProductsListModel.setElementAt(String.format("%s(%d)", selectedProductName, amount + stock), i);
+                return;
+            }
+        }
+
+        this.orderProductsListModel.addElement(String.format("%s(%d)", selectedProductName, amount));
     }
 
     private void onFinishOrder() {
+        if (this.orderProductsListModel.size() == 0) return;
     }
 }

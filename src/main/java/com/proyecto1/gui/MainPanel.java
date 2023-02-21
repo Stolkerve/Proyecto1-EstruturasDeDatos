@@ -75,6 +75,10 @@ public class MainPanel extends javax.swing.JPanel {
         manageStockBtn.addActionListener(e -> {
         });
 
+        JButton addProdutsToWearhouseBtn = new JButton("Agregar producto");
+        manageStockBtn.addActionListener(e -> {
+        });
+
         JButton showGraphBtn = new JButton("Mostrar mapa de almacenes");
         showGraphBtn.addActionListener(e -> {
             CustomComponent a = new GraphTheGraph(this);
@@ -89,7 +93,7 @@ public class MainPanel extends javax.swing.JPanel {
         menuBtns.pushBack(new JButton[] {
             loadGraphBtn, saveGraphBtn, producsStockBtn,
             requestBtn, addWearhouseBtn, addPathBtn,
-            manageStockBtn, showGraphBtn
+            manageStockBtn, addProdutsToWearhouseBtn, showGraphBtn
         });
 
         if (!Grafo.getInstance().iniciado) {
