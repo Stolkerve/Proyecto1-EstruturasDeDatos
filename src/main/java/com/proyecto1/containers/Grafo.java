@@ -6,7 +6,7 @@ import com.proyecto1.models.Wearhouse;
 
 public class Grafo {
     public boolean iniciado = false;
-    public boolean necesitaGuardar = false;
+    public boolean needsSave = false;
     public Vector<Wearhouse> almacenes;
     private static Grafo instancia;
 
@@ -103,19 +103,5 @@ public class Grafo {
             }
         }
         return wearhousePath;
-    }
-
-    public Product buscarEnOtroAlmacen(String productName, Wearhouse wearhouseOrigen) {
-        Vector<Wearhouse> wearhousesNeared = dijkstra(wearhouseOrigen);
-        for (Wearhouse almacen : wearhousesNeared) {
-            for (Product producto : almacen.products) {
-                if (producto.name.equals(productName)) {
-                    if (producto.stock > 0) {
-                        return producto;
-                    }
-                }
-            }
-        }
-        return null;
     }
 }

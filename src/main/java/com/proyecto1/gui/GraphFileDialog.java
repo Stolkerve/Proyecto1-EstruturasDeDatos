@@ -1,5 +1,6 @@
 package com.proyecto1.gui;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -170,7 +171,7 @@ public class GraphFileDialog {
         int res = fileDialog.showOpenDialog(null);
 
         if (res != JFileChooser.CANCEL_OPTION) {
-            String msg = "Nombre del archivo (Se sobre escribira los archivos con el mismo nombre)";
+            String msg = "Nombre del archivo";
             String name = JOptionPane.showInputDialog(fileDialog, msg);
 
             if (name == null)
@@ -179,7 +180,12 @@ public class GraphFileDialog {
             while (name.length() == 0)
                 name = JOptionPane.showInputDialog(fileDialog, msg);
 
-            try (FileWriter output = new FileWriter(name + ".txt")) {
+            File outputFile = new File(name + ".txt");
+            if (outputFile.exists()) {
+                int r = JOptionPane.showConfirmDialog(fileDialog, "El archivo ya existe, deseas sobre escribirlo?");
+                if (r != JOptionPane.OK_OPTION) return false;
+            }
+            try (FileWriter output = new FileWriter(outputFile)) {
                 output.write("Almacenes;\n");
                 String rutas = "";
                 for (Wearhouse w : Grafo.getInstance().almacenes) {

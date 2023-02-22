@@ -13,14 +13,22 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import org.jgrapht.ListenableGraph;
+import org.jgrapht.ext.JGraphXAdapter;
+import org.jgrapht.graph.DefaultListenableGraph;
+import org.jgrapht.graph.SimpleDirectedWeightedGraph;
+
+import com.mxgraph.swing.mxGraphComponent;
 import com.proyecto1.containers.Grafo;
 import com.proyecto1.containers.Vector;
+import com.proyecto1.models.Edge;
 import com.proyecto1.models.Product;
 import com.proyecto1.models.Wearhouse;
 import com.proyecto1.utils.AssetsManager;
@@ -131,10 +139,9 @@ public class RequestOrder extends CustomComponent {
         return panel;
     }
 
-    private void onWearhousesSelectionComboBox() {
-        this.addProductBtn.setEnabled(true);
-        String wearhouseName = (String) this.wearhousesComboBox.getSelectedItem();
+    private void resetWearhouseProductsList() {
         this.wearhouseProductsListModel = new DefaultListModel<>();
+        String wearhouseName = (String) this.wearhousesComboBox.getSelectedItem();
         for (Wearhouse w : this.wearhouses)
             if (w.name.equals(wearhouseName)) {
                 for (Product p : w.products)
@@ -142,6 +149,11 @@ public class RequestOrder extends CustomComponent {
                 break;
             }
         this.wearhouseProductsList.setModel(this.wearhouseProductsListModel);
+    }
+
+    private void onWearhousesSelectionComboBox() {
+        this.addProductBtn.setEnabled(true);
+        this.resetWearhouseProductsList();
 
         this.orderProductsListModel = new DefaultListModel<>();
         this.orderProductsList.setModel(this.orderProductsListModel);
@@ -169,10 +181,6 @@ public class RequestOrder extends CustomComponent {
         Matcher match = this.productListPattern.matcher(selectedProduct); match.matches();
         String selectedProductName = match.group(1);
         int selectedProductStock = Integer.parseInt(match.group(2));
-        if (selectedProductStock < amount) {
-            JOptionPane.showMessageDialog(this, "La cantidad pedida es mayor a la que esta disponible", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
 
         int diff = selectedProductStock - amount;
         if (diff > 0)
@@ -196,5 +204,99 @@ public class RequestOrder extends CustomComponent {
 
     private void onFinishOrder() {
         if (this.orderProductsListModel.size() == 0) return;
+
+        int wearhouseIndex = (int) this.wearhousesComboBox.getSelectedIndex();
+        Wearhouse wearhouse = this.wearhouses.get(wearhouseIndex);
+        Vector<String> pendingOrderProductsToDelete = new Vector<>();
+        Vector<Integer> pendingWearhouseProductsToDelete = new Vector<>();
+
+        for (int i = 0; i < this.orderProductsListModel.size(); i++) {
+            String listElement = this.orderProductsListModel.get(i);
+            Matcher m = this.productListPattern.matcher(listElement); m.matches();
+            String orderProductname = m.group(1);
+            int orderProductstock = Integer.parseInt(m.group(2));
+            int pIndex = 0;
+            for (Product p : wearhouse.products) {
+                if (orderProductname.equals(p.name)) {
+                    int diff = p.stock - orderProductstock;
+                    if (diff < 0) { // Se necesita el stock de otros almacenes
+                        // Notificar
+                        int res = JOptionPane.showConfirmDialog(this,
+                            String.format("Se esta solicitando mas stock que el disponible del producto %s en el almacen %s. Deseas buscar en otro almacen?", orderProductname, wearhouse.name),
+                            "Error", JOptionPane.OK_CANCEL_OPTION
+                        );
+                        if (res != JOptionPane.OK_OPTION) {
+                            pendingOrderProductsToDelete.pushBack(listElement);
+                            continue;
+                        }
+                        Vector<Wearhouse> wearhousesPath = Grafo.getInstance().dijkstra(wearhouse);
+                        search: {
+                            for (Wearhouse wClosed : wearhousesPath) {
+                                for (Product pClosed : wClosed.products) {
+                                    if (pClosed.name.equals(orderProductname)) {
+                                        diff = pClosed.stock - Math.abs(diff);
+                                        if (diff >= 0) {
+                                            pendingOrderProductsToDelete.pushBack(listElement);
+                                            JDialog dialog = new JDialog(this.mainMenuPanel.mainFrame, "Resultado");
+                                            dialog.setLayout(new BoxLayout(dialog, BoxLayout.Y_AXIS));
+                                            dialog.add(new JLabel("Las rutas mas cortas a almacenes relativamente al almacen " + wearhouse.name));
+
+                                            ListenableGraph<String, MyWeightedEdge> g = new DefaultListenableGraph<>(
+                                                    new SimpleDirectedWeightedGraph<>(MyWeightedEdge.class));
+                                            JGraphXAdapter<String, MyWeightedEdge> jgxAdapter = new JGraphXAdapter<>(g);
+
+                                            for(Wearhouse graph : wearhousesPath) {
+                                                g.addVertex(graph.name);
+                                            }
+                                            // for (int j = 0; j < wearhousesPath.size(); j++) {
+                                            //     if ((j + 1) < wearhousesPath.size()) {
+                                            //         MyWeightedEdge gEdge = g.addEdge(wearhousesPath.get(j).name, wearhousesPath.get(j + 1).name);
+                                            //         // g.setEdgeWeight(gEdge, e.distancia);
+                                            //     }
+                                            // }
+
+
+                                            mxGraphComponent component = new mxGraphComponent(jgxAdapter);
+                                            component.setConnectable(false);
+                                            component.setEnabled(false);
+                                            component.getGraph().setAllowDanglingEdges(false);
+                                            dialog.add(component);
+
+                                            JButton continueBtn = new JButton();
+                                            continueBtn.addActionListener(e -> {
+                                                dialog.dispose();
+                                            });
+                                            dialog.add(continueBtn);
+
+                                            dialog.pack();
+                                            dialog.setVisible(true);
+                                            break search;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        pendingOrderProductsToDelete.pushBack(listElement);
+                        if (diff == 0) {
+                            pendingWearhouseProductsToDelete.pushBack(pIndex);
+                            continue;
+                        }
+                        p.stock = diff;
+
+                        Grafo.getInstance().needsSave = true;
+                    }
+                }
+                pIndex++;
+            }
+        }
+
+        for (String i : pendingOrderProductsToDelete)
+            this.orderProductsListModel.removeElement(i);
+
+        for (int i = 0; i < pendingWearhouseProductsToDelete.size(); i++)
+            wearhouse.products.remove(pendingWearhouseProductsToDelete.get(i) - i);
+
+        this.resetWearhouseProductsList();
     }
 }

@@ -115,8 +115,6 @@ public class ShowStock extends CustomComponent {
     private void dfs(DefaultTableModel model) {
         Vector<Wearhouse> wearhouses = Grafo.getInstance().almacenes;
 
-        for (int i = 0; i < Grafo.getInstance().almacenes.size(); i++)
-            Grafo.getInstance().dijkstra(wearhouses.get(i));
         boolean[] visited = new boolean [wearhouses.size()];
         Arrays.fill(visited, false);
 
