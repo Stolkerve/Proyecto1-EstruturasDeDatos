@@ -25,6 +25,35 @@ public class AgregarAlmacen extends javax.swing.JPanel {
     public AgregarAlmacen() {
         initComponents();
     }
+    
+    public boolean encontrar(){
+        for (Wearhouse almacen : almacenes) {
+            if(nombre.equals(almacen.name)){
+                return true;    
+            }
+        }
+        return false;
+    }
+    
+    private String validarStr(String str){
+        try{
+            boolean encontrado=encontrar();
+            if(encontrado || str.length()==0){
+                if(encontrado){
+                    JOptionPane.showMessageDialog(null, " ERROR EL ALMACEN YA EXISTE ");
+                }else{
+                    JOptionPane.showMessageDialog(null, " ERROR EL NOMBRE INGRSADO NO ES VALIDO ");
+                }
+                fieldNombre.setText("");
+                return "";
+            }
+            return str;
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, " ERROR EL NOMBRE INGRSADO NO ES VALIDO ");
+            fieldNombre.setText("");
+            return "";
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -141,25 +170,8 @@ public class AgregarAlmacen extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void fieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldNombreActionPerformed
-        try{
-            nombre=fieldNombre.getText();
-            boolean encontrado=false;
-            for (Wearhouse almacen : almacenes) {
-                if(nombre.equals(almacen.name)){
-                    encontrado=true;    
-                    }
-                }
-            if(encontrado || nombre.length()==0){
-                if(encontrado){
-                    JOptionPane.showMessageDialog(null, " ERROR EL ALMACEN YA EXISTE ");
-                }else{
-                    JOptionPane.showMessageDialog(null, " ERROR EL NOMBRE INGRSADO NO ES VALIDO else ");
-                }
-                fieldNombre.setText("");
-            }  
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, " ERROR EL NOMBRE INGRSADO NO ES VALIDO catch");
-        }
+        String str=fieldNombre.getText();
+        nombre=validarStr(str);
     }//GEN-LAST:event_fieldNombreActionPerformed
 
     private void botonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarActionPerformed
@@ -172,7 +184,6 @@ public class AgregarAlmacen extends javax.swing.JPanel {
                 // crear arista y agregar a la lista
                 botonAgregar.setEnabled(false);
 //                cantRutas = rutasAgregadas.getVisibleRowCount();
-//                
 //                if (cantRutas >= 2 && !nombre.isEmpty()) {
 //                    botonAgregarAlmacen.setEnabled(true);
 //                }
@@ -196,33 +207,9 @@ public class AgregarAlmacen extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_rutasDisponiblesMouseClicked
 
-    private void RtrocederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RtrocederActionPerformed
-        // TODO add your handling code here:
-        MainFrame menu = new MainFrame();
-        menu.setVisible(true);
-        
-    }//GEN-LAST:event_RtrocederActionPerformed
-
     private void fieldNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldNombreFocusLost
-        try{
-            nombre=fieldNombre.getText();
-            boolean encontrado=false;
-            for (Wearhouse almacen : almacenes) {
-                if(nombre.equals(almacen.name)){
-                    encontrado=true;    
-                    }
-                }
-            if(encontrado || nombre.length()==0){
-                if(encontrado){
-                    JOptionPane.showMessageDialog(null, " ERROR EL ALMACEN YA EXISTE ");
-                }else{
-                    JOptionPane.showMessageDialog(null, " ERROR EL NOMBRE INGRSADO NO ES VALIDO else ");
-                }
-                fieldNombre.setText("");
-            }  
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, " ERROR EL NOMBRE INGRSADO NO ES VALIDO catch");
-        }
+        String str=fieldNombre.getText();
+        nombre=validarStr(str);
     }//GEN-LAST:event_fieldNombreFocusLost
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -41,10 +41,6 @@ public class AgregarRuta extends javax.swing.JPanel {
         botonAgregarRutas = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         rutasAgregadas = new javax.swing.JList<>();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        comentario1 = new javax.swing.JTextArea();
-        comentario2 = new javax.swing.JLabel();
-        comentario3 = new javax.swing.JLabel();
         listaAlmacenes = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
 
@@ -117,22 +113,6 @@ public class AgregarRuta extends javax.swing.JPanel {
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 170, 220, 220));
 
-        comentario1.setColumns(20);
-        comentario1.setFont(new java.awt.Font("Helvetica Neue", 0, 6)); // NOI18N
-        comentario1.setRows(5);
-        comentario1.setTabSize(5);
-        comentario1.setText("// Se activa solo\ncuando se haya\nseleeccionado un\nalmacen para ruta");
-        jScrollPane3.setViewportView(comentario1);
-
-        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 200, 70, -1));
-
-        comentario2.setFont(new java.awt.Font("Helvetica Neue", 0, 6)); // NOI18N
-        comentario2.setText("// Se activa cuando se hayan agregado al menos dos rutas");
-        add(comentario2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 430, 160, 10));
-
-        comentario3.setText("// JOP para pedir la distancia");
-        add(comentario3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 140, -1, 20));
-
         listaAlmacenes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         listaAlmacenes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -159,10 +139,10 @@ public class AgregarRuta extends javax.swing.JPanel {
                 comprobado=true;
                 // crear arista y agregar a la lista
                 botonAgregar.setEnabled(false);
-                cantRutas = rutasAgregadas.getVisibleRowCount();
-                if (cantRutas >= 2) {
+//                cantRutas = rutasAgregadas.getVisibleRowCount();
+//                if (cantRutas >= 2) {
                     botonAgregarRutas.setEnabled(true);
-                }
+//                }
             }catch(Exception e){
                 JOptionPane.showMessageDialog(null, " ERROR LA DISTANCIA INGRSADA NO ES VALIDA ");
             }   
@@ -174,6 +154,7 @@ public class AgregarRuta extends javax.swing.JPanel {
             if(almacenSeleccionado.name.equals(almacen.name)){
                 // almacenSeleccionado.edges.pushBack(arr);
                 botonAgregarRutas.setEnabled(false);
+                break;
             }
         }
     }//GEN-LAST:event_botonAgregarRutasActionPerformed
@@ -203,13 +184,8 @@ public class AgregarRuta extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAgregar;
     private javax.swing.JButton botonAgregarRutas;
-    private javax.swing.JTextArea comentario1;
-    private javax.swing.JLabel comentario2;
-    private javax.swing.JLabel comentario3;
-    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JComboBox<String> listaAlmacenes;
     private javax.swing.JList<String> rutasAgregadas;

@@ -44,7 +44,7 @@ public class ModificarStock extends javax.swing.JPanel {
         listaProductos = new javax.swing.JComboBox<>();
         jSeparator2 = new javax.swing.JSeparator();
         titulo4 = new javax.swing.JLabel();
-        fieldPrecio = new javax.swing.JTextField();
+        fieldCantidad = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
         botonModificar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
@@ -92,12 +92,17 @@ public class ModificarStock extends javax.swing.JPanel {
         titulo4.setText("INGRESE LA CANTIDAD A AUMENTAR  DEL PRODUCTO :");
         add(titulo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 370, 20));
 
-        fieldPrecio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldPrecioActionPerformed(evt);
+        fieldCantidad.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                fieldCantidadFocusLost(evt);
             }
         });
-        add(fieldPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 230, 210, 20));
+        fieldCantidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldCantidadActionPerformed(evt);
+            }
+        });
+        add(fieldCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 230, 210, 20));
 
         jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
         add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 580, 20));
@@ -121,15 +126,32 @@ public class ModificarStock extends javax.swing.JPanel {
         });
         add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
-
-    private void fieldPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldPrecioActionPerformed
+    
+    private int validarInt(String num){
         try{
-            stock=Integer.parseInt(fieldPrecio.getText());
+            stock=Integer.parseInt(num);
+            if(stock<=0){
+                JOptionPane.showMessageDialog(null, " ERROR LA CANTIDAD INGRSADA NO ES VALIDA ");
+                fieldCantidad.setText("");
+                return 0;
+            }
+            return stock;
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, " ERROR LA CANTIDAD INGRSADA NO ES VALIDA ");
+            fieldCantidad.setText("");
+            return 0;
+        }
+    }
+    
+    private void fieldCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldCantidadActionPerformed
+        try{
+            String num=fieldCantidad.getText();
+            stock=validarInt(num);
             botonModificar.setEnabled(true);
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, " ERROR LA CANTIDAD INGRESADA NO ES VALIDA ");
         }
-    }//GEN-LAST:event_fieldPrecioActionPerformed
+    }//GEN-LAST:event_fieldCantidadActionPerformed
 
     private void botonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarActionPerformed
 
@@ -153,15 +175,20 @@ public class ModificarStock extends javax.swing.JPanel {
         productoSeleccionado=(Product) listaProductos.getSelectedItem();
     }//GEN-LAST:event_listaProductosActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        MainFrame menu = new MainFrame();
-        menu.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void fieldCantidadFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldCantidadFocusLost
+        try{
+            String num=fieldCantidad.getText();
+            stock=validarInt(num);
+            botonModificar.setEnabled(true);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, " ERROR LA CANTIDAD INGRESADA NO ES VALIDA ");
+        }
+    }//GEN-LAST:event_fieldCantidadFocusLost
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonModificar;
+    private javax.swing.JTextField fieldCantidad;
     private javax.swing.JTextField fieldPrecio;
     private javax.swing.JButton jButton1;
     private javax.swing.JSeparator jSeparator1;

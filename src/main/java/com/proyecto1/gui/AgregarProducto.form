@@ -105,6 +105,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="fieldNombre">
       <Events>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="fieldNombreFocusLost"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fieldNombreActionPerformed"/>
       </Events>
       <Constraints>
@@ -140,6 +141,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="fieldCantidad">
       <Events>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="fieldCantidadFocusLost"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fieldCantidadActionPerformed"/>
       </Events>
       <Constraints>
