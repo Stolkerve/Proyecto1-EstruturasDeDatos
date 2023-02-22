@@ -116,6 +116,7 @@ public class ModificarStock extends javax.swing.JPanel {
             }
         });
         add(botonModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 400, 120, -1));
+
     }// </editor-fold>//GEN-END:initComponents
     
     private int validarInt(String num){

@@ -130,7 +130,7 @@ public class GraphFileDialog {
                                     if (w.name.equals(originNodeName)) {
                                         for (Wearhouse w2 : wearhouses) {
                                             if (w2.name.equals(destinationNodeName)) {
-                                                w.edges.pushBack(new Edge(w, w2, distance));
+                                                w.edges.pushBack(new Edge(w2, distance));
                                                 break;
                                             }
                                         }
@@ -200,7 +200,7 @@ public class GraphFileDialog {
                         i++;
                     }
                     for (Edge e : w.edges)
-                        rutas += String.format("%s,%s,%d\n", e.almacen.name, e.almacenVecino.name, e.distancia);
+                        rutas += String.format("%s,%s,%d\n", w.name, e.almacenVecino.name, e.distancia);
                 }
                 output.write("Rutas;\n" + rutas);
                 output.close();

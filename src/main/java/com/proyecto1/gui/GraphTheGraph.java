@@ -53,7 +53,7 @@ public class GraphTheGraph extends CustomComponent {
 
         for(Wearhouse w : wearhouses) {
             for(Edge e : w.edges) {
-                MyWeightedEdge gEdge = g.addEdge(e.almacen.name, e.almacenVecino.name);
+                MyWeightedEdge gEdge = g.addEdge(w.name, e.almacenVecino.name);
                 g.setEdgeWeight(gEdge, e.distancia);
             }
         }
