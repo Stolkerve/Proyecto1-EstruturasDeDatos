@@ -121,7 +121,7 @@ public class ModificarStock extends javax.swing.JPanel {
         jButton1.setText("<----");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                // jButton1ActionPerformed(evt);
             }
         });
         add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
