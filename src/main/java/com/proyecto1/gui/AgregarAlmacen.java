@@ -1,8 +1,12 @@
 package com.proyecto1.gui;
 
 import com.proyecto1.MainFrame;
+import com.proyecto1.containers.Grafo;
+import com.proyecto1.containers.Vector;
+import com.proyecto1.models.Edge;
 import com.proyecto1.models.Product;
 import com.proyecto1.models.Wearhouse;
+import java.awt.event.ActionEvent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -10,23 +14,34 @@ import javax.swing.JOptionPane;
 
 public class AgregarAlmacen extends javax.swing.JPanel {
     
-    int cantRutas;
+//    int cantRutas;
     boolean comprobado;
     int index;
-    int cantidad = 5;
-    Wearhouse[] almacenes = new Wearhouse[cantidad];
-    String Wearhouse[] = {"agua"};
-    
+    int distancia;
+    Vector<Wearhouse> almacenes;
     String nombre;
+    Wearhouse almacenSeleccionado;
+    Wearhouse almacenNuevo;
     
     /**
      * Creates new form Prubea
      */
     public AgregarAlmacen() {
         initComponents();
+        almacenes=Grafo.getInstance().almacenes;
+        Wearhouse almacenNuevo=new Wearhouse("vacio");
     }
     
-    public boolean encontrar(){
+    private Wearhouse buscarWearhouse(Vector<Wearhouse> almacenes,String nombre){
+        for (Wearhouse almacen : almacenes) {
+            if(nombre.equals(almacen.name)){
+                return almacen;    
+            }
+        }
+        return null;
+    }
+    
+    private boolean encontrar(){
         for (Wearhouse almacen : almacenes) {
             if(nombre.equals(almacen.name)){
                 return true;    
@@ -76,12 +91,12 @@ public class AgregarAlmacen extends javax.swing.JPanel {
         botonAgregarAlmacen = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         rutasAgregadas = new javax.swing.JList<>();
-        Rtroceder = new javax.swing.JButton();
 
         setFocusable(false);
         setMaximumSize(new java.awt.Dimension(630, 450));
         setMinimumSize(new java.awt.Dimension(630, 450));
         setPreferredSize(new java.awt.Dimension(630, 450));
+        setRequestFocusEnabled(false);
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         titulo1.setFont(new java.awt.Font("Silom", 0, 48)); // NOI18N
@@ -159,14 +174,6 @@ public class AgregarAlmacen extends javax.swing.JPanel {
         jScrollPane2.setViewportView(rutasAgregadas);
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 170, 220, 220));
-
-        Rtroceder.setText("<---");
-        Rtroceder.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RtrocederActionPerformed(evt);
-            }
-        });
-        add(Rtroceder, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 90, 40));
     }// </editor-fold>//GEN-END:initComponents
 
     private void fieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldNombreActionPerformed
@@ -181,6 +188,14 @@ public class AgregarAlmacen extends javax.swing.JPanel {
             try{
                 int distancia=Integer.parseInt(x);
                 comprobado=true;
+                String almacenVecino=rutasDisponibles.getSelectedValue();
+                Wearhouse almacenVecinoW = buscarWearhouse(almacenes,almacenVecino);
+                almacenNuevo.name=nombre;
+//                Edge edge=new Edge(almacenNuevo,almacenVecino,distancia);
+                
+//                almacenSeleccionado=(Wearhouse) rutasDisponibles.getSelectedItem();
+//                //almacenSeleccionado=rutasDisponibles.getSelec
+//                Edge(Wearhouse almacen, Wearhouse almacenVecino, int distancia)
                 // crear arista y agregar a la lista
                 botonAgregar.setEnabled(false);
 //                cantRutas = rutasAgregadas.getVisibleRowCount();
@@ -196,8 +211,8 @@ public class AgregarAlmacen extends javax.swing.JPanel {
 
     private void botonAgregarAlmacenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarAlmacenActionPerformed
         Wearhouse almacen=new Wearhouse(nombre);
-        // almacen.edges.pushBack(v);
-        // wearhouses.pushback(almacen);
+       //almacen.edges.pushBack(v);
+        almacenes.pushBack(almacen);
     }//GEN-LAST:event_botonAgregarAlmacenActionPerformed
 
     private void rutasDisponiblesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rutasDisponiblesMouseClicked
@@ -213,7 +228,6 @@ public class AgregarAlmacen extends javax.swing.JPanel {
     }//GEN-LAST:event_fieldNombreFocusLost
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Rtroceder;
     private javax.swing.JButton botonAgregar;
     private javax.swing.JButton botonAgregarAlmacen;
     private javax.swing.JTextField fieldNombre;

@@ -42,7 +42,6 @@ public class AgregarRuta extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         rutasAgregadas = new javax.swing.JList<>();
         listaAlmacenes = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(630, 450));
         setMinimumSize(new java.awt.Dimension(630, 450));
@@ -120,14 +119,6 @@ public class AgregarRuta extends javax.swing.JPanel {
             }
         });
         add(listaAlmacenes, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, 220, -1));
-
-        jButton1.setText("<----");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 80, 40));
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarActionPerformed
@@ -173,12 +164,6 @@ public class AgregarRuta extends javax.swing.JPanel {
             botonAgregar.setEnabled(true);
         } 
     }//GEN-LAST:event_rutasDisponiblesMouseClicked
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        MainFrame menu = new MainFrame();
-        menu.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
