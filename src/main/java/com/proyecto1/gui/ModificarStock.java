@@ -4,6 +4,7 @@
  */
 package com.proyecto1.gui;
 
+import com.proyecto1.MainFrame;
 import com.proyecto1.models.Product;
 import com.proyecto1.models.Wearhouse;
 import javax.swing.JOptionPane;
@@ -35,7 +36,6 @@ public class ModificarStock extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        botonRetroceder = new javax.swing.JButton();
         titulo1 = new javax.swing.JLabel();
         titulo2 = new javax.swing.JLabel();
         listaAlmacenes = new javax.swing.JComboBox<>();
@@ -47,22 +47,12 @@ public class ModificarStock extends javax.swing.JPanel {
         fieldPrecio = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
         botonModificar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(630, 450));
         setMinimumSize(new java.awt.Dimension(630, 450));
         setPreferredSize(new java.awt.Dimension(630, 450));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        botonRetroceder.setFont(new java.awt.Font("Silom", 0, 14)); // NOI18N
-        botonRetroceder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/proyecto1/assets/retroceder.png"))); // NOI18N
-        botonRetroceder.setBorder(null);
-        botonRetroceder.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botonRetroceder.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonRetrocederActionPerformed(evt);
-            }
-        });
-        add(botonRetroceder, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
 
         titulo1.setFont(new java.awt.Font("Silom", 0, 48)); // NOI18N
         titulo1.setText("MODIFICAR STOCK");
@@ -122,6 +112,14 @@ public class ModificarStock extends javax.swing.JPanel {
             }
         });
         add(botonModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 400, 120, -1));
+
+        jButton1.setText("<----");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void fieldPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldPrecioActionPerformed
@@ -147,12 +145,6 @@ public class ModificarStock extends javax.swing.JPanel {
         botonModificar.setEnabled(false);
     }//GEN-LAST:event_botonModificarActionPerformed
 
-    private void botonRetrocederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRetrocederActionPerformed
-        this.setVisible(false);
-        // MainPanel menu= new MainPanel
-        // MainPanel.show()
-    }//GEN-LAST:event_botonRetrocederActionPerformed
-
     private void listaAlmacenesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaAlmacenesActionPerformed
         almacenSeleccionado=(Wearhouse) listaAlmacenes.getSelectedItem();
     }//GEN-LAST:event_listaAlmacenesActionPerformed
@@ -161,11 +153,17 @@ public class ModificarStock extends javax.swing.JPanel {
         productoSeleccionado=(Product) listaProductos.getSelectedItem();
     }//GEN-LAST:event_listaProductosActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        MainFrame menu = new MainFrame();
+        menu.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonModificar;
-    private javax.swing.JButton botonRetroceder;
     private javax.swing.JTextField fieldPrecio;
+    private javax.swing.JButton jButton1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;

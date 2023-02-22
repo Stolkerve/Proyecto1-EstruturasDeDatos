@@ -1,7 +1,9 @@
 package com.proyecto1.gui;
 
+import com.proyecto1.MainFrame;
 import com.proyecto1.models.Product;
 import com.proyecto1.models.Wearhouse;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 // @author andresbucarello
@@ -13,6 +15,8 @@ public class AgregarAlmacen extends javax.swing.JPanel {
     int index;
     int cantidad = 5;
     Wearhouse[] almacenes = new Wearhouse[cantidad];
+    String Wearhouse[] = {"agua"};
+    
     String nombre;
     
     /**
@@ -31,7 +35,6 @@ public class AgregarAlmacen extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        botonRetroceder = new javax.swing.JButton();
         titulo1 = new javax.swing.JLabel();
         titulo2 = new javax.swing.JLabel();
         fieldNombre = new javax.swing.JTextField();
@@ -44,30 +47,27 @@ public class AgregarAlmacen extends javax.swing.JPanel {
         botonAgregarAlmacen = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         rutasAgregadas = new javax.swing.JList<>();
+        Rtroceder = new javax.swing.JButton();
 
+        setFocusable(false);
         setMaximumSize(new java.awt.Dimension(630, 450));
         setMinimumSize(new java.awt.Dimension(630, 450));
+        setPreferredSize(new java.awt.Dimension(630, 450));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        botonRetroceder.setFont(new java.awt.Font("Silom", 0, 14)); // NOI18N
-        botonRetroceder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/proyecto1/assets/retroceder.png"))); // NOI18N
-        botonRetroceder.setBorder(null);
-        botonRetroceder.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botonRetroceder.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonRetrocederActionPerformed(evt);
-            }
-        });
-        add(botonRetroceder, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
 
         titulo1.setFont(new java.awt.Font("Silom", 0, 48)); // NOI18N
         titulo1.setText("AGREGAR ALMACEN");
-        add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 0, -1, -1));
+        add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, -1, -1));
 
         titulo2.setFont(new java.awt.Font("Silom", 1, 14)); // NOI18N
         titulo2.setText("INGRESE EL NOMBRE :");
         add(titulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 160, -1));
 
+        fieldNombre.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                fieldNombreFocusLost(evt);
+            }
+        });
         fieldNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fieldNombreActionPerformed(evt);
@@ -130,11 +130,15 @@ public class AgregarAlmacen extends javax.swing.JPanel {
         jScrollPane2.setViewportView(rutasAgregadas);
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 170, 220, 220));
+
+        Rtroceder.setText("<---");
+        Rtroceder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RtrocederActionPerformed(evt);
+            }
+        });
+        add(Rtroceder, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 90, 40));
     }// </editor-fold>//GEN-END:initComponents
-
-    private void botonRetroceder1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRetrocederActionPerformed
-
-    }//GEN-LAST:event_botonRetrocederActionPerformed
 
     private void fieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldNombreActionPerformed
         try{
@@ -149,12 +153,12 @@ public class AgregarAlmacen extends javax.swing.JPanel {
                 if(encontrado){
                     JOptionPane.showMessageDialog(null, " ERROR EL ALMACEN YA EXISTE ");
                 }else{
-                    JOptionPane.showMessageDialog(null, " ERROR EL NOMBRE INGRSADO NO ES VALIDO ");
+                    JOptionPane.showMessageDialog(null, " ERROR EL NOMBRE INGRSADO NO ES VALIDO else ");
                 }
                 fieldNombre.setText("");
             }  
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null, " ERROR EL NOMBRE INGRSADO NO ES VALIDO ");
+            JOptionPane.showMessageDialog(null, " ERROR EL NOMBRE INGRSADO NO ES VALIDO catch");
         }
     }//GEN-LAST:event_fieldNombreActionPerformed
 
@@ -167,12 +171,13 @@ public class AgregarAlmacen extends javax.swing.JPanel {
                 comprobado=true;
                 // crear arista y agregar a la lista
                 botonAgregar.setEnabled(false);
-                cantRutas = rutasAgregadas.getVisibleRowCount();
-                if (cantRutas >= 2 && !nombre.isEmpty()) {
-                    botonAgregarAlmacen.setEnabled(true);
-                }
+//                cantRutas = rutasAgregadas.getVisibleRowCount();
+//                
+//                if (cantRutas >= 2 && !nombre.isEmpty()) {
+//                    botonAgregarAlmacen.setEnabled(true);
+//                }
             }catch(Exception e){
-                JOptionPane.showMessageDialog(null, " ERROR LA DISTANCIA INGRSADA NO ES VALIDA ");
+                JOptionPane.showMessageDialog(null, " ERROR LA DISTANCIA INGRSADA NO ES VALIDA"); 
             }   
         }while(!comprobado);
         
@@ -184,13 +189,6 @@ public class AgregarAlmacen extends javax.swing.JPanel {
         // wearhouses.pushback(almacen);
     }//GEN-LAST:event_botonAgregarAlmacenActionPerformed
 
-    private void botonRetrocederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRetroceder1ActionPerformed
-        this.setVisible(false);
-        // MainPanel menu= new MainPanel
-        // MainPanel.show()
-                          
-    }//GEN-LAST:event_botonRetroceder1ActionPerformed
-
     private void rutasDisponiblesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rutasDisponiblesMouseClicked
         index= rutasDisponibles.getSelectedIndex();
         if (index != -1) {
@@ -198,10 +196,39 @@ public class AgregarAlmacen extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_rutasDisponiblesMouseClicked
 
+    private void RtrocederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RtrocederActionPerformed
+        // TODO add your handling code here:
+        MainFrame menu = new MainFrame();
+        menu.setVisible(true);
+        
+    }//GEN-LAST:event_RtrocederActionPerformed
+
+    private void fieldNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldNombreFocusLost
+        try{
+            nombre=fieldNombre.getText();
+            boolean encontrado=false;
+            for (Wearhouse almacen : almacenes) {
+                if(nombre.equals(almacen.name)){
+                    encontrado=true;    
+                    }
+                }
+            if(encontrado || nombre.length()==0){
+                if(encontrado){
+                    JOptionPane.showMessageDialog(null, " ERROR EL ALMACEN YA EXISTE ");
+                }else{
+                    JOptionPane.showMessageDialog(null, " ERROR EL NOMBRE INGRSADO NO ES VALIDO else ");
+                }
+                fieldNombre.setText("");
+            }  
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, " ERROR EL NOMBRE INGRSADO NO ES VALIDO catch");
+        }
+    }//GEN-LAST:event_fieldNombreFocusLost
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Rtroceder;
     private javax.swing.JButton botonAgregar;
     private javax.swing.JButton botonAgregarAlmacen;
-    private javax.swing.JButton botonRetroceder;
     private javax.swing.JTextField fieldNombre;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
