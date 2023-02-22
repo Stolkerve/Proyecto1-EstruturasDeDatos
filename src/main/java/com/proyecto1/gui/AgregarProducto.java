@@ -86,6 +86,11 @@ public class AgregarProducto extends javax.swing.JPanel {
         titulo3.setText("INGRESE EL NOMBRE DEL PRODUCTO :");
         add(titulo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 260, 20));
 
+        fieldNombre.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                fieldNombreFocusLost(evt);
+            }
+        });
         fieldNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fieldNombreActionPerformed(evt);
@@ -100,6 +105,11 @@ public class AgregarProducto extends javax.swing.JPanel {
         titulo4.setText("INGRESE LA CANTIDAD DEL PRODUCTO :");
         add(titulo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 280, 20));
 
+        fieldCantidad.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                fieldCantidadFocusLost(evt);
+            }
+        });
         fieldCantidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fieldCantidadActionPerformed(evt);
@@ -121,20 +131,39 @@ public class AgregarProducto extends javax.swing.JPanel {
         });
         add(botonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 400, 120, -1));
     }// </editor-fold>//GEN-END:initComponents
-
-    private void fieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldNombreActionPerformed
-        try{
-            nombre=fieldNombre.getText();
-            boolean encontrado=false;
-            for (Wearhouse almacen : almacenes) {
-                if(almacenSeleccionado.name.equals(almacen.name)){
-                    for (Product producto : almacen.products){
-                        if(nombre.equals(producto.name)){
-                            encontrado=true;
-                        }
+    private boolean encontrar(){
+        for (Wearhouse almacen : almacenes) {
+            if(almacenSeleccionado.name.equals(almacen.name)){
+                for (Product producto : almacen.products){
+                    if(nombre.equals(producto.name)){
+                        return true;
                     }
-                }    
+                }
+            }    
+        }
+        return false;
+    }
+    
+    private int validarInt(String num){
+        try{
+            stock=Integer.parseInt(num);
+            if(stock<=0){
+                JOptionPane.showMessageDialog(null, " ERROR LA CANTIDAD INGRSADA NO ES VALIDA ");
+                fieldCantidad.setText("");
+                return 0;
             }
+            return stock;
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, " ERROR LA CANTIDAD INGRSADA NO ES VALIDA ");
+            fieldCantidad.setText("");
+            return 0;
+        }
+    }
+    
+    private String validarStr(String nombre){
+        try{
+            String nombreProducto=fieldNombre.getText();
+            boolean encontrado=encontrar();
             if(encontrado || !nombre.isEmpty()){
                 if(encontrado){
                     JOptionPane.showMessageDialog(null, " EL PRODUCTO YA EXISTE, EL NOMBRE NO ES VALIDO: ");
@@ -142,27 +171,29 @@ public class AgregarProducto extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(null, " ERROR EL NOMBRE INGRESADO NO ES VALIDO: ");
                 }
                 fieldNombre.setText("");
-            }else{
-                
-            }  
+                return "";
+            }
+            return nombreProducto;
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, " ERROR EL NOMBRE INGRESADO NO ES VALIDO: ");
+            fieldNombre.setText("");
+            return "";
+        }
+    }
+    
+    private void fieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldNombreActionPerformed
+        String nombreProducto=fieldNombre.getText();
+        nombre=validarStr(nombreProducto);
+        if(stock>0 && !nombre.isEmpty()){
+            botonGuardar.setEnabled(true);
         }
     }//GEN-LAST:event_fieldNombreActionPerformed
 
     private void fieldCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldCantidadActionPerformed
-        try{
-            stock=Integer.parseInt(fieldCantidad.getText());
-            if(stock<=0){
-                JOptionPane.showMessageDialog(this, " ERROR LA CANTIDAD INGRSADA NO ES VALIDA ");
-                fieldCantidad.setText("");
-            }
-            if(!nombre.isEmpty() && stock>0){
-                botonGuardar.setEnabled(true);
-            }
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(this, " ERROR LA CANTIDAD INGRSADA NO ES VALIDA ");
-            fieldCantidad.setText("");
+        String num =fieldCantidad.getText();
+        stock = validarInt(num);
+        if(stock>0 && !nombre.isEmpty()){
+            botonGuardar.setEnabled(true);
         }
     }//GEN-LAST:event_fieldCantidadActionPerformed
 
@@ -174,7 +205,6 @@ public class AgregarProducto extends javax.swing.JPanel {
                 break;
             }
         }
-        
     }//GEN-LAST:event_botonGuardarActionPerformed
 
     private void botonRetrocederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRetrocederActionPerformed
@@ -188,6 +218,21 @@ public class AgregarProducto extends javax.swing.JPanel {
         almacenSeleccionado=(Wearhouse) listaAlmacenes.getSelectedItem();
     }//GEN-LAST:event_listaAlmacenesActionPerformed
 
+    private void fieldNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldNombreFocusLost
+        String nombreProducto=fieldNombre.getText();
+        nombre=validarStr(nombreProducto);
+        if(stock>0 && !nombre.isEmpty()){
+            botonGuardar.setEnabled(true);
+        }
+    }//GEN-LAST:event_fieldNombreFocusLost
+
+    private void fieldCantidadFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldCantidadFocusLost
+        String num =fieldCantidad.getText();
+        stock = validarInt(num);
+        if(stock>0 && !nombre.isEmpty()){
+            botonGuardar.setEnabled(true);
+        }
+    }//GEN-LAST:event_fieldCantidadFocusLost
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonGuardar;
