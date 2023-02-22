@@ -13,7 +13,12 @@ import javax.swing.JOptionPane;
  * @author andresbucarello
  */
 public class ModificarStock extends javax.swing.JPanel {
-
+    
+    int cantidad = 5;
+    Wearhouse[] almacenes = new Wearhouse[cantidad];
+    int stock;
+    Wearhouse almacenSeleccionado;
+    Product productoSeleccionado;
     /**
      * Creates new form ModificarStockk
      */
@@ -34,17 +39,14 @@ public class ModificarStock extends javax.swing.JPanel {
         titulo1 = new javax.swing.JLabel();
         titulo2 = new javax.swing.JLabel();
         listaAlmacenes = new javax.swing.JComboBox<>();
+        jSeparator1 = new javax.swing.JSeparator();
         titulo3 = new javax.swing.JLabel();
+        listaProductos = new javax.swing.JComboBox<>();
+        jSeparator2 = new javax.swing.JSeparator();
         titulo4 = new javax.swing.JLabel();
         fieldPrecio = new javax.swing.JTextField();
-        botonComprobar1 = new javax.swing.JButton();
-        botonGuardar = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JSeparator();
-        jSeparator1 = new javax.swing.JSeparator();
-        jSeparator2 = new javax.swing.JSeparator();
-        listaAlmacenes1 = new javax.swing.JComboBox<>();
-        botonRetroceder2 = new javax.swing.JButton();
-        botonRetroceder1 = new javax.swing.JButton();
+        botonModificar = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(630, 450));
         setMinimumSize(new java.awt.Dimension(630, 450));
@@ -52,7 +54,7 @@ public class ModificarStock extends javax.swing.JPanel {
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botonRetroceder.setFont(new java.awt.Font("Silom", 0, 14)); // NOI18N
-        botonRetroceder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/./assets/left-arrow.png"))); // NOI18N
+        botonRetroceder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/proyecto1/assets/retroceder.png"))); // NOI18N
         botonRetroceder.setBorder(null);
         botonRetroceder.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonRetroceder.addActionListener(new java.awt.event.ActionListener() {
@@ -60,7 +62,7 @@ public class ModificarStock extends javax.swing.JPanel {
                 botonRetrocederActionPerformed(evt);
             }
         });
-        add(botonRetroceder, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
+        add(botonRetroceder, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
 
         titulo1.setFont(new java.awt.Font("Silom", 0, 48)); // NOI18N
         titulo1.setText("MODIFICAR STOCK");
@@ -71,11 +73,30 @@ public class ModificarStock extends javax.swing.JPanel {
         add(titulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 190, -1));
 
         listaAlmacenes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        add(listaAlmacenes, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 170, 290, -1));
+        listaAlmacenes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listaAlmacenesActionPerformed(evt);
+            }
+        });
+        add(listaAlmacenes, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 110, 150, -1));
+
+        jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
+        add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 580, 20));
 
         titulo3.setFont(new java.awt.Font("Silom", 1, 14)); // NOI18N
         titulo3.setText("SELECCIONE EL NOMBRE DEL PRODUCTO :");
         add(titulo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 290, 20));
+
+        listaProductos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        listaProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listaProductosActionPerformed(evt);
+            }
+        });
+        add(listaProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 170, 290, -1));
+
+        jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
+        add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 580, 20));
 
         titulo4.setFont(new java.awt.Font("Silom", 1, 14)); // NOI18N
         titulo4.setText("INGRESE LA CANTIDAD A AUMENTAR  DEL PRODUCTO :");
@@ -86,113 +107,70 @@ public class ModificarStock extends javax.swing.JPanel {
                 fieldPrecioActionPerformed(evt);
             }
         });
-        add(fieldPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 230, 80, 20));
-
-        botonComprobar1.setFont(new java.awt.Font("Silom", 0, 14)); // NOI18N
-        botonComprobar1.setText("COMPROBAR");
-        botonComprobar1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botonComprobar1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonComprobar1ActionPerformed(evt);
-            }
-        });
-        add(botonComprobar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 230, 120, 20));
-
-        botonGuardar.setFont(new java.awt.Font("Silom", 0, 14)); // NOI18N
-        botonGuardar.setText("Guardar");
-        botonGuardar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botonGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonGuardarActionPerformed(evt);
-            }
-        });
-        add(botonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 400, 120, -1));
+        add(fieldPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 230, 210, 20));
 
         jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
         add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 580, 20));
 
-        jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
-        add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 580, 20));
-
-        jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
-        add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 580, 20));
-
-        listaAlmacenes1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        add(listaAlmacenes1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 110, 150, -1));
-
-        botonRetroceder2.setFont(new java.awt.Font("Silom", 0, 14)); // NOI18N
-        botonRetroceder2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/proyecto1/images/retroceder.png"))); // NOI18N
-        botonRetroceder2.setBorder(null);
-        botonRetroceder2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botonRetroceder2.addActionListener(new java.awt.event.ActionListener() {
+        botonModificar.setFont(new java.awt.Font("Silom", 0, 14)); // NOI18N
+        botonModificar.setText("MODIFICAR");
+        botonModificar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botonModificar.setEnabled(false);
+        botonModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonRetroceder2ActionPerformed(evt);
+                botonModificarActionPerformed(evt);
             }
         });
-        add(botonRetroceder2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
-
-        botonRetroceder1.setFont(new java.awt.Font("Silom", 0, 14)); // NOI18N
-        botonRetroceder1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/proyecto1/assets/retroceder.png"))); // NOI18N
-        botonRetroceder1.setBorder(null);
-        botonRetroceder1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botonRetroceder1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonRetroceder1ActionPerformed(evt);
-            }
-        });
-        add(botonRetroceder1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
+        add(botonModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 400, 120, -1));
     }// </editor-fold>//GEN-END:initComponents
-
-    private void botonRetrocederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRetrocederActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botonRetrocederActionPerformed
 
     private void fieldPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldPrecioActionPerformed
         try{
-            // int stock=Integer.parseInt(fieldNombre.getText());
-            // for (Wearhouse almacen : listaAlmacenesS) {
-            //     if(listaAlmacenes.getSelectedItem().equals(almacen.name)){
-            //         for (Product producto : almacen.products){
-            //             if(fieldNombre.getText().equals(producto.name)){
-            //                 producto.stock+=stock;
-            //             }
-            //         }
-            //     }    
-            // }
+            stock=Integer.parseInt(fieldPrecio.getText());
+            botonModificar.setEnabled(true);
         }catch(Exception e){
-            JOptionPane.showMessageDialog(this, " ERROR LA CANTIDAD INGRESADA NO ES VALIDA ");
+            JOptionPane.showMessageDialog(null, " ERROR LA CANTIDAD INGRESADA NO ES VALIDA ");
         }
     }//GEN-LAST:event_fieldPrecioActionPerformed
 
-    private void botonComprobar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonComprobar1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botonComprobar1ActionPerformed
+    private void botonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarActionPerformed
 
-    private void botonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botonGuardarActionPerformed
+        for (Wearhouse almacen : almacenes){
+            if(almacenSeleccionado.name.equals(almacen.name)){
+                for (Product producto : almacen.products){
+                    if(productoSeleccionado.name.equals(producto.name)){
+                        producto.stock+=stock;
+                    }
+                }
+            }    
+        }
+        botonModificar.setEnabled(false);
+    }//GEN-LAST:event_botonModificarActionPerformed
 
-    private void botonRetroceder2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRetroceder2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botonRetroceder2ActionPerformed
+    private void botonRetrocederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRetrocederActionPerformed
+        this.setVisible(false);
+        // MainPanel menu= new MainPanel
+        // MainPanel.show()
+    }//GEN-LAST:event_botonRetrocederActionPerformed
 
-    private void botonRetroceder1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRetroceder1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botonRetroceder1ActionPerformed
+    private void listaAlmacenesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaAlmacenesActionPerformed
+        almacenSeleccionado=(Wearhouse) listaAlmacenes.getSelectedItem();
+    }//GEN-LAST:event_listaAlmacenesActionPerformed
+
+    private void listaProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaProductosActionPerformed
+        productoSeleccionado=(Product) listaProductos.getSelectedItem();
+    }//GEN-LAST:event_listaProductosActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botonComprobar1;
-    private javax.swing.JButton botonGuardar;
+    private javax.swing.JButton botonModificar;
     private javax.swing.JButton botonRetroceder;
-    private javax.swing.JButton botonRetroceder1;
-    private javax.swing.JButton botonRetroceder2;
     private javax.swing.JTextField fieldPrecio;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JComboBox<String> listaAlmacenes;
-    private javax.swing.JComboBox<String> listaAlmacenes1;
+    private javax.swing.JComboBox<String> listaProductos;
     private javax.swing.JLabel titulo1;
     private javax.swing.JLabel titulo2;
     private javax.swing.JLabel titulo3;

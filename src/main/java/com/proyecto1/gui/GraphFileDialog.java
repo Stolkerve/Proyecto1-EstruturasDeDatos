@@ -61,8 +61,6 @@ public class GraphFileDialog {
                 Vector<Wearhouse> wearhouses = new Vector<>();
                 Wearhouse wearhouse = null;
 
-                int productIdCounter = 0;
-
                 while (scanner.hasNextLine()) {
                     String line = scanner.nextLine();
                     switch (state) {
@@ -92,7 +90,6 @@ public class GraphFileDialog {
                                 }
                                 wearhouse = new Wearhouse(name);
                                 wearhouses.pushBack(wearhouse);
-                                productIdCounter = 0;
                             } else {
                                 // No son grafos?
                                 if (!line.equals("Rutas;")) {
@@ -113,9 +110,8 @@ public class GraphFileDialog {
                             if (match.matches()) {
                                 String name = match.group(1);
                                 int stock = Integer.parseInt(match.group(2));
-                                wearhouse.products.pushBack(new Product(name, productIdCounter, stock));
+                                wearhouse.products.pushBack(new Product(name, stock));
 
-                                productIdCounter++;
                                 String endChar = match.group(3);
                                 if (endChar.length() != 0) {
                                     state = FileState.BeginWearhouse;

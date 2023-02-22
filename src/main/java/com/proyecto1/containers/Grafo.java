@@ -25,11 +25,11 @@ public class Grafo {
         almacenes.pushBack(nuevo);
     }
 
-    public Product buscarProducto(int productoId, String almacenName) {
+    public Product buscarProducto(String nombre, String almacenName) {
         for (Wearhouse almacen : this.almacenes) {
             if (almacen.name.equals(almacenName)) {
                 for (Product producto : almacen.products) {
-                    if (producto.id == productoId) {
+                    if (producto.name == nombre) {
                         return producto;
                     }
                 }
