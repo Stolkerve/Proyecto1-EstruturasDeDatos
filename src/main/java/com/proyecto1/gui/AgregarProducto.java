@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package com.proyecto1.gui;
 import javax.swing.JOptionPane;
 import com.proyecto1.models.Product;
@@ -9,14 +5,17 @@ import com.proyecto1.models.Wearhouse;
 import com.proyecto1.gui.MainPanel;
 import javax.swing.JFrame;
 
-/**
- *
- * @author andresbucarello
- */
+// @author andresbucarello
+
 public class AgregarProducto extends javax.swing.JPanel {
     
     int cantidad = 5;
-    Wearhouse[] listaAlmacenesS = new Wearhouse[cantidad];
+    Wearhouse[] almacenes = new Wearhouse[cantidad];
+    String nombre;
+    int stock;
+    int opciones;
+    Wearhouse almacenSeleccionado;
+    
     /**
      * Creates new form AgregarProducto
      */
@@ -114,6 +113,7 @@ public class AgregarProducto extends javax.swing.JPanel {
         botonGuardar.setFont(new java.awt.Font("Silom", 0, 14)); // NOI18N
         botonGuardar.setText("Guardar");
         botonGuardar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botonGuardar.setEnabled(false);
         botonGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonGuardarActionPerformed(evt);
@@ -124,44 +124,57 @@ public class AgregarProducto extends javax.swing.JPanel {
 
     private void fieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldNombreActionPerformed
         try{
-            String nombre=fieldNombre.getText();
+            nombre=fieldNombre.getText();
             boolean encontrado=false;
-            for (Wearhouse almacen : listaAlmacenesS) {
-                if(listaAlmacenes.getSelectedItem().equals(almacen.name)){
+            for (Wearhouse almacen : almacenes) {
+                if(almacenSeleccionado.name.equals(almacen.name)){
                     for (Product producto : almacen.products){
-                        if(fieldNombre.getText().equals(producto.name)){
+                        if(nombre.equals(producto.name)){
                             encontrado=true;
                         }
                     }
                 }    
             }
-            if(encontrado){
-                System.out.println(" SI EXISTE, EL NOMBRE NO ES VALIDO");
+            if(encontrado || !nombre.isEmpty()){
+                if(encontrado){
+                    JOptionPane.showMessageDialog(null, " EL PRODUCTO YA EXISTE, EL NOMBRE NO ES VALIDO: ");
+                }else{
+                    JOptionPane.showMessageDialog(null, " ERROR EL NOMBRE INGRESADO NO ES VALIDO: ");
+                }
+                fieldNombre.setText("");
             }else{
-                System.out.println(" NO EXISTE, EL NOMBRE ES VALIDO ");
-            }   
+                
+            }  
         }catch(Exception e){
-            JOptionPane.showMessageDialog(this, " ERROR EL NOMBRE INGRSADO NO ES VALIDO ");
+            JOptionPane.showMessageDialog(null, " ERROR EL NOMBRE INGRESADO NO ES VALIDO: ");
         }
     }//GEN-LAST:event_fieldNombreActionPerformed
 
     private void fieldCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldCantidadActionPerformed
         try{
-            int stock=Integer.parseInt(fieldCantidad.getText());
+            stock=Integer.parseInt(fieldCantidad.getText());
+            if(stock<=0){
+                JOptionPane.showMessageDialog(this, " ERROR LA CANTIDAD INGRSADA NO ES VALIDA ");
+                fieldCantidad.setText("");
+            }
+            if(!nombre.isEmpty() && stock>0){
+                botonGuardar.setEnabled(true);
+            }
         }catch(Exception e){
-            JOptionPane.showMessageDialog(this, " ERROR EL PRECIO INGRSADO NO ES VALIDO ");
+            JOptionPane.showMessageDialog(this, " ERROR LA CANTIDAD INGRSADA NO ES VALIDA ");
+            fieldCantidad.setText("");
         }
     }//GEN-LAST:event_fieldCantidadActionPerformed
 
     private void botonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActionPerformed
-        int id=0;
-        Product producto=new Product(fieldNombre.getText(), id, Integer.parseInt(fieldCantidad.getText()));
-        for (Wearhouse almacen : listaAlmacenesS) {
-            if(listaAlmacenes.getSelectedItem().equals(almacen.name)){
+        Product producto=new Product(nombre, stock);
+        for (Wearhouse almacen : almacenes) {
+            if(almacenSeleccionado.name.equals(almacen.name)){
                 almacen.products.pushBack(producto);
                 break;
             }
         }
+        
     }//GEN-LAST:event_botonGuardarActionPerformed
 
     private void botonRetrocederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRetrocederActionPerformed
@@ -171,8 +184,8 @@ public class AgregarProducto extends javax.swing.JPanel {
     }//GEN-LAST:event_botonRetrocederActionPerformed
 
     private void listaAlmacenesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaAlmacenesActionPerformed
-        // TODO add your handling code here:
         // La lista debe mostrar los almacenes
+        almacenSeleccionado=(Wearhouse) listaAlmacenes.getSelectedItem();
     }//GEN-LAST:event_listaAlmacenesActionPerformed
 
 

@@ -1,21 +1,20 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package com.proyecto1.gui;
 
 import com.proyecto1.models.Product;
 import com.proyecto1.models.Wearhouse;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author andresbucarello
- */
+// @author andresbucarello
+
 public class AgregarAlmacen extends javax.swing.JPanel {
     
+    int cantRutas;
+    boolean comprobado;
+    int index;
     int cantidad = 5;
-    Wearhouse[] listaAlmacenesS = new Wearhouse[cantidad];
+    Wearhouse[] almacenes = new Wearhouse[cantidad];
+    String nombre;
+    
     /**
      * Creates new form Prubea
      */
@@ -36,21 +35,15 @@ public class AgregarAlmacen extends javax.swing.JPanel {
         titulo1 = new javax.swing.JLabel();
         titulo2 = new javax.swing.JLabel();
         fieldNombre = new javax.swing.JTextField();
-        botonComprobar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         titulo3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         rutasDisponibles = new javax.swing.JList<>();
-        botonAgregarRuta = new javax.swing.JButton();
+        botonAgregar = new javax.swing.JButton();
         titulo4 = new javax.swing.JLabel();
         botonAgregarAlmacen = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         rutasAgregadas = new javax.swing.JList<>();
-        botonGuardar = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        comentario1 = new javax.swing.JTextArea();
-        comentario2 = new javax.swing.JLabel();
-        comentario3 = new javax.swing.JLabel();
 
         setMaximumSize(new java.awt.Dimension(630, 450));
         setMinimumSize(new java.awt.Dimension(630, 450));
@@ -80,17 +73,7 @@ public class AgregarAlmacen extends javax.swing.JPanel {
                 fieldNombreActionPerformed(evt);
             }
         });
-        add(fieldNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 90, 290, -1));
-
-        botonComprobar.setFont(new java.awt.Font("Silom", 0, 14)); // NOI18N
-        botonComprobar.setText("COMPROBAR");
-        botonComprobar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botonComprobar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonComprobarActionPerformed(evt);
-            }
-        });
-        add(botonComprobar, new org.netbeans.lib.awtextra.AbsoluteConstraints(494, 90, -1, -1));
+        add(fieldNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 90, 420, -1));
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
         add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 580, 10));
@@ -104,19 +87,25 @@ public class AgregarAlmacen extends javax.swing.JPanel {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        rutasDisponibles.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rutasDisponiblesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(rutasDisponibles);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 220, 220));
 
-        botonAgregarRuta.setFont(new java.awt.Font("Silom", 0, 14)); // NOI18N
-        botonAgregarRuta.setText(">>");
-        botonAgregarRuta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botonAgregarRuta.addActionListener(new java.awt.event.ActionListener() {
+        botonAgregar.setFont(new java.awt.Font("Silom", 0, 14)); // NOI18N
+        botonAgregar.setText(">>");
+        botonAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botonAgregar.setEnabled(false);
+        botonAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonAgregarRutaActionPerformed(evt);
+                botonAgregarActionPerformed(evt);
             }
         });
-        add(botonAgregarRuta, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 250, 60, 40));
+        add(botonAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 250, 60, 40));
 
         titulo4.setFont(new java.awt.Font("Silom", 1, 14)); // NOI18N
         titulo4.setText("RUTAS AGREGADAS");
@@ -125,12 +114,13 @@ public class AgregarAlmacen extends javax.swing.JPanel {
         botonAgregarAlmacen.setFont(new java.awt.Font("Silom", 0, 14)); // NOI18N
         botonAgregarAlmacen.setText("Agregar Almacen");
         botonAgregarAlmacen.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botonAgregarAlmacen.setEnabled(false);
         botonAgregarAlmacen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonAgregarAlmacenActionPerformed(evt);
             }
         });
-        add(botonAgregarAlmacen, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, 440, -1));
+        add(botonAgregarAlmacen, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, 580, -1));
 
         rutasAgregadas.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -140,93 +130,81 @@ public class AgregarAlmacen extends javax.swing.JPanel {
         jScrollPane2.setViewportView(rutasAgregadas);
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 170, 220, 220));
-
-        botonGuardar.setFont(new java.awt.Font("Silom", 0, 14)); // NOI18N
-        botonGuardar.setText("Guardar");
-        botonGuardar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botonGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonGuardarActionPerformed(evt);
-            }
-        });
-        add(botonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 400, 120, -1));
-
-        comentario1.setColumns(20);
-        comentario1.setFont(new java.awt.Font("Helvetica Neue", 0, 6)); // NOI18N
-        comentario1.setRows(5);
-        comentario1.setTabSize(5);
-        comentario1.setText("// Se activa solo\ncuando se haya\nseleeccionado un\nalmacen para ruta");
-        jScrollPane3.setViewportView(comentario1);
-
-        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 200, 70, -1));
-
-        comentario2.setFont(new java.awt.Font("Helvetica Neue", 0, 6)); // NOI18N
-        comentario2.setText("// Se activa cuando se hayan agregado al menos dos rutas");
-        add(comentario2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 430, 160, 10));
-
-        comentario3.setText("// JOP para pedir la distancia");
-        add(comentario3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 140, -1, 20));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void botonRetrocederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRetrocederActionPerformed
-        // TODO add your handling code here:
+    private void botonRetroceder1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRetrocederActionPerformed
+
     }//GEN-LAST:event_botonRetrocederActionPerformed
 
     private void fieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldNombreActionPerformed
         try{
-            String nombre=fieldNombre.getText();
+            nombre=fieldNombre.getText();
             boolean encontrado=false;
-            for (Wearhouse almacen : listaAlmacenesS) {
+            for (Wearhouse almacen : almacenes) {
                 if(nombre.equals(almacen.name)){
                     encontrado=true;    
                     }
                 }
-            if(encontrado){
-                System.out.println(" SI EXISTE, EL NOMBRE NO ES VALIDO");
+            if(encontrado || nombre.length()==0){
+                if(encontrado){
+                    JOptionPane.showMessageDialog(null, " ERROR EL ALMACEN YA EXISTE ");
+                }else{
+                    JOptionPane.showMessageDialog(null, " ERROR EL NOMBRE INGRSADO NO ES VALIDO ");
+                }
                 fieldNombre.setText("");
-            }else{
-                System.out.println(" NO EXISTE, EL NOMBRE ES VALIDO ");
-            }   
+            }  
         }catch(Exception e){
-            JOptionPane.showMessageDialog(this, " ERROR EL NOMBRE INGRSADO NO ES VALIDO ");
+            JOptionPane.showMessageDialog(null, " ERROR EL NOMBRE INGRSADO NO ES VALIDO ");
         }
     }//GEN-LAST:event_fieldNombreActionPerformed
 
-    private void botonComprobarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonComprobarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botonComprobarActionPerformed
-
-    private void botonAgregarRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarRutaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botonAgregarRutaActionPerformed
+    private void botonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarActionPerformed
+        do{
+            comprobado=false;
+            String x=JOptionPane.showInputDialog(null, " INGRESE LA DISTANCIA CON EL ALMACEN " + rutasDisponibles.getSelectedValue());
+            try{
+                int distancia=Integer.parseInt(x);
+                comprobado=true;
+                // crear arista y agregar a la lista
+                botonAgregar.setEnabled(false);
+                cantRutas = rutasAgregadas.getVisibleRowCount();
+                if (cantRutas >= 2 && !nombre.isEmpty()) {
+                    botonAgregarAlmacen.setEnabled(true);
+                }
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(null, " ERROR LA DISTANCIA INGRSADA NO ES VALIDA ");
+            }   
+        }while(!comprobado);
+        
+    }//GEN-LAST:event_botonAgregarActionPerformed
 
     private void botonAgregarAlmacenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarAlmacenActionPerformed
-        Wearhouse almacen=new Wearhouse(fieldNombre.getText());
+        Wearhouse almacen=new Wearhouse(nombre);
+        // almacen.edges.pushBack(v);
         // wearhouses.pushback(almacen);
     }//GEN-LAST:event_botonAgregarAlmacenActionPerformed
 
-    private void botonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botonGuardarActionPerformed
-
-    private void botonRetroceder1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRetroceder1ActionPerformed
-        // TODO add your handling code here:
+    private void botonRetrocederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRetroceder1ActionPerformed
+        this.setVisible(false);
+        // MainPanel menu= new MainPanel
+        // MainPanel.show()
+                          
     }//GEN-LAST:event_botonRetroceder1ActionPerformed
 
+    private void rutasDisponiblesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rutasDisponiblesMouseClicked
+        index= rutasDisponibles.getSelectedIndex();
+        if (index != -1) {
+            botonAgregar.setEnabled(true);
+        }
+    }//GEN-LAST:event_rutasDisponiblesMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonAgregar;
     private javax.swing.JButton botonAgregarAlmacen;
-    private javax.swing.JButton botonAgregarRuta;
-    private javax.swing.JButton botonComprobar;
-    private javax.swing.JButton botonGuardar;
     private javax.swing.JButton botonRetroceder;
-    private javax.swing.JTextArea comentario1;
-    private javax.swing.JLabel comentario2;
-    private javax.swing.JLabel comentario3;
     private javax.swing.JTextField fieldNombre;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JList<String> rutasAgregadas;
     private javax.swing.JList<String> rutasDisponibles;
