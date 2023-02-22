@@ -5,6 +5,7 @@ import java.awt.*;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.proyecto1.utils.AssetsManager;
@@ -34,6 +35,7 @@ public class MainPanel extends javax.swing.JPanel {
      */
     public void initComponents() {
         this.setLayout(new GridLayout());
+        Grafo grafo = Grafo.getInstance();
 
         final Vector<JButton> menuBtns = new Vector<JButton>();
 
@@ -41,7 +43,7 @@ public class MainPanel extends javax.swing.JPanel {
         loadGraphBtn.addActionListener(e -> {
             GraphFileDialog.loadFileDialog();
 
-            if (Grafo.getInstance().iniciado) {
+            if (grafo.iniciado) {
                 for (JButton btn : menuBtns)
                     btn.setEnabled(true);
             }
@@ -96,7 +98,7 @@ public class MainPanel extends javax.swing.JPanel {
             manageStockBtn, addProdutsToWearhouseBtn, showGraphBtn
         });
 
-        if (!Grafo.getInstance().iniciado) {
+        if (!grafo.iniciado) {
             for (JButton btn : menuBtns)
                 btn.setEnabled(false);
             loadGraphBtn.setEnabled(true);
@@ -139,6 +141,11 @@ public class MainPanel extends javax.swing.JPanel {
         colsPanel.add(rightCol, c);
 
         this.add(colsPanel);
+
+        if (grafo.needsSave) {
+            JOptionPane.showMessageDialog(this, "El repositio de almacenes se modifico, recuerda guardarlo!");
+            grafo.needsSave = false;
+        }
     }
 
     void addCustomComponent(JPanel c) {
