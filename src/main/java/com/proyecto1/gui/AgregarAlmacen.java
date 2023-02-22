@@ -1,7 +1,9 @@
 package com.proyecto1.gui;
 
+import com.proyecto1.MainFrame;
 import com.proyecto1.models.Product;
 import com.proyecto1.models.Wearhouse;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 // @author andresbucarello
@@ -13,6 +15,8 @@ public class AgregarAlmacen extends javax.swing.JPanel {
     int index;
     int cantidad = 5;
     Wearhouse[] almacenes = new Wearhouse[cantidad];
+    String Wearhouse[] = {"agua"};
+    
     String nombre;
     
     /**
@@ -72,17 +76,17 @@ public class AgregarAlmacen extends javax.swing.JPanel {
         botonAgregarAlmacen = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         rutasAgregadas = new javax.swing.JList<>();
+        Rtroceder = new javax.swing.JButton();
 
         setFocusable(false);
         setMaximumSize(new java.awt.Dimension(630, 450));
         setMinimumSize(new java.awt.Dimension(630, 450));
         setPreferredSize(new java.awt.Dimension(630, 450));
-        setRequestFocusEnabled(false);
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         titulo1.setFont(new java.awt.Font("Silom", 0, 48)); // NOI18N
         titulo1.setText("AGREGAR ALMACEN");
-        add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 0, -1, -1));
+        add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, -1, -1));
 
         titulo2.setFont(new java.awt.Font("Silom", 1, 14)); // NOI18N
         titulo2.setText("INGRESE EL NOMBRE :");
@@ -155,6 +159,14 @@ public class AgregarAlmacen extends javax.swing.JPanel {
         jScrollPane2.setViewportView(rutasAgregadas);
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 170, 220, 220));
+
+        Rtroceder.setText("<---");
+        Rtroceder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RtrocederActionPerformed(evt);
+            }
+        });
+        add(Rtroceder, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 90, 40));
     }// </editor-fold>//GEN-END:initComponents
 
     private void fieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldNombreActionPerformed
@@ -176,7 +188,7 @@ public class AgregarAlmacen extends javax.swing.JPanel {
 //                    botonAgregarAlmacen.setEnabled(true);
 //                }
             }catch(Exception e){
-                JOptionPane.showMessageDialog(null, " ERROR LA DISTANCIA INGRSADA NO ES VALIDA ");
+                JOptionPane.showMessageDialog(null, " ERROR LA DISTANCIA INGRSADA NO ES VALIDA"); 
             }   
         }while(!comprobado);
         
@@ -201,6 +213,7 @@ public class AgregarAlmacen extends javax.swing.JPanel {
     }//GEN-LAST:event_fieldNombreFocusLost
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Rtroceder;
     private javax.swing.JButton botonAgregar;
     private javax.swing.JButton botonAgregarAlmacen;
     private javax.swing.JTextField fieldNombre;

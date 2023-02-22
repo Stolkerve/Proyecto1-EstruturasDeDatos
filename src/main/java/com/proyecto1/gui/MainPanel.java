@@ -1,5 +1,6 @@
 package com.proyecto1.gui;
 
+import com.proyecto1.MainFrame;
 import java.awt.*;
 
 import javax.swing.JButton;
@@ -7,7 +8,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
 import com.proyecto1.utils.AssetsManager;
 import com.proyecto1.utils.ImageAsset;
 import com.proyecto1.containers.Grafo;
@@ -71,14 +71,18 @@ public class MainPanel extends javax.swing.JPanel {
 
         JButton addPathBtn = new JButton("Agregar camino a almacen");
         addPathBtn.addActionListener(e -> {
+            this.addCustomComponent(new AgregarRuta());
         });
 
         JButton manageStockBtn = new JButton("Gestionar stock de almacenes");
         manageStockBtn.addActionListener(e -> {
+            this.addCustomComponent(new ModificarStock());
+            
         });
 
         JButton addProdutsToWearhouseBtn = new JButton("Agregar producto");
         manageStockBtn.addActionListener(e -> {
+            this.addCustomComponent(new AgregarProducto());
         });
 
         JButton showGraphBtn = new JButton("Mostrar mapa de almacenes");
