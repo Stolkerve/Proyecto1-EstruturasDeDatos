@@ -47,7 +47,6 @@ public class ModificarStock extends javax.swing.JPanel {
         fieldCantidad = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
         botonModificar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(630, 450));
         setMinimumSize(new java.awt.Dimension(630, 450));
@@ -117,14 +116,6 @@ public class ModificarStock extends javax.swing.JPanel {
             }
         });
         add(botonModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 400, 120, -1));
-
-        jButton1.setText("<----");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
     
     private int validarInt(String num){
@@ -189,8 +180,6 @@ public class ModificarStock extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonModificar;
     private javax.swing.JTextField fieldCantidad;
-    private javax.swing.JTextField fieldPrecio;
-    private javax.swing.JButton jButton1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;

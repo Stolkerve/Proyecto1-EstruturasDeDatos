@@ -46,7 +46,6 @@ public class AgregarProducto extends javax.swing.JPanel {
         fieldCantidad = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
         botonGuardar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(630, 450));
         setMinimumSize(new java.awt.Dimension(630, 450));
@@ -120,14 +119,6 @@ public class AgregarProducto extends javax.swing.JPanel {
             }
         });
         add(botonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 400, 120, -1));
-
-        jButton1.setText("<----");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
     private boolean encontrar(){
         for (Wearhouse almacen : almacenes) {
@@ -230,7 +221,6 @@ public class AgregarProducto extends javax.swing.JPanel {
     private javax.swing.JButton botonGuardar;
     private javax.swing.JTextField fieldCantidad;
     private javax.swing.JTextField fieldNombre;
-    private javax.swing.JButton jButton1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
