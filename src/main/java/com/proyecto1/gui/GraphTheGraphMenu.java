@@ -33,9 +33,9 @@ class MyWeightedEdge extends DefaultWeightedEdge {
   }
 }
 
-public class GraphTheGraph extends CustomComponent {
+public class GraphTheGraphMenu extends MenuComponent {
 
-    protected GraphTheGraph(MainPanel mainMenuPanel) {
+    protected GraphTheGraphMenu(MainPanel mainMenuPanel) {
         super(mainMenuPanel, "Mapa de los almacenes");
     }
 

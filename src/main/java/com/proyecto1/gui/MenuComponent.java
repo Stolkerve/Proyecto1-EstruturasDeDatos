@@ -12,10 +12,10 @@ import javax.swing.JPanel;
 import com.proyecto1.utils.AssetsManager;
 import com.proyecto1.utils.ImageAsset;
 
-public class CustomComponent extends JPanel {
+public class MenuComponent extends JPanel {
     MainPanel mainMenuPanel;
 
-    protected CustomComponent(MainPanel mainMenuPanel, String title) {
+    protected MenuComponent(MainPanel mainMenuPanel, String title) {
         this.mainMenuPanel = mainMenuPanel;
         this.initSize();
 
@@ -35,7 +35,7 @@ public class CustomComponent extends JPanel {
         this.initComponent();
     }
 
-    protected CustomComponent(MainPanel mainMenuPanel) {
+    protected MenuComponent(MainPanel mainMenuPanel) {
         this.mainMenuPanel = mainMenuPanel;
         this.initSize();
     }

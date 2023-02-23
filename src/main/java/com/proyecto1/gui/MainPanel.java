@@ -4,7 +4,6 @@ import com.proyecto1.MainFrame;
 import java.awt.*;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -17,14 +16,14 @@ import com.proyecto1.containers.Vector;
  * @author sebas
  */
 public class MainPanel extends javax.swing.JPanel {
-    JFrame mainFrame;
+    MainFrame mainFrame;
 
     /**
      * Crear el panel principal, instancia los componentes del menu principal
      * 
      * @param mainFrame es la instancia del JFrame padre
      */
-    public MainPanel(JFrame mainFrame) {
+    public MainPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
 
         initComponents();
@@ -56,39 +55,39 @@ public class MainPanel extends javax.swing.JPanel {
 
         JButton producsStockBtn = new JButton("Reporte de stock de productos");
         producsStockBtn.addActionListener(e -> {
-            this.addCustomComponent(new ShowStock(this));
+            this.addMenuComponent(new ShowStockMenu(this));
         });
 
         JButton requestBtn = new JButton("Realizar pedido de producto");
         requestBtn.addActionListener(e -> {
-            this.addCustomComponent(new RequestOrder(this));
+            this.addMenuComponent(new RequestOrderMenu(this));
         });
 
         JButton addWearhouseBtn = new JButton("Agregar almacen");
         addWearhouseBtn.addActionListener(e -> {
-            this.addCustomComponent(new AgregarAlmacen());
+            this.addMenuComponent(new AgregarAlmacen());
         });
 
         JButton addPathBtn = new JButton("Agregar camino a almacen");
         addPathBtn.addActionListener(e -> {
-            this.addCustomComponent(new AgregarRuta());
+            this.addMenuComponent(new AgregarRuta());
         });
 
         JButton manageStockBtn = new JButton("Gestionar stock de almacenes");
         manageStockBtn.addActionListener(e -> {
-            this.addCustomComponent(new ModificarStock());
+            this.addMenuComponent(new ModificarStock());
             
         });
 
         JButton addProdutsToWearhouseBtn = new JButton("Agregar producto");
         manageStockBtn.addActionListener(e -> {
-            this.addCustomComponent(new AgregarProducto());
+            this.addMenuComponent(new AgregarProducto());
         });
 
         JButton showGraphBtn = new JButton("Mostrar mapa de almacenes");
         showGraphBtn.addActionListener(e -> {
-            CustomComponent a = new GraphTheGraph(this);
-            this.addCustomComponent(a);
+            MenuComponent a = new GraphTheGraphMenu(this);
+            this.addMenuComponent(a);
         });
 
         JButton helpBtn = new JButton("???");
@@ -152,7 +151,7 @@ public class MainPanel extends javax.swing.JPanel {
         }
     }
 
-    void addCustomComponent(JPanel c) {
+    void addMenuComponent(JPanel c) {
         this.removeAll();
         this.add(c);
         this.repaint();
