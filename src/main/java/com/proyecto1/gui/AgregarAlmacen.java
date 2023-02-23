@@ -7,6 +7,7 @@ import com.proyecto1.models.Edge;
 import com.proyecto1.models.Product;
 import com.proyecto1.models.Wearhouse;
 import java.awt.event.ActionEvent;
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -14,22 +15,36 @@ import javax.swing.JOptionPane;
 
 public class AgregarAlmacen extends javax.swing.JPanel {
     
-//    int cantRutas;
-    boolean comprobado;
-    int index;
-    int distancia;
     Vector<Wearhouse> almacenes;
     String nombre;
     Wearhouse almacenSeleccionado;
-    Wearhouse almacenNuevo;
+    Wearhouse almacenNuevo=new Wearhouse ("");
+    DefaultListModel<String> disponibles = new DefaultListModel<>();
+    DefaultListModel<String> agregadas = new DefaultListModel<>();
     
     /**
      * Creates new form Prubea
      */
     public AgregarAlmacen() {
         initComponents();
+        
+        rutasDisponibles.setModel(disponibles);
+        rutasAgregadas.setModel(agregadas);
         almacenes=Grafo.getInstance().almacenes;
-        Wearhouse almacenNuevo=new Wearhouse("vacio");
+        //Wearhouse almacenNuevo=new Wearhouse("");
+        
+        for (Wearhouse almacen: almacenes) {
+            boolean encontrado=false;
+            for (Edge arista : almacen.edges){
+                if(arista.almacenVecino.equals(almacen.name)){
+                    encontrado=true;
+                    System.out.println("siiii");
+                }
+            }
+            if(!encontrado){
+                disponibles.addElement(almacen.name);
+            }
+        }     
     }
     
     private Wearhouse buscarWearhouse(Vector<Wearhouse> almacenes,String nombre){
@@ -41,28 +56,29 @@ public class AgregarAlmacen extends javax.swing.JPanel {
         return null;
     }
     
-    private boolean encontrar(){
-        for (Wearhouse almacen : almacenes) {
-            if(nombre.equals(almacen.name)){
-                return true;    
-            }
-        }
-        return false;
-    }
-    
     private String validarStr(String str){
         try{
-            boolean encontrado=encontrar();
+            boolean encontrado=false;
+            for (Wearhouse almacen : almacenes) {
+                if(str.equalsIgnoreCase(almacen.name)){
+                   encontrado=true;
+                }
+            }
             if(encontrado || str.length()==0){
                 if(encontrado){
                     JOptionPane.showMessageDialog(null, " ERROR EL ALMACEN YA EXISTE ");
                 }else{
-                    JOptionPane.showMessageDialog(null, " ERROR EL NOMBRE INGRSADO NO ES VALIDO ");
+                    JOptionPane.showMessageDialog(null, " ERROR EL NOMBRE INGRESADO NO ES VALIDO ");
                 }
                 fieldNombre.setText("");
                 return "";
+            }else{
+                fieldNombre.setEnabled(false);
+                rutasDisponibles.setEnabled(true);
+                almacenNuevo.name=str.toUpperCase();
+                return str.toUpperCase();
             }
-            return str;
+            
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, " ERROR EL NOMBRE INGRSADO NO ES VALIDO ");
             fieldNombre.setText("");
@@ -93,19 +109,19 @@ public class AgregarAlmacen extends javax.swing.JPanel {
         rutasAgregadas = new javax.swing.JList<>();
 
         setFocusable(false);
-        setMaximumSize(new java.awt.Dimension(630, 450));
-        setMinimumSize(new java.awt.Dimension(630, 450));
-        setPreferredSize(new java.awt.Dimension(630, 450));
+        setMaximumSize(new java.awt.Dimension(960, 720));
+        setMinimumSize(new java.awt.Dimension(960, 720));
+        setPreferredSize(new java.awt.Dimension(960, 720));
         setRequestFocusEnabled(false);
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        titulo1.setFont(new java.awt.Font("Silom", 0, 48)); // NOI18N
+        titulo1.setFont(new java.awt.Font("Silom", 0, 65)); // NOI18N
         titulo1.setText("AGREGAR ALMACEN");
-        add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, -1, -1));
+        add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 0, -1, -1));
 
-        titulo2.setFont(new java.awt.Font("Silom", 1, 14)); // NOI18N
+        titulo2.setFont(new java.awt.Font("Silom", 1, 24)); // NOI18N
         titulo2.setText("INGRESE EL NOMBRE :");
-        add(titulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 160, -1));
+        add(titulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 280, -1));
 
         fieldNombre.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -117,20 +133,21 @@ public class AgregarAlmacen extends javax.swing.JPanel {
                 fieldNombreActionPerformed(evt);
             }
         });
-        add(fieldNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 90, 420, -1));
+        add(fieldNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 100, 590, 30));
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
-        add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 580, 10));
+        add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 860, 10));
 
-        titulo3.setFont(new java.awt.Font("Silom", 1, 14)); // NOI18N
+        titulo3.setFont(new java.awt.Font("Silom", 1, 24)); // NOI18N
         titulo3.setText("RUTAS DISPONIBLES");
-        add(titulo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 220, 30));
+        add(titulo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 380, 30));
 
         rutasDisponibles.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        rutasDisponibles.setEnabled(false);
         rutasDisponibles.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 rutasDisponiblesMouseClicked(evt);
@@ -138,7 +155,7 @@ public class AgregarAlmacen extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(rutasDisponibles);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 220, 220));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, 380, 410));
 
         botonAgregar.setFont(new java.awt.Font("Silom", 0, 14)); // NOI18N
         botonAgregar.setText(">>");
@@ -149,31 +166,35 @@ public class AgregarAlmacen extends javax.swing.JPanel {
                 botonAgregarActionPerformed(evt);
             }
         });
-        add(botonAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 250, 60, 40));
+        add(botonAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 370, 60, 40));
 
-        titulo4.setFont(new java.awt.Font("Silom", 1, 14)); // NOI18N
+        titulo4.setFont(new java.awt.Font("Silom", 1, 24)); // NOI18N
         titulo4.setText("RUTAS AGREGADAS");
-        add(titulo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 140, 220, 30));
+        add(titulo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 170, 380, 30));
 
-        botonAgregarAlmacen.setFont(new java.awt.Font("Silom", 0, 14)); // NOI18N
+        botonAgregarAlmacen.setFont(new java.awt.Font("Silom", 0, 24)); // NOI18N
         botonAgregarAlmacen.setText("Agregar Almacen");
         botonAgregarAlmacen.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonAgregarAlmacen.setEnabled(false);
+        botonAgregarAlmacen.setMaximumSize(new java.awt.Dimension(250, 40));
+        botonAgregarAlmacen.setMinimumSize(new java.awt.Dimension(250, 40));
+        botonAgregarAlmacen.setPreferredSize(new java.awt.Dimension(250, 40));
         botonAgregarAlmacen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonAgregarAlmacenActionPerformed(evt);
             }
         });
-        add(botonAgregarAlmacen, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, 580, -1));
+        add(botonAgregarAlmacen, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 630, 860, -1));
 
         rutasAgregadas.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        rutasAgregadas.setEnabled(false);
         jScrollPane2.setViewportView(rutasAgregadas);
 
-        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 170, 220, 220));
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 200, 380, 410));
     }// </editor-fold>//GEN-END:initComponents
 
     private void fieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldNombreActionPerformed
@@ -182,41 +203,47 @@ public class AgregarAlmacen extends javax.swing.JPanel {
     }//GEN-LAST:event_fieldNombreActionPerformed
 
     private void botonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarActionPerformed
+        boolean comprobado=false;
         do{
-            comprobado=false;
             String x=JOptionPane.showInputDialog(null, " INGRESE LA DISTANCIA CON EL ALMACEN " + rutasDisponibles.getSelectedValue());
             try{
                 int distancia=Integer.parseInt(x);
-                comprobado=true;
-                String almacenVecino=rutasDisponibles.getSelectedValue();
-                Wearhouse almacenVecinoW = buscarWearhouse(almacenes,almacenVecino);
-                almacenNuevo.name=nombre;
-//                Edge edge=new Edge(almacenNuevo,almacenVecino,distancia);
                 
-//                almacenSeleccionado=(Wearhouse) rutasDisponibles.getSelectedItem();
-//                //almacenSeleccionado=rutasDisponibles.getSelec
-//                Edge(Wearhouse almacen, Wearhouse almacenVecino, int distancia)
-                // crear arista y agregar a la lista
+                String almacenVecino=rutasDisponibles.getSelectedValue(); // Recupera el nombre del almacen seleccionado
+                
+                Wearhouse almacenVecinoW = buscarWearhouse(almacenes,almacenVecino); // Obtiene el objeto almacen apartir del nombre
+                
+                Edge edge=new Edge(almacenVecinoW,distancia);
+                almacenNuevo.edges.pushBack(edge);
+                
+                agregadas.addElement(rutasDisponibles.getSelectedValue() + " | Distancia: " + distancia);
+                disponibles.remove(rutasDisponibles.getSelectedIndex());
+                
+                if(disponibles.getSize()==0){
+                    rutasDisponibles.setEnabled(false);
+                }
                 botonAgregar.setEnabled(false);
-//                cantRutas = rutasAgregadas.getVisibleRowCount();
-//                if (cantRutas >= 2 && !nombre.isEmpty()) {
-//                    botonAgregarAlmacen.setEnabled(true);
-//                }
+                if (almacenNuevo.edges.size() >= 2) {
+                    botonAgregarAlmacen.setEnabled(true);
+                }
+                comprobado=true;
             }catch(Exception e){
                 JOptionPane.showMessageDialog(null, " ERROR LA DISTANCIA INGRSADA NO ES VALIDA"); 
+                System.out.println(e);
             }   
         }while(!comprobado);
         
     }//GEN-LAST:event_botonAgregarActionPerformed
 
     private void botonAgregarAlmacenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarAlmacenActionPerformed
-        Wearhouse almacen=new Wearhouse(nombre);
-       //almacen.edges.pushBack(v);
-        almacenes.pushBack(almacen);
+        almacenes.pushBack(almacenNuevo);
+        fieldNombre.setText("");
+        botonAgregarAlmacen.setEnabled(false);
+        // Preguntar a Sebas como Reiniciar la ventana
     }//GEN-LAST:event_botonAgregarAlmacenActionPerformed
 
     private void rutasDisponiblesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rutasDisponiblesMouseClicked
-        index= rutasDisponibles.getSelectedIndex();
+        int index= rutasDisponibles.getSelectedIndex();
         if (index != -1) {
             botonAgregar.setEnabled(true);
         }

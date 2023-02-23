@@ -1,29 +1,37 @@
 package com.proyecto1.gui;
 import com.proyecto1.MainFrame;
+import com.proyecto1.containers.Grafo;
+import com.proyecto1.containers.Vector;
 import javax.swing.JOptionPane;
 import com.proyecto1.models.Product;
 import com.proyecto1.models.Wearhouse;
 import com.proyecto1.gui.MainPanel;
+import com.proyecto1.models.Edge;
+import javax.swing.ComboBoxEditor;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 
 // @author andresbucarello
 
 public class AgregarProducto extends javax.swing.JPanel {
     
-    int cantidad = 5;
-    Wearhouse[] almacenes = new Wearhouse[cantidad];
+    Vector<Wearhouse> almacenes;
+    Wearhouse almacenSeleccionadoW;
     String nombre;
     int stock;
-    int opciones;
-    Wearhouse almacenSeleccionado;
+    DefaultComboBoxModel<String> disponibles = new DefaultComboBoxModel();
+    
     
     /**
      * Creates new form AgregarProducto
      */
     public AgregarProducto() {
         initComponents();
-        // crear array de los almacenes existentes
         
+        almacenes=Grafo.getInstance().almacenes;
+        cargarCombo(listaAlmacenes);
     }
 
     /**
@@ -47,18 +55,18 @@ public class AgregarProducto extends javax.swing.JPanel {
         jSeparator3 = new javax.swing.JSeparator();
         botonGuardar = new javax.swing.JButton();
 
-        setMaximumSize(new java.awt.Dimension(630, 450));
-        setMinimumSize(new java.awt.Dimension(630, 450));
-        setPreferredSize(new java.awt.Dimension(630, 450));
+        setMaximumSize(new java.awt.Dimension(960, 720));
+        setMinimumSize(new java.awt.Dimension(960, 720));
+        setPreferredSize(new java.awt.Dimension(960, 720));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        titulo1.setFont(new java.awt.Font("Silom", 0, 48)); // NOI18N
+        titulo1.setFont(new java.awt.Font("Silom", 0, 65)); // NOI18N
         titulo1.setText("AGREGAR PRODUCTO");
-        add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 0, -1, -1));
+        add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, -1, -1));
 
-        titulo2.setFont(new java.awt.Font("Silom", 1, 14)); // NOI18N
+        titulo2.setFont(new java.awt.Font("Silom", 1, 24)); // NOI18N
         titulo2.setText("SELECCIONE EL ALMACEN :");
-        add(titulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 190, -1));
+        add(titulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, 380, -1));
 
         listaAlmacenes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         listaAlmacenes.addActionListener(new java.awt.event.ActionListener() {
@@ -66,14 +74,14 @@ public class AgregarProducto extends javax.swing.JPanel {
                 listaAlmacenesActionPerformed(evt);
             }
         });
-        add(listaAlmacenes, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 110, 150, -1));
+        add(listaAlmacenes, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 240, 320, 30));
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
-        add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 580, 20));
+        add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 880, 20));
 
-        titulo3.setFont(new java.awt.Font("Silom", 1, 14)); // NOI18N
+        titulo3.setFont(new java.awt.Font("Silom", 1, 24)); // NOI18N
         titulo3.setText("INGRESE EL NOMBRE DEL PRODUCTO :");
-        add(titulo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 260, 20));
+        add(titulo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 330, 450, 20));
 
         fieldNombre.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -85,14 +93,14 @@ public class AgregarProducto extends javax.swing.JPanel {
                 fieldNombreActionPerformed(evt);
             }
         });
-        add(fieldNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 200, 320, 20));
+        add(fieldNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 320, 420, 30));
 
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
-        add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 580, 20));
+        add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 380, 880, 20));
 
-        titulo4.setFont(new java.awt.Font("Silom", 1, 14)); // NOI18N
+        titulo4.setFont(new java.awt.Font("Silom", 1, 24)); // NOI18N
         titulo4.setText("INGRESE LA CANTIDAD DEL PRODUCTO :");
-        add(titulo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 280, 20));
+        add(titulo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 420, 470, 20));
 
         fieldCantidad.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -104,12 +112,12 @@ public class AgregarProducto extends javax.swing.JPanel {
                 fieldCantidadActionPerformed(evt);
             }
         });
-        add(fieldCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 260, 300, 20));
+        add(fieldCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 410, 400, 30));
 
         jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
-        add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 580, 20));
+        add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 470, 880, 20));
 
-        botonGuardar.setFont(new java.awt.Font("Silom", 0, 14)); // NOI18N
+        botonGuardar.setFont(new java.awt.Font("Silom", 0, 24)); // NOI18N
         botonGuardar.setText("Guardar");
         botonGuardar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonGuardar.setEnabled(false);
@@ -118,19 +126,35 @@ public class AgregarProducto extends javax.swing.JPanel {
                 botonGuardarActionPerformed(evt);
             }
         });
-        add(botonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 400, 120, -1));
+        add(botonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 640, 180, -1));
     }// </editor-fold>//GEN-END:initComponents
-    private boolean encontrar(){
+    private boolean encontrarProducto(String nombreProducto){
         for (Wearhouse almacen : almacenes) {
-            if(almacenSeleccionado.name.equals(almacen.name)){
+            if(almacenSeleccionadoW.name.equals(almacen.name)){
                 for (Product producto : almacen.products){
-                    if(nombre.equals(producto.name)){
+                    if(nombreProducto.equals(producto.name)){
                         return true;
                     }
                 }
             }    
         }
         return false;
+    }
+    
+    private void cargarCombo(JComboBox c) {
+        c.setModel(disponibles);
+        for (Wearhouse almacen: almacenes) {
+            disponibles.addElement(almacen.name);
+        }
+    }
+    
+    private Wearhouse buscarWearhouse(Vector<Wearhouse> almacenes,String nombre){
+        for (Wearhouse almacen : almacenes) {
+            if(nombre.equals(almacen.name)){
+                return almacen;    
+            }
+        }
+        return null;
     }
     
     private int validarInt(String num){
@@ -141,6 +165,7 @@ public class AgregarProducto extends javax.swing.JPanel {
                 fieldCantidad.setText("");
                 return 0;
             }
+            fieldCantidad.setEnabled(false);
             return stock;
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, " ERROR LA CANTIDAD INGRSADA NO ES VALIDA ");
@@ -149,11 +174,10 @@ public class AgregarProducto extends javax.swing.JPanel {
         }
     }
     
-    private String validarStr(String nombre){
+    private String validarStr(String nombreProducto){
         try{
-            String nombreProducto=fieldNombre.getText();
-            boolean encontrado=encontrar();
-            if(encontrado || !nombre.isEmpty()){
+            boolean encontrado=encontrarProducto(nombreProducto);
+            if(encontrado || nombreProducto.isEmpty()){
                 if(encontrado){
                     JOptionPane.showMessageDialog(null, " EL PRODUCTO YA EXISTE, EL NOMBRE NO ES VALIDO: ");
                 }else{
@@ -162,7 +186,9 @@ public class AgregarProducto extends javax.swing.JPanel {
                 fieldNombre.setText("");
                 return "";
             }
+            fieldNombre.setEnabled(false);
             return nombreProducto;
+            
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, " ERROR EL NOMBRE INGRESADO NO ES VALIDO: ");
             fieldNombre.setText("");
@@ -189,16 +215,21 @@ public class AgregarProducto extends javax.swing.JPanel {
     private void botonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActionPerformed
         Product producto=new Product(nombre, stock);
         for (Wearhouse almacen : almacenes) {
-            if(almacenSeleccionado.name.equals(almacen.name)){
+            if(almacenSeleccionadoW.name.equals(almacen.name)){
                 almacen.products.pushBack(producto);
+                fieldCantidad.setText("");
+                fieldCantidad.setEnabled(true);
+                fieldNombre.setText("");
+                fieldNombre.setEnabled(true);
+                botonGuardar.setEnabled(false);
                 break;
             }
         }
     }//GEN-LAST:event_botonGuardarActionPerformed
-
+    
     private void listaAlmacenesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaAlmacenesActionPerformed
-        // La lista debe mostrar los almacenes
-        almacenSeleccionado=(Wearhouse) listaAlmacenes.getSelectedItem();
+        String almacenSeleccionado=listaAlmacenes.getSelectedItem().toString();
+        almacenSeleccionadoW=buscarWearhouse(almacenes, almacenSeleccionado);
     }//GEN-LAST:event_listaAlmacenesActionPerformed
 
     private void fieldNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldNombreFocusLost
