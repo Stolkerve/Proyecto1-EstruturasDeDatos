@@ -2,4 +2,5 @@
 
 Proyecto 1 de la materia estructuras de datos
 
-# Version de Java: 8
+# Manejador de proyecto: Ant
+# Version de Java: 11 
