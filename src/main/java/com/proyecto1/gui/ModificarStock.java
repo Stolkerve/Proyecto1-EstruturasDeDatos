@@ -1,30 +1,34 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package com.proyecto1.gui;
 
 import com.proyecto1.MainFrame;
+import com.proyecto1.containers.Grafo;
+import com.proyecto1.containers.Vector;
 import com.proyecto1.models.Product;
 import com.proyecto1.models.Wearhouse;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author andresbucarello
- */
+// @author andresbucarello
+
 public class ModificarStock extends javax.swing.JPanel {
     
-    int cantidad = 5;
-    Wearhouse[] almacenes = new Wearhouse[cantidad];
+    Vector<Wearhouse> almacenes;
+    Wearhouse almacenSeleccionadoW;
+    Product productoSeleccionadoP;
     int stock;
-    Wearhouse almacenSeleccionado;
-    Product productoSeleccionado;
+    DefaultComboBoxModel<String> almacenesDisponibles = new DefaultComboBoxModel();
+    DefaultComboBoxModel<String> productosDisponibles = new DefaultComboBoxModel();
+    
     /**
      * Creates new form ModificarStockk
      */
     public ModificarStock() {
         initComponents();
+        
+        almacenes=Grafo.getInstance().almacenes;
+        cargarComboAlmacenes(listaAlmacenes);
+        listaProductos.setModel(productosDisponibles);
     }
 
     /**
@@ -48,18 +52,18 @@ public class ModificarStock extends javax.swing.JPanel {
         jSeparator3 = new javax.swing.JSeparator();
         botonModificar = new javax.swing.JButton();
 
-        setMaximumSize(new java.awt.Dimension(630, 450));
-        setMinimumSize(new java.awt.Dimension(630, 450));
-        setPreferredSize(new java.awt.Dimension(630, 450));
+        setMaximumSize(new java.awt.Dimension(960, 720));
+        setMinimumSize(new java.awt.Dimension(960, 720));
+        setPreferredSize(new java.awt.Dimension(960, 720));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        titulo1.setFont(new java.awt.Font("Silom", 0, 48)); // NOI18N
+        titulo1.setFont(new java.awt.Font("Silom", 0, 65)); // NOI18N
         titulo1.setText("MODIFICAR STOCK");
-        add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, -1, -1));
+        add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 50, -1, -1));
 
-        titulo2.setFont(new java.awt.Font("Silom", 1, 14)); // NOI18N
+        titulo2.setFont(new java.awt.Font("Silom", 1, 24)); // NOI18N
         titulo2.setText("SELECCIONE EL ALMACEN :");
-        add(titulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 190, -1));
+        add(titulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, 330, -1));
 
         listaAlmacenes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         listaAlmacenes.addActionListener(new java.awt.event.ActionListener() {
@@ -67,14 +71,14 @@ public class ModificarStock extends javax.swing.JPanel {
                 listaAlmacenesActionPerformed(evt);
             }
         });
-        add(listaAlmacenes, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 110, 150, -1));
+        add(listaAlmacenes, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 210, 520, 30));
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
-        add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 580, 20));
+        add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 270, 850, 20));
 
-        titulo3.setFont(new java.awt.Font("Silom", 1, 14)); // NOI18N
+        titulo3.setFont(new java.awt.Font("Silom", 1, 24)); // NOI18N
         titulo3.setText("SELECCIONE EL NOMBRE DEL PRODUCTO :");
-        add(titulo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 290, 20));
+        add(titulo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 320, 490, 20));
 
         listaProductos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         listaProductos.addActionListener(new java.awt.event.ActionListener() {
@@ -82,14 +86,14 @@ public class ModificarStock extends javax.swing.JPanel {
                 listaProductosActionPerformed(evt);
             }
         });
-        add(listaProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 170, 290, -1));
+        add(listaProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 313, 350, 30));
 
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
-        add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 580, 20));
+        add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, 850, 20));
 
-        titulo4.setFont(new java.awt.Font("Silom", 1, 14)); // NOI18N
+        titulo4.setFont(new java.awt.Font("Silom", 1, 24)); // NOI18N
         titulo4.setText("INGRESE LA CANTIDAD A AUMENTAR  DEL PRODUCTO :");
-        add(titulo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 370, 20));
+        add(titulo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 410, 640, 20));
 
         fieldCantidad.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -101,12 +105,12 @@ public class ModificarStock extends javax.swing.JPanel {
                 fieldCantidadActionPerformed(evt);
             }
         });
-        add(fieldCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 230, 210, 20));
+        add(fieldCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 410, 220, 30));
 
         jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
-        add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 580, 20));
+        add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 470, 850, 20));
 
-        botonModificar.setFont(new java.awt.Font("Silom", 0, 14)); // NOI18N
+        botonModificar.setFont(new java.awt.Font("Silom", 0, 24)); // NOI18N
         botonModificar.setText("MODIFICAR");
         botonModificar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonModificar.setEnabled(false);
@@ -115,9 +119,37 @@ public class ModificarStock extends javax.swing.JPanel {
                 botonModificarActionPerformed(evt);
             }
         });
-        add(botonModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 400, 120, -1));
-
+        add(botonModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 630, 250, -1));
     }// </editor-fold>//GEN-END:initComponents
+    
+    private void cargarComboAlmacenes(JComboBox c) {
+        c.setModel(almacenesDisponibles);
+        for (Wearhouse almacen: almacenes) {
+            almacenesDisponibles.addElement(almacen.name);
+        }
+    }
+    
+    private Wearhouse buscarWearhouse(Vector<Wearhouse> almacenes,String nombre){
+        for (Wearhouse almacen : almacenes) {
+            if(nombre.equals(almacen.name)){
+                return almacen;    
+            }
+        }
+        return null;
+    }
+    
+    private Product buscarProducto(String nombreAlmacen,String nombreProducto){
+        for (Wearhouse almacen : almacenes) {
+            if(nombreAlmacen.equals(almacen.name)){
+                for(Product producto: almacen.products){
+                    if(producto.name.equalsIgnoreCase(nombreProducto)){
+                        return producto;   
+                    }
+                } 
+            }
+        }
+        return null;
+    }
     
     private int validarInt(String num){
         try{
@@ -127,6 +159,7 @@ public class ModificarStock extends javax.swing.JPanel {
                 fieldCantidad.setText("");
                 return 0;
             }
+            fieldCantidad.setEnabled(false);
             return stock;
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, " ERROR LA CANTIDAD INGRSADA NO ES VALIDA ");
@@ -136,44 +169,56 @@ public class ModificarStock extends javax.swing.JPanel {
     }
     
     private void fieldCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldCantidadActionPerformed
-        try{
-            String num=fieldCantidad.getText();
-            stock=validarInt(num);
+        String num =fieldCantidad.getText();
+        stock = validarInt(num);
+        if(stock>0){
             botonModificar.setEnabled(true);
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, " ERROR LA CANTIDAD INGRESADA NO ES VALIDA ");
         }
     }//GEN-LAST:event_fieldCantidadActionPerformed
 
     private void botonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarActionPerformed
 
         for (Wearhouse almacen : almacenes){
-            if(almacenSeleccionado.name.equals(almacen.name)){
+            if(almacenSeleccionadoW.name.equals(almacen.name)){
                 for (Product producto : almacen.products){
-                    if(productoSeleccionado.name.equals(producto.name)){
+                    if(productoSeleccionadoP.name.equals(producto.name)){
                         producto.stock+=stock;
                     }
                 }
             }    
         }
         botonModificar.setEnabled(false);
+        fieldCantidad.setText("");
+        fieldCantidad.setEnabled(true);
     }//GEN-LAST:event_botonModificarActionPerformed
 
     private void listaAlmacenesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaAlmacenesActionPerformed
-        almacenSeleccionado=(Wearhouse) listaAlmacenes.getSelectedItem();
+        String almacenSeleccionado=listaAlmacenes.getSelectedItem().toString();
+        almacenSeleccionadoW=buscarWearhouse(almacenes, almacenSeleccionado);
+        productosDisponibles.removeAllElements();
+        for (Wearhouse almacen: almacenes) {
+            if(almacenSeleccionadoW.name.equalsIgnoreCase(almacen.name)){
+                for (Product producto : almacen.products) {
+                    productosDisponibles.addElement(producto.name);
+                }
+            }
+        }
     }//GEN-LAST:event_listaAlmacenesActionPerformed
 
     private void listaProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaProductosActionPerformed
-        productoSeleccionado=(Product) listaProductos.getSelectedItem();
+        try{
+            String productoSeleccionado=listaProductos.getSelectedItem().toString();
+            productoSeleccionadoP=buscarProducto(almacenSeleccionadoW.name,productoSeleccionado);
+        }catch(Exception e){
+            
+        }
     }//GEN-LAST:event_listaProductosActionPerformed
 
     private void fieldCantidadFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldCantidadFocusLost
-        try{
-            String num=fieldCantidad.getText();
-            stock=validarInt(num);
+        String num =fieldCantidad.getText();
+        stock = validarInt(num);
+        if(stock>0){
             botonModificar.setEnabled(true);
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, " ERROR LA CANTIDAD INGRESADA NO ES VALIDA ");
         }
     }//GEN-LAST:event_fieldCantidadFocusLost
 
