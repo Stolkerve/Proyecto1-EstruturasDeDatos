@@ -1,13 +1,15 @@
 package com.proyecto1.models;
 
+/**
+ * @author Andres
+ */
 public class Edge {
+    public Warehouse nextWarehouse;
+    public int distance;
 
-    public Wearhouse almacenVecino;
-    public int distancia;
-
-    public Edge(Wearhouse almacenVecino, int distancia) {
-        this.almacenVecino = almacenVecino;
-        this.distancia = distancia;
+    public Edge(Warehouse nextWarehouse, int distance) {
+        this.nextWarehouse = nextWarehouse;
+        this.distance = distance;
     }
 
 }

@@ -1,10 +1,9 @@
 package com.proyecto1.gui;
 
-import com.proyecto1.MainFrame;
-import com.proyecto1.containers.Grafo;
+import com.proyecto1.containers.Graph;
 import com.proyecto1.containers.Vector;
 import com.proyecto1.models.Product;
-import com.proyecto1.models.Wearhouse;
+import com.proyecto1.models.Warehouse;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -13,8 +12,8 @@ import javax.swing.JOptionPane;
 
 public class ModificarStock extends javax.swing.JPanel {
     
-    Vector<Wearhouse> almacenes;
-    Wearhouse almacenSeleccionadoW;
+    Vector<Warehouse> almacenes;
+    Warehouse almacenSeleccionadoW;
     Product productoSeleccionadoP;
     int stock;
     DefaultComboBoxModel<String> almacenesDisponibles = new DefaultComboBoxModel();
@@ -26,7 +25,7 @@ public class ModificarStock extends javax.swing.JPanel {
     public ModificarStock() {
         initComponents();
         
-        almacenes=Grafo.getInstance().almacenes;
+        almacenes= Graph.getInstance().warehouses;
         cargarComboAlmacenes(listaAlmacenes);
         listaProductos.setModel(productosDisponibles);
     }
@@ -124,13 +123,13 @@ public class ModificarStock extends javax.swing.JPanel {
     
     private void cargarComboAlmacenes(JComboBox c) {
         c.setModel(almacenesDisponibles);
-        for (Wearhouse almacen: almacenes) {
+        for (Warehouse almacen: almacenes) {
             almacenesDisponibles.addElement(almacen.name);
         }
     }
     
-    private Wearhouse buscarWearhouse(Vector<Wearhouse> almacenes,String nombre){
-        for (Wearhouse almacen : almacenes) {
+    private Warehouse buscarWearhouse(Vector<Warehouse> almacenes, String nombre){
+        for (Warehouse almacen : almacenes) {
             if(nombre.equals(almacen.name)){
                 return almacen;    
             }
@@ -139,7 +138,7 @@ public class ModificarStock extends javax.swing.JPanel {
     }
     
     private Product buscarProducto(String nombreAlmacen,String nombreProducto){
-        for (Wearhouse almacen : almacenes) {
+        for (Warehouse almacen : almacenes) {
             if(nombreAlmacen.equals(almacen.name)){
                 for(Product producto: almacen.products){
                     if(producto.name.equalsIgnoreCase(nombreProducto)){
@@ -178,7 +177,7 @@ public class ModificarStock extends javax.swing.JPanel {
 
     private void botonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarActionPerformed
 
-        for (Wearhouse almacen : almacenes){
+        for (Warehouse almacen : almacenes){
             if(almacenSeleccionadoW.name.equals(almacen.name)){
                 for (Product producto : almacen.products){
                     if(productoSeleccionadoP.name.equals(producto.name)){
@@ -196,7 +195,7 @@ public class ModificarStock extends javax.swing.JPanel {
         String almacenSeleccionado=listaAlmacenes.getSelectedItem().toString();
         almacenSeleccionadoW=buscarWearhouse(almacenes, almacenSeleccionado);
         productosDisponibles.removeAllElements();
-        for (Wearhouse almacen: almacenes) {
+        for (Warehouse almacen: almacenes) {
             if(almacenSeleccionadoW.name.equalsIgnoreCase(almacen.name)){
                 for (Product producto : almacen.products) {
                     productosDisponibles.addElement(producto.name);

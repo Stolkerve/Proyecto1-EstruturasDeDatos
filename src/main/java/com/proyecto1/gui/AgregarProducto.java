@@ -1,24 +1,19 @@
 package com.proyecto1.gui;
-import com.proyecto1.MainFrame;
-import com.proyecto1.containers.Grafo;
+import com.proyecto1.containers.Graph;
 import com.proyecto1.containers.Vector;
 import javax.swing.JOptionPane;
 import com.proyecto1.models.Product;
-import com.proyecto1.models.Wearhouse;
-import com.proyecto1.gui.MainPanel;
-import com.proyecto1.models.Edge;
-import javax.swing.ComboBoxEditor;
+import com.proyecto1.models.Warehouse;
+
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 
 // @author andresbucarello
 
 public class AgregarProducto extends javax.swing.JPanel {
     
-    Vector<Wearhouse> almacenes;
-    Wearhouse almacenSeleccionadoW;
+    Vector<Warehouse> almacenes;
+    Warehouse almacenSeleccionadoW;
     String nombre;
     int stock;
     DefaultComboBoxModel<String> disponibles = new DefaultComboBoxModel();
@@ -30,7 +25,7 @@ public class AgregarProducto extends javax.swing.JPanel {
     public AgregarProducto() {
         initComponents();
         
-        almacenes=Grafo.getInstance().almacenes;
+        almacenes= Graph.getInstance().warehouses;
         cargarCombo(listaAlmacenes);
     }
 
@@ -129,7 +124,7 @@ public class AgregarProducto extends javax.swing.JPanel {
         add(botonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 640, 180, -1));
     }// </editor-fold>//GEN-END:initComponents
     private boolean encontrarProducto(String nombreProducto){
-        for (Wearhouse almacen : almacenes) {
+        for (Warehouse almacen : almacenes) {
             if(almacenSeleccionadoW.name.equals(almacen.name)){
                 for (Product producto : almacen.products){
                     if(nombreProducto.equals(producto.name)){
@@ -143,13 +138,13 @@ public class AgregarProducto extends javax.swing.JPanel {
     
     private void cargarCombo(JComboBox c) {
         c.setModel(disponibles);
-        for (Wearhouse almacen: almacenes) {
+        for (Warehouse almacen: almacenes) {
             disponibles.addElement(almacen.name);
         }
     }
     
-    private Wearhouse buscarWearhouse(Vector<Wearhouse> almacenes,String nombre){
-        for (Wearhouse almacen : almacenes) {
+    private Warehouse buscarWearhouse(Vector<Warehouse> almacenes, String nombre){
+        for (Warehouse almacen : almacenes) {
             if(nombre.equals(almacen.name)){
                 return almacen;    
             }
@@ -214,7 +209,7 @@ public class AgregarProducto extends javax.swing.JPanel {
 
     private void botonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActionPerformed
         Product producto=new Product(nombre, stock);
-        for (Wearhouse almacen : almacenes) {
+        for (Warehouse almacen : almacenes) {
             if(almacenSeleccionadoW.name.equals(almacen.name)){
                 almacen.products.pushBack(producto);
                 fieldCantidad.setText("");

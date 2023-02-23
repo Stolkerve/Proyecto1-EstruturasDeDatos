@@ -13,11 +13,11 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
-import com.proyecto1.containers.Grafo;
+import com.proyecto1.containers.Graph;
 import com.proyecto1.containers.Vector;
 import com.proyecto1.models.Edge;
 import com.proyecto1.models.Product;
-import com.proyecto1.models.Wearhouse;
+import com.proyecto1.models.Warehouse;
 
 /**
  * Estado de carga del arhcivo de grafos
@@ -58,8 +58,8 @@ public class GraphFileDialog {
                 Pattern wearhouseProductPattern = Pattern.compile("([a-zA-Z0-9]+),([0-9]+)(;?)");
                 Pattern graphRoutePattern = Pattern.compile("([a-zA-Z0-9]+),([a-zA-Z0-9]+),([0-9]+)");
 
-                Vector<Wearhouse> wearhouses = new Vector<>();
-                Wearhouse wearhouse = null;
+                Vector<Warehouse> wearhouses = new Vector<>();
+                Warehouse warehouse = null;
 
                 while (scanner.hasNextLine()) {
                     String line = scanner.nextLine();
@@ -80,7 +80,7 @@ public class GraphFileDialog {
                             Matcher match = wearhouseIdPattern.matcher(line);
                             if (match.matches()) {
                                 String name = match.group(2);
-                                for (Wearhouse w : wearhouses) {
+                                for (Warehouse w : wearhouses) {
                                     if (w.name.equals(name)) {
                                         JOptionPane.showMessageDialog(fileDialog,
                                             String.format("Ya existe un almacen con nombre %. Se procede a ignoralo", name), "ERROR",
@@ -88,8 +88,8 @@ public class GraphFileDialog {
                                         continue;
                                     }
                                 }
-                                wearhouse = new Wearhouse(name);
-                                wearhouses.pushBack(wearhouse);
+                                warehouse = new Warehouse(name);
+                                wearhouses.pushBack(warehouse);
                             } else {
                                 // No son grafos?
                                 if (!line.equals("Rutas;")) {
@@ -110,7 +110,7 @@ public class GraphFileDialog {
                             if (match.matches()) {
                                 String name = match.group(1);
                                 int stock = Integer.parseInt(match.group(2));
-                                wearhouse.products.pushBack(new Product(name, stock));
+                                warehouse.products.pushBack(new Product(name, stock));
 
                                 String endChar = match.group(3);
                                 if (endChar.length() != 0) {
@@ -126,9 +126,9 @@ public class GraphFileDialog {
                                 String destinationNodeName = match.group(2);
                                 int distance = Integer.parseInt(match.group(3));
 
-                                for (Wearhouse w : wearhouses) {
+                                for (Warehouse w : wearhouses) {
                                     if (w.name.equals(originNodeName)) {
-                                        for (Wearhouse w2 : wearhouses) {
+                                        for (Warehouse w2 : wearhouses) {
                                             if (w2.name.equals(destinationNodeName)) {
                                                 w.edges.pushBack(new Edge(w2, distance));
                                                 break;
@@ -145,17 +145,17 @@ public class GraphFileDialog {
                 // Si se llego aqui significa que se abrio el archivo y no salto ningun error de
                 // carga
 
-                Grafo instace = Grafo.getInstance();
+                Graph instace = Graph.getInstance();
 
-                if (!instace.iniciado) {
-                    instace.iniciado = true;
-                    instace.almacenes.reserve(wearhouses.capacity());
+                if (!instace.init) {
+                    instace.init = true;
+                    instace.warehouses.reserve(wearhouses.capacity());
                 }
                 else {
-                    instace.almacenes.clear();
+                    instace.warehouses.clear();
                 }
-                for (Wearhouse w : wearhouses)
-                    instace.almacenes.pushBack(w);
+                for (Warehouse w : wearhouses)
+                    instace.warehouses.pushBack(w);
             } catch (FileNotFoundException e) {
                 JOptionPane.showMessageDialog(fileDialog,
                         "No se pudo abrir archivo", "ERROR",
@@ -188,7 +188,7 @@ public class GraphFileDialog {
             try (FileWriter output = new FileWriter(outputFile)) {
                 output.write("Almacenes;\n");
                 String rutas = "";
-                for (Wearhouse w : Grafo.getInstance().almacenes) {
+                for (Warehouse w : Graph.getInstance().warehouses) {
                     output.write(String.format("Almacen %s:\n", w.name));
                     int i = 0;
                     for (Product p : w.products) {
@@ -200,7 +200,7 @@ public class GraphFileDialog {
                         i++;
                     }
                     for (Edge e : w.edges)
-                        rutas += String.format("%s,%s,%d\n", w.name, e.almacenVecino.name, e.distancia);
+                        rutas += String.format("%s,%s,%d\n", w.name, e.nextWarehouse.name, e.distance);
                 }
                 output.write("Rutas;\n" + rutas);
                 output.close();

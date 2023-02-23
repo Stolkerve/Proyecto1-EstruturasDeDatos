@@ -8,6 +8,7 @@ import java.util.Iterator;
  *         Esta clase Vector es una estructura secuencial que permite
  *         funcionalidades
  *         de colas, pilas y vectores
+ *  @param <T> Tipo de dato del contenedor
  */
 public class Vector<T> implements Iterable<T> {
     public T[] data;
@@ -98,36 +99,6 @@ public class Vector<T> implements Iterable<T> {
         this.size++;
     }
 
-    public void pushFront(T v) {
-        this.needCapacity();
-
-        System.arraycopy(this.data, 0, this.data, 1, this.data.length - 1);
-        this.data[0] = v;
-        this.size++;
-    }
-
-    public boolean insert(T v, int pos) {
-        if (pos > (this.size - 1) || pos < 0)
-            return false;
-
-        this.needCapacity();
-
-        System.arraycopy(this.data, pos, this.data, pos + 1, this.data.length - 1 - pos);
-        this.data[pos] = v;
-        this.size++;
-        return true;
-    }
-
-    public boolean popBack() {
-        if (this.size == 0)
-            return false;
-
-        this.size--;
-        this.data[this.size] = null;
-
-        return true;
-    }
-
     public T popFront() {
         if (this.size == 0)
             return null;
@@ -146,6 +117,10 @@ public class Vector<T> implements Iterable<T> {
     }
 }
 
+/**
+ * Implementacion de iterador para la clase Vector
+ * @param <T> Tipo de dato del contendedor
+ */
 class VectorIterator<T> implements Iterator<T> {
     int i;
     int size;

@@ -5,12 +5,12 @@ import com.proyecto1.containers.Vector;
 /**
  * @author sebas
  */
-public class Wearhouse {
+public class Warehouse {
     public String name;
     public Vector<Product> products;
     public Vector<Edge> edges;
 
-    public Wearhouse(String name) {
+    public Warehouse(String name) {
         this.name = name;
         this.products = new Vector<>();
         this.edges = new Vector<>();

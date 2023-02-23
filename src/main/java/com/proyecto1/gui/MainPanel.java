@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import com.proyecto1.utils.AssetsManager;
 import com.proyecto1.utils.ImageAsset;
-import com.proyecto1.containers.Grafo;
+import com.proyecto1.containers.Graph;
 import com.proyecto1.containers.Vector;
 
 /**
@@ -29,12 +29,9 @@ public class MainPanel extends javax.swing.JPanel {
         initComponents();
     }
 
-    /**
-     * 
-     */
     public void initComponents() {
         this.setLayout(new GridLayout());
-        Grafo grafo = Grafo.getInstance();
+        Graph graph = Graph.getInstance();
 
         final Vector<JButton> menuBtns = new Vector<JButton>();
 
@@ -42,7 +39,7 @@ public class MainPanel extends javax.swing.JPanel {
         loadGraphBtn.addActionListener(e -> {
             GraphFileDialog.loadFileDialog();
 
-            if (grafo.iniciado) {
+            if (graph.init) {
                 for (JButton btn : menuBtns)
                     btn.setEnabled(true);
             }
@@ -80,7 +77,7 @@ public class MainPanel extends javax.swing.JPanel {
         });
 
         JButton addProdutsToWearhouseBtn = new JButton("Agregar producto");
-        manageStockBtn.addActionListener(e -> {
+        addProdutsToWearhouseBtn.addActionListener(e -> {
             this.addMenuComponent(new AgregarProducto());
         });
 
@@ -101,7 +98,7 @@ public class MainPanel extends javax.swing.JPanel {
             manageStockBtn, addProdutsToWearhouseBtn, showGraphBtn
         });
 
-        if (!grafo.iniciado) {
+        if (!graph.init) {
             for (JButton btn : menuBtns)
                 btn.setEnabled(false);
             loadGraphBtn.setEnabled(true);
@@ -145,9 +142,9 @@ public class MainPanel extends javax.swing.JPanel {
 
         this.add(colsPanel);
 
-        if (grafo.needsSave) {
+        if (graph.needsSave) {
             JOptionPane.showMessageDialog(this, "El repositio de almacenes se modifico, recuerda guardarlo!");
-            grafo.needsSave = false;
+            graph.needsSave = false;
         }
     }
 

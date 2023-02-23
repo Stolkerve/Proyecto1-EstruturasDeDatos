@@ -1,24 +1,21 @@
 package com.proyecto1.gui;
 
-import com.proyecto1.MainFrame;
-import com.proyecto1.containers.Grafo;
+import com.proyecto1.containers.Graph;
 import com.proyecto1.containers.Vector;
 import com.proyecto1.models.Edge;
-import com.proyecto1.models.Product;
-import com.proyecto1.models.Wearhouse;
-import java.awt.event.ActionEvent;
+import com.proyecto1.models.Warehouse;
+
 import javax.swing.DefaultListModel;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 // @author andresbucarello
 
 public class AgregarAlmacen extends javax.swing.JPanel {
     
-    Vector<Wearhouse> almacenes;
+    Vector<Warehouse> almacenes;
     String nombre;
-    Wearhouse almacenSeleccionado;
-    Wearhouse almacenNuevo=new Wearhouse ("");
+    Warehouse almacenSeleccionado;
+    Warehouse almacenNuevo=new Warehouse("");
     DefaultListModel<String> disponibles = new DefaultListModel<>();
     DefaultListModel<String> agregadas = new DefaultListModel<>();
     
@@ -30,13 +27,13 @@ public class AgregarAlmacen extends javax.swing.JPanel {
         
         rutasDisponibles.setModel(disponibles);
         rutasAgregadas.setModel(agregadas);
-        almacenes=Grafo.getInstance().almacenes;
+        almacenes= Graph.getInstance().warehouses;
         //Wearhouse almacenNuevo=new Wearhouse("");
         
-        for (Wearhouse almacen: almacenes) {
+        for (Warehouse almacen: almacenes) {
             boolean encontrado=false;
             for (Edge arista : almacen.edges){
-                if(arista.almacenVecino.equals(almacen.name)){
+                if(arista.nextWarehouse.equals(almacen.name)){
                     encontrado=true;
                     System.out.println("siiii");
                 }
@@ -47,8 +44,8 @@ public class AgregarAlmacen extends javax.swing.JPanel {
         }     
     }
     
-    private Wearhouse buscarWearhouse(Vector<Wearhouse> almacenes,String nombre){
-        for (Wearhouse almacen : almacenes) {
+    private Warehouse buscarWearhouse(Vector<Warehouse> almacenes, String nombre){
+        for (Warehouse almacen : almacenes) {
             if(nombre.equals(almacen.name)){
                 return almacen;    
             }
@@ -59,7 +56,7 @@ public class AgregarAlmacen extends javax.swing.JPanel {
     private String validarStr(String str){
         try{
             boolean encontrado=false;
-            for (Wearhouse almacen : almacenes) {
+            for (Warehouse almacen : almacenes) {
                 if(str.equalsIgnoreCase(almacen.name)){
                    encontrado=true;
                 }
@@ -211,7 +208,7 @@ public class AgregarAlmacen extends javax.swing.JPanel {
                 
                 String almacenVecino=rutasDisponibles.getSelectedValue(); // Recupera el nombre del almacen seleccionado
                 
-                Wearhouse almacenVecinoW = buscarWearhouse(almacenes,almacenVecino); // Obtiene el objeto almacen apartir del nombre
+                Warehouse almacenVecinoW = buscarWearhouse(almacenes,almacenVecino); // Obtiene el objeto almacen apartir del nombre
                 
                 Edge edge=new Edge(almacenVecinoW,distancia);
                 almacenNuevo.edges.pushBack(edge);

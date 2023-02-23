@@ -17,17 +17,16 @@ import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGeometry;
 import com.mxgraph.model.mxGraphModel;
 import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.util.mxConstants;
-import com.proyecto1.containers.Grafo;
+import com.proyecto1.containers.Graph;
 import com.proyecto1.containers.Pair;
 import com.proyecto1.containers.Vector;
 import com.proyecto1.models.Product;
-import com.proyecto1.models.Wearhouse;
+import com.proyecto1.models.Warehouse;
 import com.proyecto1.utils.AssetsManager;
 import com.proyecto1.utils.ImageAsset;
 
 public class RequestOrderMenu extends MenuComponent {
-    Vector<Wearhouse> wearhouses; 
+    Vector<Warehouse> wearhouses;
     JList<String> wearhouseProductsList;
     DefaultListModel<String> wearhouseProductsListModel;
     JList<String> orderProductsList;
@@ -43,7 +42,7 @@ public class RequestOrderMenu extends MenuComponent {
         this.setBorder(BorderFactory.createEmptyBorder(-5,0,0,0));
 
         this.orderProductsListModel = new DefaultListModel<>();
-        this.wearhouses = Grafo.getInstance().almacenes;
+        this.wearhouses = Graph.getInstance().warehouses;
         String[] wearhousesNames = new String[this.wearhouses.size()];
         for (int i = 0; i < this.wearhouses.size(); i++)
             wearhousesNames[i] = this.wearhouses.get(i).name;
@@ -70,11 +69,11 @@ public class RequestOrderMenu extends MenuComponent {
 
         this.add(topPanel);
 
-        this.initComponent();
+        this.initComponents();
     }
 
     @Override
-    protected void initComponent() {
+    protected void initComponents() {
         GridBagConstraints c = new GridBagConstraints();
         JPanel wearhouseProductsPanel = new JPanel(new GridBagLayout());
         c.gridx = 0;
@@ -135,7 +134,7 @@ public class RequestOrderMenu extends MenuComponent {
     private void resetWearhouseProductsList() {
         this.wearhouseProductsListModel = new DefaultListModel<>();
         String wearhouseName = (String) this.wearhousesComboBox.getSelectedItem();
-        for (Wearhouse w : this.wearhouses)
+        for (Warehouse w : this.wearhouses)
             if (w.name.equals(wearhouseName)) {
                 for (Product p : w.products)
                     this.wearhouseProductsListModel.addElement(String.format("%s(%d)", p.name, p.stock));
@@ -199,7 +198,7 @@ public class RequestOrderMenu extends MenuComponent {
         if (this.orderProductsListModel.size() == 0) return;
 
         int wearhouseIndex = (int) this.wearhousesComboBox.getSelectedIndex();
-        Wearhouse wearhouse = this.wearhouses.get(wearhouseIndex);
+        Warehouse warehouse = this.wearhouses.get(wearhouseIndex);
         Vector<String> pendingOrderProductsToDelete = new Vector<>();
         Vector<Integer> pendingWearhouseProductsToDelete = new Vector<>();
 
@@ -209,24 +208,24 @@ public class RequestOrderMenu extends MenuComponent {
             String orderProductname = m.group(1);
             int orderProductstock = Integer.parseInt(m.group(2));
             int pIndex = 0;
-            for (Product p : wearhouse.products) {
+            for (Product p : warehouse.products) {
                 if (orderProductname.equals(p.name)) {
                     int diff = p.stock - orderProductstock;
                     if (diff < 0) { // Se necesita el stock de otros almacenes
                         // Notificar
                         int res = JOptionPane.showConfirmDialog(this,
-                            String.format("Se esta solicitando mas stock que el disponible del producto %s en el almacen %s. Deseas buscar en otro almacen?", orderProductname, wearhouse.name),
+                            String.format("Se esta solicitando mas stock que el disponible del producto %s en el almacen %s. Deseas buscar en otro almacen?", orderProductname, warehouse.name),
                             "Error", JOptionPane.OK_CANCEL_OPTION
                         );
                         if (res != JOptionPane.OK_OPTION) {
                             pendingOrderProductsToDelete.pushBack(listElement);
                             continue;
                         }
-                        Vector<Pair<Wearhouse, Integer>> wearhousesPath = Grafo.getInstance().dijkstra(wearhouse);
+                        Vector<Pair<Warehouse, Integer>> wearhousesPath = Graph.getInstance().dijkstra(warehouse);
                         boolean found = false;
                         search: {
-                            for (Pair<Wearhouse, Integer> pair : wearhousesPath) {
-                                Wearhouse wClosed = pair.primary;
+                            for (Pair<Warehouse, Integer> pair : wearhousesPath) {
+                                Warehouse wClosed = pair.primary;
                                 int pIndex2 = 0;
                                 for (Product pClosed : wClosed.products) {
                                     if (pClosed.name.equals(orderProductname)) {
@@ -239,23 +238,22 @@ public class RequestOrderMenu extends MenuComponent {
                                             dialog.setLocationRelativeTo(null);
                                             dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
                                             dialog.setUndecorated(true);
-                                            dialog.add(new JLabel("Las rutas mas cortas a almacenes relativamente al almacen " + wearhouse.name));
+                                            dialog.add(new JLabel("Las rutas mas cortas a almacenes relativamente al almacen " + warehouse.name));
 
                                             ListenableGraph<String, MyWeightedEdge> g = new DefaultListenableGraph<>(
                                                     new SimpleDirectedWeightedGraph<>(MyWeightedEdge.class));
                                             JGraphXAdapter<String, MyWeightedEdge> jgxAdapter = new JGraphXAdapter<>(g);
 
-                                            int weight = 0;
-                                            g.addVertex(wearhouse.name);
-                                            for(Pair<Wearhouse, Integer> pair2 : wearhousesPath) {
+                                            g.addVertex(warehouse.name);
+                                            for(Pair<Warehouse, Integer> pair2 : wearhousesPath) {
                                                 g.addVertex(pair2.primary.name);
                                                 if (pair2.primary.name.equals(wClosed.name)) break;
                                             }
 
                                             for (int j = 0; j < wearhousesPath.size(); j++) {
                                                 if (j == 0) {
-                                                    MyWeightedEdge gEdge = g.addEdge(wearhouse.name, wearhousesPath.get(j).primary.name);
-                                                    g.setEdgeWeight(gEdge, wearhousesPath.get(j).secound);
+                                                    MyWeightedEdge gEdge = g.addEdge(warehouse.name, wearhousesPath.get(j).primary.name);
+                                                    g.setEdgeWeight(gEdge, wearhousesPath.get(j).second);
                                                     if (wearhousesPath.get(j).primary.name.equals(wClosed.name)) break;
                                                     continue;
                                                 }
@@ -263,7 +261,7 @@ public class RequestOrderMenu extends MenuComponent {
 
                                                     if (wearhousesPath.get(j).primary.name.equals(wClosed.name)) break;
                                                     MyWeightedEdge gEdge = g.addEdge(wearhousesPath.get(j).primary.name, wearhousesPath.get(j + 1).primary.name);
-                                                    g.setEdgeWeight(gEdge, wearhousesPath.get(j).secound);
+                                                    g.setEdgeWeight(gEdge, wearhousesPath.get(j).second);
                                                 }
                                             }
 
@@ -278,12 +276,12 @@ public class RequestOrderMenu extends MenuComponent {
                                             Collection<Object> cells = graphModel.getCells().values();
                                             for (Object c : cells) {
                                                 mxCell cell = (mxCell) c;
-                                                cell.setAttribute(mxConstants.STYLE_ENDARROW, mxConstants.NONE);
+                                                graphModel.setStyle(cell, "rounded=1;");
                                                 mxGeometry geometry = cell.getGeometry();
 
                                                 if (cell.isVertex()) {
-                                                    geometry.setWidth(40);
-                                                    geometry.setHeight(40);
+                                                    geometry.setWidth(30);
+                                                    geometry.setHeight(30);
                                                 }
                                             }
 
@@ -321,7 +319,7 @@ public class RequestOrderMenu extends MenuComponent {
                                             }
 
                                             found = true;
-                                            Grafo.getInstance().needsSave = true;
+                                            Graph.getInstance().needsSave = true;
                                             break search;
                                         }
                                     }
@@ -341,7 +339,7 @@ public class RequestOrderMenu extends MenuComponent {
                         }
                         p.stock = diff;
 
-                        Grafo.getInstance().needsSave = true;
+                        Graph.getInstance().needsSave = true;
                     }
                 }
                 pIndex++;
@@ -352,7 +350,7 @@ public class RequestOrderMenu extends MenuComponent {
             this.orderProductsListModel.removeElement(i);
 
         for (int i = 0; i < pendingWearhouseProductsToDelete.size(); i++)
-            wearhouse.products.remove(pendingWearhouseProductsToDelete.get(i) - i);
+            warehouse.products.remove(pendingWearhouseProductsToDelete.get(i) - i);
 
         this.resetWearhouseProductsList();
     }

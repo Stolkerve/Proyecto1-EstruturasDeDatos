@@ -2,7 +2,6 @@ package com.proyecto1;
 
 import java.util.Enumeration;
 
-import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;

@@ -1,10 +1,9 @@
 package com.proyecto1.gui;
 
-import com.proyecto1.MainFrame;
-import com.proyecto1.containers.Grafo;
+import com.proyecto1.containers.Graph;
 import com.proyecto1.containers.Vector;
 import com.proyecto1.models.Edge;
-import com.proyecto1.models.Wearhouse;
+import com.proyecto1.models.Warehouse;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
@@ -14,9 +13,9 @@ import javax.swing.JOptionPane;
 
 public class AgregarRuta extends javax.swing.JPanel {
     
-    Vector<Wearhouse> almacenes;
-    Wearhouse almacenSeleccionadoW;
-    Wearhouse almacenNuevo=new Wearhouse ("");
+    Vector<Warehouse> almacenes;
+    Warehouse almacenSeleccionadoW;
+    Warehouse almacenNuevo=new Warehouse("");
     DefaultListModel<String> disponibles = new DefaultListModel<>();
     DefaultListModel<String> agregadas = new DefaultListModel<>();
     
@@ -29,13 +28,13 @@ public class AgregarRuta extends javax.swing.JPanel {
         
         rutasDisponibles.setModel(disponibles);
         rutasAgregadas.setModel(agregadas);
-        almacenes=Grafo.getInstance().almacenes;
+        almacenes= Graph.getInstance().warehouses;
         cargarCombo(listaAlmacenes);
         
     }
     
-    private Wearhouse buscarWearhouse(Vector<Wearhouse> almacenes,String nombre){
-        for (Wearhouse almacen : almacenes) {
+    private Warehouse buscarWearhouse(Vector<Warehouse> almacenes, String nombre){
+        for (Warehouse almacen : almacenes) {
             if(nombre.equals(almacen.name)){
                 return almacen;    
             }
@@ -138,7 +137,7 @@ public class AgregarRuta extends javax.swing.JPanel {
                 int distancia=Integer.parseInt(x);
                 String almacenVecino=rutasDisponibles.getSelectedValue(); // Recupera el nombre del almacen seleccionado
                 
-                Wearhouse almacenVecinoW = buscarWearhouse(almacenes,almacenVecino); // Obtiene el objeto almacen apartir del nombre
+                Warehouse almacenVecinoW = buscarWearhouse(almacenes,almacenVecino); // Obtiene el objeto almacen apartir del nombre
                 
                 Edge edge=new Edge(almacenVecinoW,distancia);
                 almacenSeleccionadoW.edges.pushBack(edge);
@@ -166,10 +165,10 @@ public class AgregarRuta extends javax.swing.JPanel {
         almacenSeleccionadoW=buscarWearhouse(almacenes, almacenSeleccionado);
         disponibles.clear();
         
-        for (Wearhouse almacen : almacenes) {
+        for (Warehouse almacen : almacenes) {
             boolean encontrado=false;
             for (Edge arista : almacenSeleccionadoW.edges) {
-                if(almacen.name.equalsIgnoreCase(arista.almacenVecino.name)){
+                if(almacen.name.equalsIgnoreCase(arista.nextWarehouse.name)){
                     encontrado=true;
                 }
             }
@@ -204,7 +203,7 @@ public class AgregarRuta extends javax.swing.JPanel {
     private void cargarCombo(JComboBox c) {
         DefaultComboBoxModel<String> dispo = new DefaultComboBoxModel();
         c.setModel(dispo);
-        for (Wearhouse almacen: almacenes) {
+        for (Warehouse almacen: almacenes) {
             dispo.addElement(almacen.name);
         }
     }

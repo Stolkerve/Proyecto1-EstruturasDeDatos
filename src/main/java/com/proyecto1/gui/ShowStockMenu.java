@@ -13,19 +13,25 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import com.proyecto1.containers.Grafo;
+import com.proyecto1.containers.Graph;
 import com.proyecto1.containers.Vector;
 import com.proyecto1.models.Edge;
 import com.proyecto1.models.Product;
-import com.proyecto1.models.Wearhouse;
+import com.proyecto1.models.Warehouse;
 
+/**
+ * @author sebas
+ */
 public class ShowStockMenu extends MenuComponent {
+    /**
+     * @param mainMenuPanel Panel principal
+     */
     public ShowStockMenu(MainPanel mainMenuPanel) {
         super(mainMenuPanel, "Stock de los almacenes");
     }
 
     @Override
-    protected void initComponent() {
+    protected void initComponents() {
         GridBagConstraints c = new GridBagConstraints();
         JPanel wearhouseProductsPanel = new JPanel(new GridBagLayout());
         c.gridx = 0;
@@ -80,10 +86,10 @@ public class ShowStockMenu extends MenuComponent {
     }
 
     private void bfs(DefaultTableModel model) {
-        Vector<Wearhouse> wearhouses = Grafo.getInstance().almacenes;
-        Vector<Wearhouse> queue = new Vector<>(wearhouses.size());
+        Vector<Warehouse> wearhouses = Graph.getInstance().warehouses;
+        Vector<Warehouse> queue = new Vector<>(wearhouses.size());
         boolean[] visited = new boolean [wearhouses.size()];
-        Wearhouse w; //vértice actual
+        Warehouse w; //vértice actual
 
         Arrays.fill(visited, false);
 
@@ -101,7 +107,7 @@ public class ShowStockMenu extends MenuComponent {
                     for (int j = 0; j < visited.length; j++){
                         boolean a = false;
                         for (Edge e : w.edges)
-                            a = e.almacenVecino.name.equals(wearhouses.get(j).name);
+                            a = e.nextWarehouse.name.equals(wearhouses.get(j).name);
                         if (!(w.name.equals(wearhouses.get(j).name)) && (a && (!visited[j]))) {
                             queue.pushBack(wearhouses.get(j));
                             visited[j] = true;
@@ -113,7 +119,7 @@ public class ShowStockMenu extends MenuComponent {
     }
 
     private void dfs(DefaultTableModel model) {
-        Vector<Wearhouse> wearhouses = Grafo.getInstance().almacenes;
+        Vector<Warehouse> wearhouses = Graph.getInstance().warehouses;
 
         boolean[] visited = new boolean [wearhouses.size()];
         Arrays.fill(visited, false);
@@ -123,18 +129,18 @@ public class ShowStockMenu extends MenuComponent {
                 recursiveDfs(i, wearhouses, visited, model);
     }
 
-    private void recursiveDfs(int w, Vector<Wearhouse> wearhouses, boolean[] visited, DefaultTableModel model) {
+    private void recursiveDfs(int w, Vector<Warehouse> wearhouses, boolean[] visited, DefaultTableModel model) {
         visited[w] = true;
 
-        Wearhouse wearhouse = wearhouses.get(w);
-        for (Product p : wearhouse.products) {
-            model.addRow(new String[] {wearhouse.name, p.name, Integer.toString(p.stock)});
+        Warehouse warehouse = wearhouses.get(w);
+        for (Product p : warehouse.products) {
+            model.addRow(new String[] {warehouse.name, p.name, Integer.toString(p.stock)});
         }
 
         for (int i = 0; i < wearhouses.size(); i++) {
             boolean a = false;
-            for (Edge e : wearhouse.edges)
-                a = e.almacenVecino.name.equals(wearhouses.get(i).name);
+            for (Edge e : warehouse.edges)
+                a = e.nextWarehouse.name.equals(wearhouses.get(i).name);
             if ((w != i) && (!visited[i]) && (a))
                 recursiveDfs(i, wearhouses, visited, model);
         }

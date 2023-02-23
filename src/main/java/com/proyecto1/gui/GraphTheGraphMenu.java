@@ -20,11 +20,10 @@ import com.mxgraph.model.mxGeometry;
 import com.mxgraph.model.mxGraphModel;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.util.mxConstants;
-import com.mxgraph.util.mxUtils;
-import com.proyecto1.containers.Grafo;
+import com.proyecto1.containers.Graph;
 import com.proyecto1.containers.Vector;
 import com.proyecto1.models.Edge;
-import com.proyecto1.models.Wearhouse;
+import com.proyecto1.models.Warehouse;
 
 class MyWeightedEdge extends DefaultWeightedEdge {
   @Override
@@ -40,21 +39,21 @@ public class GraphTheGraphMenu extends MenuComponent {
     }
 
     @Override
-    protected void initComponent() {
+    protected void initComponents() {
         ListenableGraph<String, MyWeightedEdge> g = new DefaultListenableGraph<>(
                 new SimpleDirectedWeightedGraph<>(MyWeightedEdge.class));
         JGraphXAdapter<String, MyWeightedEdge> jgxAdapter = new JGraphXAdapter<>(g);
 
-        Vector<Wearhouse> wearhouses = Grafo.getInstance().almacenes;
+        Vector<Warehouse> wearhouses = Graph.getInstance().warehouses;
         
-        for(Wearhouse w : wearhouses) {
+        for(Warehouse w : wearhouses) {
             g.addVertex(w.name);
         }
 
-        for(Wearhouse w : wearhouses) {
+        for(Warehouse w : wearhouses) {
             for(Edge e : w.edges) {
-                MyWeightedEdge gEdge = g.addEdge(w.name, e.almacenVecino.name);
-                g.setEdgeWeight(gEdge, e.distancia);
+                MyWeightedEdge gEdge = g.addEdge(w.name, e.nextWarehouse.name);
+                g.setEdgeWeight(gEdge, e.distance);
             }
         }
 
@@ -69,13 +68,13 @@ public class GraphTheGraphMenu extends MenuComponent {
             cell.setAttribute(mxConstants.STYLE_ENDARROW, mxConstants.NONE);
             mxGeometry geometry = cell.getGeometry();
 
+            graphModel.setStyle(cell, "rounded=1;endArrow=none");
             if (cell.isVertex()) {
                 geometry.setWidth(40);
                 geometry.setHeight(40);
             }
         }
-        mxUtils.setCellStyles(component.getGraph().getModel(),
-                cells.toArray(), mxConstants.STYLE_ENDARROW, mxConstants.NONE);
+
         JPanel panel = new JPanel(new GridLayout());
         JScrollPane sp = new JScrollPane(component);
         sp.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
