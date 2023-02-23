@@ -26,7 +26,7 @@ import com.proyecto1.models.Warehouse;
  */
 enum FileState {
     Init,
-    BeginWearhouse,
+    BeginWarehouse,
     OnLoadProducts,
     OnGraph
 };
@@ -58,7 +58,7 @@ public class GraphFileDialog {
                 Pattern wearhouseProductPattern = Pattern.compile("([a-zA-Z0-9]+),([0-9]+)(;?)");
                 Pattern graphRoutePattern = Pattern.compile("([a-zA-Z0-9]+),([a-zA-Z0-9]+),([0-9]+)");
 
-                Vector<Warehouse> wearhouses = new Vector<>();
+                Vector<Warehouse> warehouses = new Vector<>();
                 Warehouse warehouse = null;
 
                 while (scanner.hasNextLine()) {
@@ -71,16 +71,16 @@ public class GraphFileDialog {
                                         JOptionPane.ERROR_MESSAGE);
                                 return;
                             }
-                            state = FileState.BeginWearhouse;
+                            state = FileState.BeginWarehouse;
                             break;
                         }
-                        case BeginWearhouse: {
+                        case BeginWarehouse: {
                             // Ver si la linea es un almacen o son los grafos
                             // La posicion 2 del match tiene el nombre del almacen
                             Matcher match = wearhouseIdPattern.matcher(line);
                             if (match.matches()) {
                                 String name = match.group(2);
-                                for (Warehouse w : wearhouses) {
+                                for (Warehouse w : warehouses) {
                                     if (w.name.equals(name)) {
                                         JOptionPane.showMessageDialog(fileDialog,
                                             String.format("Ya existe un almacen con nombre %. Se procede a ignoralo", name), "ERROR",
@@ -89,7 +89,7 @@ public class GraphFileDialog {
                                     }
                                 }
                                 warehouse = new Warehouse(name);
-                                wearhouses.pushBack(warehouse);
+                                warehouses.pushBack(warehouse);
                             } else {
                                 // No son grafos?
                                 if (!line.equals("Rutas;")) {
@@ -114,7 +114,7 @@ public class GraphFileDialog {
 
                                 String endChar = match.group(3);
                                 if (endChar.length() != 0) {
-                                    state = FileState.BeginWearhouse;
+                                    state = FileState.BeginWarehouse;
                                 }
                             }
                             break;
@@ -126,9 +126,9 @@ public class GraphFileDialog {
                                 String destinationNodeName = match.group(2);
                                 int distance = Integer.parseInt(match.group(3));
 
-                                for (Warehouse w : wearhouses) {
+                                for (Warehouse w : warehouses) {
                                     if (w.name.equals(originNodeName)) {
-                                        for (Warehouse w2 : wearhouses) {
+                                        for (Warehouse w2 : warehouses) {
                                             if (w2.name.equals(destinationNodeName)) {
                                                 w.edges.pushBack(new Edge(w2, distance));
                                                 break;
@@ -145,17 +145,17 @@ public class GraphFileDialog {
                 // Si se llego aqui significa que se abrio el archivo y no salto ningun error de
                 // carga
 
-                Graph instace = Graph.getInstance();
+                Graph instance = Graph.getInstance();
 
-                if (!instace.init) {
-                    instace.init = true;
-                    instace.warehouses.reserve(wearhouses.capacity());
+                if (!instance.init) {
+                    instance.init = true;
+                    instance.warehouses.reserve(warehouses.capacity());
                 }
                 else {
-                    instace.warehouses.clear();
+                    instance.warehouses.clear();
                 }
-                for (Warehouse w : wearhouses)
-                    instace.warehouses.pushBack(w);
+                for (Warehouse w : warehouses)
+                    instance.warehouses.pushBack(w);
             } catch (FileNotFoundException e) {
                 JOptionPane.showMessageDialog(fileDialog,
                         "No se pudo abrir archivo", "ERROR",

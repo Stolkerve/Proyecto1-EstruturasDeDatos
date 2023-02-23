@@ -86,16 +86,16 @@ public class ShowStockMenu extends MenuComponent {
     }
 
     private void bfs(DefaultTableModel model) {
-        Vector<Warehouse> wearhouses = Graph.getInstance().warehouses;
-        Vector<Warehouse> queue = new Vector<>(wearhouses.size());
-        boolean[] visited = new boolean [wearhouses.size()];
+        Vector<Warehouse> warehouses = Graph.getInstance().warehouses;
+        Vector<Warehouse> queue = new Vector<>(warehouses.size());
+        boolean[] visited = new boolean [warehouses.size()];
         Warehouse w; //vértice actual
 
         Arrays.fill(visited, false);
 
         for (int i = 0; i < visited.length; i++) {
             if (!visited[i]){
-                queue.pushBack(wearhouses.get(i));
+                queue.pushBack(warehouses.get(i));
                 visited [i] = true;
                 while (!queue.empty()) {
                     w = queue.popFront();
@@ -107,9 +107,9 @@ public class ShowStockMenu extends MenuComponent {
                     for (int j = 0; j < visited.length; j++){
                         boolean a = false;
                         for (Edge e : w.edges)
-                            a = e.nextWarehouse.name.equals(wearhouses.get(j).name);
-                        if (!(w.name.equals(wearhouses.get(j).name)) && (a && (!visited[j]))) {
-                            queue.pushBack(wearhouses.get(j));
+                            a = e.nextWarehouse.name.equals(warehouses.get(j).name);
+                        if (!(w.name.equals(warehouses.get(j).name)) && (a && (!visited[j]))) {
+                            queue.pushBack(warehouses.get(j));
                             visited[j] = true;
                         }
                     }
@@ -119,30 +119,30 @@ public class ShowStockMenu extends MenuComponent {
     }
 
     private void dfs(DefaultTableModel model) {
-        Vector<Warehouse> wearhouses = Graph.getInstance().warehouses;
+        Vector<Warehouse> warehouses = Graph.getInstance().warehouses;
 
-        boolean[] visited = new boolean [wearhouses.size()];
+        boolean[] visited = new boolean [warehouses.size()];
         Arrays.fill(visited, false);
 
-        for (int i = 0; i < wearhouses.size(); i++)
+        for (int i = 0; i < warehouses.size(); i++)
             if (!visited[i])
-                recursiveDfs(i, wearhouses, visited, model);
+                recursiveDfs(i, warehouses, visited, model);
     }
 
-    private void recursiveDfs(int w, Vector<Warehouse> wearhouses, boolean[] visited, DefaultTableModel model) {
+    private void recursiveDfs(int w, Vector<Warehouse> warehouses, boolean[] visited, DefaultTableModel model) {
         visited[w] = true;
 
-        Warehouse warehouse = wearhouses.get(w);
+        Warehouse warehouse = warehouses.get(w);
         for (Product p : warehouse.products) {
             model.addRow(new String[] {warehouse.name, p.name, Integer.toString(p.stock)});
         }
 
-        for (int i = 0; i < wearhouses.size(); i++) {
+        for (int i = 0; i < warehouses.size(); i++) {
             boolean a = false;
             for (Edge e : warehouse.edges)
-                a = e.nextWarehouse.name.equals(wearhouses.get(i).name);
+                a = e.nextWarehouse.name.equals(warehouses.get(i).name);
             if ((w != i) && (!visited[i]) && (a))
-                recursiveDfs(i, wearhouses, visited, model);
+                recursiveDfs(i, warehouses, visited, model);
         }
 
     }

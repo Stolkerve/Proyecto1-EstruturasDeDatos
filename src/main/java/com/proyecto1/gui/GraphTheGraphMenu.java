@@ -44,13 +44,13 @@ public class GraphTheGraphMenu extends MenuComponent {
                 new SimpleDirectedWeightedGraph<>(MyWeightedEdge.class));
         JGraphXAdapter<String, MyWeightedEdge> jgxAdapter = new JGraphXAdapter<>(g);
 
-        Vector<Warehouse> wearhouses = Graph.getInstance().warehouses;
+        Vector<Warehouse> warehouses = Graph.getInstance().warehouses;
         
-        for(Warehouse w : wearhouses) {
+        for(Warehouse w : warehouses) {
             g.addVertex(w.name);
         }
 
-        for(Warehouse w : wearhouses) {
+        for(Warehouse w : warehouses) {
             for(Edge e : w.edges) {
                 MyWeightedEdge gEdge = g.addEdge(w.name, e.nextWarehouse.name);
                 g.setEdgeWeight(gEdge, e.distance);

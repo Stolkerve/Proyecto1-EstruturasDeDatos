@@ -26,12 +26,12 @@ import com.proyecto1.utils.AssetsManager;
 import com.proyecto1.utils.ImageAsset;
 
 public class RequestOrderMenu extends MenuComponent {
-    Vector<Warehouse> wearhouses;
-    JList<String> wearhouseProductsList;
-    DefaultListModel<String> wearhouseProductsListModel;
+    Vector<Warehouse> warehouses;
+    JList<String> warehouseProductsList;
+    DefaultListModel<String> warehouseProductsListModel;
     JList<String> orderProductsList;
     DefaultListModel<String> orderProductsListModel;
-    JComboBox<String> wearhousesComboBox;
+    JComboBox<String> warehousesComboBox;
     JButton addProductBtn;
     Pattern productListPattern;
 
@@ -42,10 +42,10 @@ public class RequestOrderMenu extends MenuComponent {
         this.setBorder(BorderFactory.createEmptyBorder(-5,0,0,0));
 
         this.orderProductsListModel = new DefaultListModel<>();
-        this.wearhouses = Graph.getInstance().warehouses;
-        String[] wearhousesNames = new String[this.wearhouses.size()];
-        for (int i = 0; i < this.wearhouses.size(); i++)
-            wearhousesNames[i] = this.wearhouses.get(i).name;
+        this.warehouses = Graph.getInstance().warehouses;
+        String[] warehousesNames = new String[this.warehouses.size()];
+        for (int i = 0; i < this.warehouses.size(); i++)
+            warehousesNames[i] = this.warehouses.get(i).name;
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         ImageAsset leftArrow = AssetsManager.getInstance().getImage("left-arrow");
@@ -57,11 +57,11 @@ public class RequestOrderMenu extends MenuComponent {
         topPanel.add(left);
 
         JPanel right = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        this.wearhousesComboBox = new JComboBox<String>(wearhousesNames);
-        wearhousesComboBox.setSelectedIndex(-1);
-        wearhousesComboBox.addActionListener(e -> {this.onWearhousesSelectionComboBox();});
+        this.warehousesComboBox = new JComboBox<String>(warehousesNames);
+        warehousesComboBox.setSelectedIndex(-1);
+        warehousesComboBox.addActionListener(e -> {this.onWarehousesSelectionComboBox();});
         right.add(new JLabel("Almacenes"));
-        right.add(wearhousesComboBox);
+        right.add(warehousesComboBox);
         JButton finishOrderBtn = new JButton("Realizar pedido");
         finishOrderBtn.addActionListener(e -> this.onFinishOrder());
         right.add(finishOrderBtn);
@@ -75,25 +75,25 @@ public class RequestOrderMenu extends MenuComponent {
     @Override
     protected void initComponents() {
         GridBagConstraints c = new GridBagConstraints();
-        JPanel wearhouseProductsPanel = new JPanel(new GridBagLayout());
+        JPanel warehouseProductsPanel = new JPanel(new GridBagLayout());
         c.gridx = 0;
         c.weightx = 1.0;
         c.weighty = 1.0;
         c.fill = GridBagConstraints.BOTH;
-        wearhouseProductsPanel.add(this.createList(true), c);
+        warehouseProductsPanel.add(this.createList(true), c);
 
         c.gridx = 1;
         this.addProductBtn = new JButton("->");
         this.addProductBtn.addActionListener(e -> this.onAddProductToOrderList());
         this.addProductBtn.setBorder(BorderFactory.createEmptyBorder(0,5,0,5));
         this.addProductBtn.setEnabled(false);
-        wearhouseProductsPanel.add(addProductBtn);
+        warehouseProductsPanel.add(addProductBtn);
 
         c.gridx = 2;
         c.fill = GridBagConstraints.BOTH;
-        wearhouseProductsPanel.add(this.createList(false), c);
+        warehouseProductsPanel.add(this.createList(false), c);
 
-        this.add(wearhouseProductsPanel);
+        this.add(warehouseProductsPanel);
     }
 
     JComponent createList(boolean left) {
@@ -105,8 +105,8 @@ public class RequestOrderMenu extends MenuComponent {
         JPanel listPanel = new JPanel(new GridLayout());
         JScrollPane sp = new JScrollPane();
         if (left) {
-            this.wearhouseProductsList = new JList<>();
-            sp.setViewportView(this.wearhouseProductsList);
+            this.warehouseProductsList = new JList<>();
+            sp.setViewportView(this.warehouseProductsList);
             titlePanel.add(new JLabel("Productos del almacen"));
         }
         else {
@@ -131,28 +131,28 @@ public class RequestOrderMenu extends MenuComponent {
         return panel;
     }
 
-    private void resetWearhouseProductsList() {
-        this.wearhouseProductsListModel = new DefaultListModel<>();
-        String wearhouseName = (String) this.wearhousesComboBox.getSelectedItem();
-        for (Warehouse w : this.wearhouses)
-            if (w.name.equals(wearhouseName)) {
+    private void resetWarehouseProductsList() {
+        this.warehouseProductsListModel = new DefaultListModel<>();
+        String warehouseName = (String) this.warehousesComboBox.getSelectedItem();
+        for (Warehouse w : this.warehouses)
+            if (w.name.equals(warehouseName)) {
                 for (Product p : w.products)
-                    this.wearhouseProductsListModel.addElement(String.format("%s(%d)", p.name, p.stock));
+                    this.warehouseProductsListModel.addElement(String.format("%s(%d)", p.name, p.stock));
                 break;
             }
-        this.wearhouseProductsList.setModel(this.wearhouseProductsListModel);
+        this.warehouseProductsList.setModel(this.warehouseProductsListModel);
     }
 
-    private void onWearhousesSelectionComboBox() {
+    private void onWarehousesSelectionComboBox() {
         this.addProductBtn.setEnabled(true);
-        this.resetWearhouseProductsList();
+        this.resetWarehouseProductsList();
 
         this.orderProductsListModel = new DefaultListModel<>();
         this.orderProductsList.setModel(this.orderProductsListModel);
     }
 
     private void onAddProductToOrderList() {
-        int index = this.wearhouseProductsList.getSelectedIndex();
+        int index = this.warehouseProductsList.getSelectedIndex();
         if (index < 0) return;
 
         int amount = 0;
@@ -169,16 +169,16 @@ public class RequestOrderMenu extends MenuComponent {
             } catch (Exception e) {}
         }
 
-        String selectedProduct = this.wearhouseProductsList.getSelectedValue();
+        String selectedProduct = this.warehouseProductsList.getSelectedValue();
         Matcher match = this.productListPattern.matcher(selectedProduct); match.matches();
         String selectedProductName = match.group(1);
         int selectedProductStock = Integer.parseInt(match.group(2));
 
         int diff = selectedProductStock - amount;
         if (diff > 0)
-            this.wearhouseProductsListModel.setElementAt(String.format("%s(%d)", selectedProductName, diff), index);
+            this.warehouseProductsListModel.setElementAt(String.format("%s(%d)", selectedProductName, diff), index);
         else
-            this.wearhouseProductsListModel.removeElementAt(index);
+            this.warehouseProductsListModel.removeElementAt(index);
         
         for (int i = 0; i < this.orderProductsListModel.size(); i++) {
             String listElement = this.orderProductsListModel.get(i);
@@ -197,38 +197,38 @@ public class RequestOrderMenu extends MenuComponent {
     private void onFinishOrder() {
         if (this.orderProductsListModel.size() == 0) return;
 
-        int wearhouseIndex = (int) this.wearhousesComboBox.getSelectedIndex();
-        Warehouse warehouse = this.wearhouses.get(wearhouseIndex);
+        int warehouseIndex = (int) this.warehousesComboBox.getSelectedIndex();
+        Warehouse warehouse = this.warehouses.get(warehouseIndex);
         Vector<String> pendingOrderProductsToDelete = new Vector<>();
-        Vector<Integer> pendingWearhouseProductsToDelete = new Vector<>();
+        Vector<Integer> pendingWarehouseProductsToDelete = new Vector<>();
 
         for (int i = 0; i < this.orderProductsListModel.size(); i++) {
             String listElement = this.orderProductsListModel.get(i);
             Matcher m = this.productListPattern.matcher(listElement); m.matches();
-            String orderProductname = m.group(1);
-            int orderProductstock = Integer.parseInt(m.group(2));
+            String orderProductName = m.group(1);
+            int orderProductStock = Integer.parseInt(m.group(2));
             int pIndex = 0;
             for (Product p : warehouse.products) {
-                if (orderProductname.equals(p.name)) {
-                    int diff = p.stock - orderProductstock;
+                if (orderProductName.equals(p.name)) {
+                    int diff = p.stock - orderProductStock;
                     if (diff < 0) { // Se necesita el stock de otros almacenes
                         // Notificar
                         int res = JOptionPane.showConfirmDialog(this,
-                            String.format("Se esta solicitando mas stock que el disponible del producto %s en el almacen %s. Deseas buscar en otro almacen?", orderProductname, warehouse.name),
+                            String.format("Se esta solicitando mas stock que el disponible del producto %s en el almacen %s. Deseas buscar en otro almacen?", orderProductName, warehouse.name),
                             "Error", JOptionPane.OK_CANCEL_OPTION
                         );
                         if (res != JOptionPane.OK_OPTION) {
                             pendingOrderProductsToDelete.pushBack(listElement);
                             continue;
                         }
-                        Vector<Pair<Warehouse, Integer>> wearhousesPath = Graph.getInstance().dijkstra(warehouse);
+                        Vector<Pair<Warehouse, Integer>> warehousesPath = Graph.getInstance().dijkstra(warehouse);
                         boolean found = false;
                         search: {
-                            for (Pair<Warehouse, Integer> pair : wearhousesPath) {
+                            for (Pair<Warehouse, Integer> pair : warehousesPath) {
                                 Warehouse wClosed = pair.primary;
                                 int pIndex2 = 0;
                                 for (Product pClosed : wClosed.products) {
-                                    if (pClosed.name.equals(orderProductname)) {
+                                    if (pClosed.name.equals(orderProductName)) {
                                         int diff2 =  Math.abs(diff) - pClosed.stock;
                                         if (diff2 <= 0) { // El primer almacen suple la cantidad necesaria, terminar
                                             JDialog dialog = new JDialog(this.mainMenuPanel.mainFrame, "Resultado");
@@ -245,23 +245,23 @@ public class RequestOrderMenu extends MenuComponent {
                                             JGraphXAdapter<String, MyWeightedEdge> jgxAdapter = new JGraphXAdapter<>(g);
 
                                             g.addVertex(warehouse.name);
-                                            for(Pair<Warehouse, Integer> pair2 : wearhousesPath) {
+                                            for(Pair<Warehouse, Integer> pair2 : warehousesPath) {
                                                 g.addVertex(pair2.primary.name);
                                                 if (pair2.primary.name.equals(wClosed.name)) break;
                                             }
 
-                                            for (int j = 0; j < wearhousesPath.size(); j++) {
+                                            for (int j = 0; j < warehousesPath.size(); j++) {
                                                 if (j == 0) {
-                                                    MyWeightedEdge gEdge = g.addEdge(warehouse.name, wearhousesPath.get(j).primary.name);
-                                                    g.setEdgeWeight(gEdge, wearhousesPath.get(j).second);
-                                                    if (wearhousesPath.get(j).primary.name.equals(wClosed.name)) break;
+                                                    MyWeightedEdge gEdge = g.addEdge(warehouse.name, warehousesPath.get(j).primary.name);
+                                                    g.setEdgeWeight(gEdge, warehousesPath.get(j).second);
+                                                    if (warehousesPath.get(j).primary.name.equals(wClosed.name)) break;
                                                     continue;
                                                 }
-                                                if ((j + 1) < wearhousesPath.size()) {
+                                                if ((j + 1) < warehousesPath.size()) {
 
-                                                    if (wearhousesPath.get(j).primary.name.equals(wClosed.name)) break;
-                                                    MyWeightedEdge gEdge = g.addEdge(wearhousesPath.get(j).primary.name, wearhousesPath.get(j + 1).primary.name);
-                                                    g.setEdgeWeight(gEdge, wearhousesPath.get(j).second);
+                                                    if (warehousesPath.get(j).primary.name.equals(wClosed.name)) break;
+                                                    MyWeightedEdge gEdge = g.addEdge(warehousesPath.get(j).primary.name, warehousesPath.get(j + 1).primary.name);
+                                                    g.setEdgeWeight(gEdge, warehousesPath.get(j).second);
                                                 }
                                             }
 
@@ -310,7 +310,7 @@ public class RequestOrderMenu extends MenuComponent {
                                             dialog.setVisible(true);
 
                                             pendingOrderProductsToDelete.pushBack(listElement);
-                                            pendingWearhouseProductsToDelete.pushBack(pIndex);
+                                            pendingWarehouseProductsToDelete.pushBack(pIndex);
 
                                             if (diff2 == 0) {
                                                 wClosed.products.remove(pIndex2);
@@ -334,7 +334,7 @@ public class RequestOrderMenu extends MenuComponent {
                     } else {
                         pendingOrderProductsToDelete.pushBack(listElement);
                         if (diff == 0) {
-                            pendingWearhouseProductsToDelete.pushBack(pIndex);
+                            pendingWarehouseProductsToDelete.pushBack(pIndex);
                             continue;
                         }
                         p.stock = diff;
@@ -349,9 +349,9 @@ public class RequestOrderMenu extends MenuComponent {
         for (String i : pendingOrderProductsToDelete)
             this.orderProductsListModel.removeElement(i);
 
-        for (int i = 0; i < pendingWearhouseProductsToDelete.size(); i++)
-            warehouse.products.remove(pendingWearhouseProductsToDelete.get(i) - i);
+        for (int i = 0; i < pendingWarehouseProductsToDelete.size(); i++)
+            warehouse.products.remove(pendingWarehouseProductsToDelete.get(i) - i);
 
-        this.resetWearhouseProductsList();
+        this.resetWarehouseProductsList();
     }
 }
