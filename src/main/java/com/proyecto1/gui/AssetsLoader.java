@@ -81,7 +81,7 @@ public class AssetsLoader {
 
                 int i = 0;
                 for (AssetInfo assetInfo : assetsLoadInfo) {
-                    assetLabel.setText(assetInfo.path);
+                    assetLabel.setText(assetInfo.path.substring("./src/main/java/com/".length()));
                     float porc = ((float) (assetsLoadInfo.length - (assetsLoadInfo.length - i)) / assetsLoadInfo.length)
                             * 100;
                     bar.setValue((int) porc);

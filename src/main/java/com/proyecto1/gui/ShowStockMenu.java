@@ -19,8 +19,8 @@ import com.proyecto1.models.Edge;
 import com.proyecto1.models.Product;
 import com.proyecto1.models.Wearhouse;
 
-public class ShowStock extends CustomComponent {
-    public ShowStock(MainPanel mainMenuPanel) {
+public class ShowStockMenu extends MenuComponent {
+    public ShowStockMenu(MainPanel mainMenuPanel) {
         super(mainMenuPanel, "Stock de los almacenes");
     }
 

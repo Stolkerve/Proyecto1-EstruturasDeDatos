@@ -1,40 +1,32 @@
 package com.proyecto1.gui;
 
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
+import java.awt.*;
+import java.util.Collection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import javax.swing.*;
 
 import org.jgrapht.ListenableGraph;
 import org.jgrapht.ext.JGraphXAdapter;
 import org.jgrapht.graph.DefaultListenableGraph;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
+import com.mxgraph.layout.mxCircleLayout;
+import com.mxgraph.model.mxCell;
+import com.mxgraph.model.mxGeometry;
+import com.mxgraph.model.mxGraphModel;
 import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.util.mxConstants;
 import com.proyecto1.containers.Grafo;
+import com.proyecto1.containers.Pair;
 import com.proyecto1.containers.Vector;
-import com.proyecto1.models.Edge;
 import com.proyecto1.models.Product;
 import com.proyecto1.models.Wearhouse;
 import com.proyecto1.utils.AssetsManager;
 import com.proyecto1.utils.ImageAsset;
 
-public class RequestOrder extends CustomComponent {
+public class RequestOrderMenu extends MenuComponent {
     Vector<Wearhouse> wearhouses; 
     JList<String> wearhouseProductsList;
     DefaultListModel<String> wearhouseProductsListModel;
@@ -44,12 +36,13 @@ public class RequestOrder extends CustomComponent {
     JButton addProductBtn;
     Pattern productListPattern;
 
-    RequestOrder(MainPanel mainPanel) {
+    RequestOrderMenu(MainPanel mainPanel) {
         super(mainPanel);
         this.productListPattern = Pattern.compile("([a-zA-Z0-9]+)\\(([0-9]+)\\)"); 
 
         this.setBorder(BorderFactory.createEmptyBorder(-5,0,0,0));
 
+        this.orderProductsListModel = new DefaultListModel<>();
         this.wearhouses = Grafo.getInstance().almacenes;
         String[] wearhousesNames = new String[this.wearhouses.size()];
         for (int i = 0; i < this.wearhouses.size(); i++)
@@ -229,52 +222,116 @@ public class RequestOrder extends CustomComponent {
                             pendingOrderProductsToDelete.pushBack(listElement);
                             continue;
                         }
-                        Vector<Wearhouse> wearhousesPath = Grafo.getInstance().dijkstra(wearhouse);
+                        Vector<Pair<Wearhouse, Integer>> wearhousesPath = Grafo.getInstance().dijkstra(wearhouse);
+                        boolean found = false;
                         search: {
-                            for (Wearhouse wClosed : wearhousesPath) {
+                            for (Pair<Wearhouse, Integer> pair : wearhousesPath) {
+                                Wearhouse wClosed = pair.primary;
+                                int pIndex2 = 0;
                                 for (Product pClosed : wClosed.products) {
                                     if (pClosed.name.equals(orderProductname)) {
-                                        diff = pClosed.stock - Math.abs(diff);
-                                        if (diff >= 0) {
-                                            pendingOrderProductsToDelete.pushBack(listElement);
+                                        int diff2 =  Math.abs(diff) - pClosed.stock;
+                                        if (diff2 <= 0) { // El primer almacen suple la cantidad necesaria, terminar
                                             JDialog dialog = new JDialog(this.mainMenuPanel.mainFrame, "Resultado");
-                                            dialog.setLayout(new BoxLayout(dialog, BoxLayout.Y_AXIS));
+                                            dialog.setLayout(new BorderLayout());
+                                            dialog.setSize(320 * 2, 180 * 2);
+                                            dialog.setModal(true);
+                                            dialog.setLocationRelativeTo(null);
+                                            dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+                                            dialog.setUndecorated(true);
                                             dialog.add(new JLabel("Las rutas mas cortas a almacenes relativamente al almacen " + wearhouse.name));
 
                                             ListenableGraph<String, MyWeightedEdge> g = new DefaultListenableGraph<>(
                                                     new SimpleDirectedWeightedGraph<>(MyWeightedEdge.class));
                                             JGraphXAdapter<String, MyWeightedEdge> jgxAdapter = new JGraphXAdapter<>(g);
 
-                                            for(Wearhouse graph : wearhousesPath) {
-                                                g.addVertex(graph.name);
+                                            int weight = 0;
+                                            g.addVertex(wearhouse.name);
+                                            for(Pair<Wearhouse, Integer> pair2 : wearhousesPath) {
+                                                g.addVertex(pair2.primary.name);
+                                                if (pair2.primary.name.equals(wClosed.name)) break;
                                             }
-                                            // for (int j = 0; j < wearhousesPath.size(); j++) {
-                                            //     if ((j + 1) < wearhousesPath.size()) {
-                                            //         MyWeightedEdge gEdge = g.addEdge(wearhousesPath.get(j).name, wearhousesPath.get(j + 1).name);
-                                            //         // g.setEdgeWeight(gEdge, e.distancia);
-                                            //     }
-                                            // }
+
+                                            for (int j = 0; j < wearhousesPath.size(); j++) {
+                                                if (j == 0) {
+                                                    MyWeightedEdge gEdge = g.addEdge(wearhouse.name, wearhousesPath.get(j).primary.name);
+                                                    g.setEdgeWeight(gEdge, wearhousesPath.get(j).secound);
+                                                    if (wearhousesPath.get(j).primary.name.equals(wClosed.name)) break;
+                                                    continue;
+                                                }
+                                                if ((j + 1) < wearhousesPath.size()) {
+
+                                                    if (wearhousesPath.get(j).primary.name.equals(wClosed.name)) break;
+                                                    MyWeightedEdge gEdge = g.addEdge(wearhousesPath.get(j).primary.name, wearhousesPath.get(j + 1).primary.name);
+                                                    g.setEdgeWeight(gEdge, wearhousesPath.get(j).secound);
+                                                }
+                                            }
 
 
                                             mxGraphComponent component = new mxGraphComponent(jgxAdapter);
                                             component.setConnectable(false);
                                             component.setEnabled(false);
                                             component.getGraph().setAllowDanglingEdges(false);
-                                            dialog.add(component);
+                                            mxCircleLayout layout = new mxCircleLayout(jgxAdapter);
 
-                                            JButton continueBtn = new JButton();
+                                            mxGraphModel graphModel = (mxGraphModel) component.getGraph().getModel();
+                                            Collection<Object> cells = graphModel.getCells().values();
+                                            for (Object c : cells) {
+                                                mxCell cell = (mxCell) c;
+                                                cell.setAttribute(mxConstants.STYLE_ENDARROW, mxConstants.NONE);
+                                                mxGeometry geometry = cell.getGeometry();
+
+                                                if (cell.isVertex()) {
+                                                    geometry.setWidth(40);
+                                                    geometry.setHeight(40);
+                                                }
+                                            }
+
+
+                                            // center the circle
+                                            int radius = 40;
+
+                                            layout.setX0((320 * 2 / 2.0) - radius);
+                                            layout.setY0(((180 * 2 - 100) / 2.0) - radius);
+                                            layout.setRadius(radius);
+                                            layout.setMoveCircle(true);
+
+                                            layout.execute(jgxAdapter.getDefaultParent());
+
+                                            JButton continueBtn = new JButton("Continuar");
                                             continueBtn.addActionListener(e -> {
                                                 dialog.dispose();
                                             });
-                                            dialog.add(continueBtn);
 
-                                            dialog.pack();
+                                            JPanel panel = new JPanel(new BorderLayout());
+                                            panel.add(new JLabel("Mapa de los almacenes recorridos"), BorderLayout.NORTH);
+                                            panel.add(component, BorderLayout.CENTER);
+                                            panel.add(continueBtn, BorderLayout.SOUTH);
+                                            dialog.add(panel);
+
                                             dialog.setVisible(true);
+
+                                            pendingOrderProductsToDelete.pushBack(listElement);
+                                            pendingWearhouseProductsToDelete.pushBack(pIndex);
+
+                                            if (diff2 == 0) {
+                                                wClosed.products.remove(pIndex2);
+                                            } else {
+                                                pClosed.stock = Math.abs(diff2);
+                                            }
+
+                                            found = true;
+                                            Grafo.getInstance().needsSave = true;
                                             break search;
                                         }
                                     }
+                                    pIndex2++;
                                 }
                             }
+                        }
+                        if (!found) {
+                            JOptionPane.showMessageDialog(this, "No se encontro ningun almacen que supla la cantidad pedida del producto", "Error", JOptionPane.ERROR_MESSAGE);
+                            pendingOrderProductsToDelete.pushBack(listElement);
                         }
                     } else {
                         pendingOrderProductsToDelete.pushBack(listElement);

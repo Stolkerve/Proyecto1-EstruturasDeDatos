@@ -38,7 +38,7 @@ public class Grafo {
         return null;
     }
 
-    public Vector<Wearhouse> dijkstra(Wearhouse wearhouseOrigen) {
+    public Vector<Pair<Wearhouse, Integer>> dijkstra(Wearhouse wearhouseOrigen) {
         class Vertex {
             int index; int distance;
             public Vertex(int index, int distance) {
@@ -47,7 +47,7 @@ public class Grafo {
             }
         }
 
-        Vector<Wearhouse> wearhousePath = new Vector<>(this.almacenes.size());
+        Vector<Pair<Wearhouse, Integer>> wearhousePath = new Vector<>(this.almacenes.size());
         Vector<Vertex> queue = new Vector<>(this.almacenes.size());
         Vector<Integer> dist = new Vector<>(this.almacenes.size());
         Vector<Boolean> done = new Vector<>(this.almacenes.size());
@@ -99,7 +99,7 @@ public class Grafo {
             if (!(wearhouseOrigen.name.equals(this.almacenes.get(i).name)) && dist.get(i) != Integer.MAX_VALUE) {
                 System.out.printf("Path (%s —> %s): Minimum cost = %d\n",
                                 wearhouseOrigen.name, this.almacenes.get(i).name, dist.get(i));
-                wearhousePath.pushBack(this.almacenes.get(i));
+                wearhousePath.pushBack(new Pair<Wearhouse, Integer>(this.almacenes.get(i), dist.get(i)));
             }
         }
         return wearhousePath;
