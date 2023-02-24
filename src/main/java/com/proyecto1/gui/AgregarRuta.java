@@ -141,6 +141,8 @@ public class AgregarRuta extends javax.swing.JPanel {
                 
                 Edge edge=new Edge(almacenVecinoW,distancia);
                 almacenSeleccionadoW.edges.pushBack(edge);
+
+                Graph.getInstance().needsSave = true;
                 
                 agregadas.addElement(rutasDisponibles.getSelectedValue() + " --> Distancia: " + distancia);
                 disponibles.remove(rutasDisponibles.getSelectedIndex());

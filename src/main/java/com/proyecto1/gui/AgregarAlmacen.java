@@ -257,6 +257,7 @@ public class AgregarAlmacen extends MenuComponent {
             almacenNuevo.edges.pushBack(aristaC);
         }
         almacenes.pushBack(almacenNuevo);
+        Graph.getInstance().needsSave = true;
         reiniciarVentana();
     }//GEN-LAST:event_botonAgregarAlmacenActionPerformed
 

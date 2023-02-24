@@ -228,7 +228,8 @@ public class AgregarProducto extends MenuComponent {
                 fieldNombre.setText("");
                 fieldNombre.setEnabled(true);
                 botonGuardar.setEnabled(false);
-                break;
+                Graph.getInstance().needsSave = true;
+                return;
             }
         }
     }//GEN-LAST:event_botonGuardarActionPerformed

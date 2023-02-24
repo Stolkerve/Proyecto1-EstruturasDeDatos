@@ -83,7 +83,7 @@ public class RequestOrderMenu extends MenuComponent {
         warehouseProductsPanel.add(this.createList(true), c);
 
         c.gridx = 1;
-        this.addProductBtn = new JButton("->");
+        this.addProductBtn = new JButton(">>");
         this.addProductBtn.addActionListener(e -> this.onAddProductToOrderList());
         this.addProductBtn.setBorder(BorderFactory.createEmptyBorder(0,5,0,5));
         this.addProductBtn.setEnabled(false);

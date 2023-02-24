@@ -182,6 +182,8 @@ public class ModificarStock extends javax.swing.JPanel {
                 for (Product producto : almacen.products){
                     if(productoSeleccionadoP.name.equals(producto.name)){
                         producto.stock+=stock;
+                        Graph.getInstance().needsSave = true;
+                        return;
                     }
                 }
             }    
