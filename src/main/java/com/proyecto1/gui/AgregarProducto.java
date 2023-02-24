@@ -10,7 +10,7 @@ import javax.swing.JComboBox;
 
 // @author andresbucarello
 
-public class AgregarProducto extends javax.swing.JPanel {
+public class AgregarProducto extends MenuComponent {
     
     Vector<Warehouse> almacenes;
     Warehouse almacenSeleccionadoW;
@@ -18,11 +18,11 @@ public class AgregarProducto extends javax.swing.JPanel {
     int stock;
     DefaultComboBoxModel<String> disponibles = new DefaultComboBoxModel();
     
-    
     /**
      * Creates new form AgregarProducto
      */
-    public AgregarProducto() {
+    public AgregarProducto(MainPanel mainMenuPanel) {
+        super(mainMenuPanel);
         initComponents();
         
         almacenes= Graph.getInstance().warehouses;
@@ -49,6 +49,7 @@ public class AgregarProducto extends javax.swing.JPanel {
         fieldCantidad = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
         botonGuardar = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(960, 720));
         setMinimumSize(new java.awt.Dimension(960, 720));
@@ -122,12 +123,20 @@ public class AgregarProducto extends javax.swing.JPanel {
             }
         });
         add(botonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 640, 180, -1));
+
+        jButton2.setText("jButton1");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
     private boolean encontrarProducto(String nombreProducto){
         for (Warehouse almacen : almacenes) {
             if(almacenSeleccionadoW.name.equals(almacen.name)){
                 for (Product producto : almacen.products){
-                    if(nombreProducto.equals(producto.name)){
+                    if(nombreProducto.equalsIgnoreCase(producto.name)){
                         return true;
                     }
                 }
@@ -182,6 +191,7 @@ public class AgregarProducto extends javax.swing.JPanel {
                 return "";
             }
             fieldNombre.setEnabled(false);
+            listaAlmacenes.setEnabled(false);
             return nombreProducto;
             
         }catch(Exception e){
@@ -214,6 +224,7 @@ public class AgregarProducto extends javax.swing.JPanel {
                 almacen.products.pushBack(producto);
                 fieldCantidad.setText("");
                 fieldCantidad.setEnabled(true);
+                listaAlmacenes.setEnabled(true);
                 fieldNombre.setText("");
                 fieldNombre.setEnabled(true);
                 botonGuardar.setEnabled(false);
@@ -243,10 +254,15 @@ public class AgregarProducto extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_fieldCantidadFocusLost
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.backToMainMenu();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonGuardar;
     private javax.swing.JTextField fieldCantidad;
     private javax.swing.JTextField fieldNombre;
+    private javax.swing.JButton jButton2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;

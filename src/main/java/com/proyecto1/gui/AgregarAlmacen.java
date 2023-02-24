@@ -10,38 +10,39 @@ import javax.swing.JOptionPane;
 
 // @author andresbucarello
 
-public class AgregarAlmacen extends javax.swing.JPanel {
+public class AgregarAlmacen extends MenuComponent {
     
     Vector<Warehouse> almacenes;
+    Vector<Edge> aristas=new Vector<Edge>();
     String nombre;
-    Warehouse almacenSeleccionado;
-    Warehouse almacenNuevo=new Warehouse("");
     DefaultListModel<String> disponibles = new DefaultListModel<>();
     DefaultListModel<String> agregadas = new DefaultListModel<>();
-    
     /**
      * Creates new form Prubea
      */
-    public AgregarAlmacen() {
+    
+    public AgregarAlmacen(MainPanel mainMenuPanel) {
+        super(mainMenuPanel);
         initComponents();
         
         rutasDisponibles.setModel(disponibles);
         rutasAgregadas.setModel(agregadas);
         almacenes= Graph.getInstance().warehouses;
-        //Wearhouse almacenNuevo=new Wearhouse("");
-        
+        cargarDisponibles();
+    }
+    
+    private void cargarDisponibles(){
         for (Warehouse almacen: almacenes) {
             boolean encontrado=false;
             for (Edge arista : almacen.edges){
                 if(arista.nextWarehouse.equals(almacen.name)){
                     encontrado=true;
-                    System.out.println("siiii");
                 }
             }
             if(!encontrado){
                 disponibles.addElement(almacen.name);
             }
-        }     
+        }
     }
     
     private Warehouse buscarWearhouse(Vector<Warehouse> almacenes, String nombre){
@@ -53,7 +54,7 @@ public class AgregarAlmacen extends javax.swing.JPanel {
         return null;
     }
     
-    private String validarStr(String str){
+    private void validarStr(String str){
         try{
             boolean encontrado=false;
             for (Warehouse almacen : almacenes) {
@@ -68,21 +69,30 @@ public class AgregarAlmacen extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(null, " ERROR EL NOMBRE INGRESADO NO ES VALIDO ");
                 }
                 fieldNombre.setText("");
-                return "";
             }else{
                 fieldNombre.setEnabled(false);
                 rutasDisponibles.setEnabled(true);
-                almacenNuevo.name=str.toUpperCase();
-                return str.toUpperCase();
+                nombre=str.toUpperCase();
             }
             
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, " ERROR EL NOMBRE INGRSADO NO ES VALIDO ");
             fieldNombre.setText("");
-            return "";
         }
     }
-
+    
+    private void reiniciarVentana(){
+        fieldNombre.setText("");
+        fieldNombre.setEnabled(true);
+        rutasDisponibles.setEnabled(false);
+        botonAgregarAlmacen.setEnabled(false);
+        
+        aristas.clear();
+        agregadas.clear();
+        disponibles.clear();
+        
+        cargarDisponibles();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -104,6 +114,7 @@ public class AgregarAlmacen extends javax.swing.JPanel {
         botonAgregarAlmacen = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         rutasAgregadas = new javax.swing.JList<>();
+        jButton1 = new javax.swing.JButton();
 
         setFocusable(false);
         setMaximumSize(new java.awt.Dimension(960, 720));
@@ -192,11 +203,19 @@ public class AgregarAlmacen extends javax.swing.JPanel {
         jScrollPane2.setViewportView(rutasAgregadas);
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 200, 380, 410));
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void fieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldNombreActionPerformed
         String str=fieldNombre.getText();
-        nombre=validarStr(str);
+        validarStr(str);
     }//GEN-LAST:event_fieldNombreActionPerformed
 
     private void botonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarActionPerformed
@@ -211,7 +230,7 @@ public class AgregarAlmacen extends javax.swing.JPanel {
                 Warehouse almacenVecinoW = buscarWearhouse(almacenes,almacenVecino); // Obtiene el objeto almacen apartir del nombre
                 
                 Edge edge=new Edge(almacenVecinoW,distancia);
-                almacenNuevo.edges.pushBack(edge);
+                aristas.pushBack(edge);
                 
                 agregadas.addElement(rutasDisponibles.getSelectedValue() + " | Distancia: " + distancia);
                 disponibles.remove(rutasDisponibles.getSelectedIndex());
@@ -220,7 +239,7 @@ public class AgregarAlmacen extends javax.swing.JPanel {
                     rutasDisponibles.setEnabled(false);
                 }
                 botonAgregar.setEnabled(false);
-                if (almacenNuevo.edges.size() >= 2) {
+                if (agregadas.getSize() >= 2) {
                     botonAgregarAlmacen.setEnabled(true);
                 }
                 comprobado=true;
@@ -233,10 +252,12 @@ public class AgregarAlmacen extends javax.swing.JPanel {
     }//GEN-LAST:event_botonAgregarActionPerformed
 
     private void botonAgregarAlmacenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarAlmacenActionPerformed
+        Warehouse almacenNuevo= new Warehouse(nombre);
+        for(Edge aristaC : aristas){
+            almacenNuevo.edges.pushBack(aristaC);
+        }
         almacenes.pushBack(almacenNuevo);
-        fieldNombre.setText("");
-        botonAgregarAlmacen.setEnabled(false);
-        // Preguntar a Sebas como Reiniciar la ventana
+        reiniciarVentana();
     }//GEN-LAST:event_botonAgregarAlmacenActionPerformed
 
     private void rutasDisponiblesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rutasDisponiblesMouseClicked
@@ -247,14 +268,18 @@ public class AgregarAlmacen extends javax.swing.JPanel {
     }//GEN-LAST:event_rutasDisponiblesMouseClicked
 
     private void fieldNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldNombreFocusLost
-        String str=fieldNombre.getText();
-        nombre=validarStr(str);
+
     }//GEN-LAST:event_fieldNombreFocusLost
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.backToMainMenu();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAgregar;
     private javax.swing.JButton botonAgregarAlmacen;
     private javax.swing.JTextField fieldNombre;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;

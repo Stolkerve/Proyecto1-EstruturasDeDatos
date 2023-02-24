@@ -164,6 +164,7 @@ public class AgregarRuta extends javax.swing.JPanel {
         String almacenSeleccionado=listaAlmacenes.getSelectedItem().toString();
         almacenSeleccionadoW=buscarWearhouse(almacenes, almacenSeleccionado);
         disponibles.clear();
+        agregadas.clear();
         
         for (Warehouse almacen : almacenes) {
             boolean encontrado=false;
@@ -175,6 +176,10 @@ public class AgregarRuta extends javax.swing.JPanel {
             if(!encontrado && !almacen.name.equalsIgnoreCase(almacenSeleccionadoW.name)){
                 disponibles.addElement(almacen.name);
             }
+        }
+        if(disponibles.isEmpty()){
+            JOptionPane.showMessageDialog(null, " ERROR! ESTE ALMACEN YA ALCANZO EL MAXIMO DE RUTAS : ");
+                    
         }
     }//GEN-LAST:event_listaAlmacenesActionPerformed
 

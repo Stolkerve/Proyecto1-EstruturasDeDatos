@@ -31,7 +31,7 @@ public class ShowStockMenu extends MenuComponent {
     }
 
     @Override
-    protected void initComponents() {
+    protected void initMenuComponents() {
         GridBagConstraints c = new GridBagConstraints();
         JPanel wearhouseProductsPanel = new JPanel(new GridBagLayout());
         c.gridx = 0;

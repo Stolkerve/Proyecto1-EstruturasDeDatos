@@ -39,7 +39,7 @@ public class GraphTheGraphMenu extends MenuComponent {
     }
 
     @Override
-    protected void initComponents() {
+    protected void initMenuComponents() {
         ListenableGraph<String, MyWeightedEdge> g = new DefaultListenableGraph<>(
                 new SimpleDirectedWeightedGraph<>(MyWeightedEdge.class));
         JGraphXAdapter<String, MyWeightedEdge> jgxAdapter = new JGraphXAdapter<>(g);
