@@ -55,17 +55,17 @@ public class MainPanel extends javax.swing.JPanel {
             this.addMenuComponent(new ShowStockMenu(this));
         });
 
-        JButton requestBtn = new JButton("Realizar pedido de producto");
+        JButton requestBtn = new JButton("Realizar pedido de productos");
         requestBtn.addActionListener(e -> {
             this.addMenuComponent(new RequestOrderMenu(this));
         });
 
-        JButton addWearhouseBtn = new JButton("Agregar almacen");
+        JButton addWearhouseBtn = new JButton("Agregar almacenes");
         addWearhouseBtn.addActionListener(e -> {
             this.addMenuComponent(new AgregarAlmacen(this));
         });
 
-        JButton addPathBtn = new JButton("Agregar camino a almacen");
+        JButton addPathBtn = new JButton("Agregar caminos a almacen");
         addPathBtn.addActionListener(e -> {
             this.addMenuComponent(new AgregarRuta());
         });

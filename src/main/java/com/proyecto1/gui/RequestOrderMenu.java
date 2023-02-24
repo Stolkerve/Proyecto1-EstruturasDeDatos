@@ -274,6 +274,7 @@ public class RequestOrderMenu extends MenuComponent {
 
                                             mxGraphModel graphModel = (mxGraphModel) component.getGraph().getModel();
                                             Collection<Object> cells = graphModel.getCells().values();
+                                            
                                             for (Object c : cells) {
                                                 mxCell cell = (mxCell) c;
                                                 graphModel.setStyle(cell, "rounded=1;");
@@ -351,7 +352,7 @@ public class RequestOrderMenu extends MenuComponent {
 
         for (int i = 0; i < pendingWarehouseProductsToDelete.size(); i++)
             warehouse.products.remove(pendingWarehouseProductsToDelete.get(i) - i);
-
+        
         this.resetWarehouseProductsList();
     }
 }
