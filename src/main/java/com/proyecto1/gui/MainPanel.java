@@ -62,7 +62,7 @@ public class MainPanel extends javax.swing.JPanel {
 
         JButton addWearhouseBtn = new JButton("Agregar almacen");
         addWearhouseBtn.addActionListener(e -> {
-            this.addMenuComponent(new AgregarAlmacen());
+            this.addMenuComponent(new AgregarAlmacen(this));
         });
 
         JButton addPathBtn = new JButton("Agregar camino a almacen");
@@ -78,7 +78,7 @@ public class MainPanel extends javax.swing.JPanel {
 
         JButton addProdutsToWearhouseBtn = new JButton("Agregar producto");
         addProdutsToWearhouseBtn.addActionListener(e -> {
-            this.addMenuComponent(new AgregarProducto());
+            this.addMenuComponent(new AgregarProducto(this));
         });
 
         JButton showGraphBtn = new JButton("Mostrar mapa de almacenes");

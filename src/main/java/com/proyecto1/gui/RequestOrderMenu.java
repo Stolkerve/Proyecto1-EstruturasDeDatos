@@ -69,11 +69,11 @@ public class RequestOrderMenu extends MenuComponent {
 
         this.add(topPanel);
 
-        this.initComponents();
+        this.initMenuComponents();
     }
 
     @Override
-    protected void initComponents() {
+    protected void initMenuComponents() {
         GridBagConstraints c = new GridBagConstraints();
         JPanel warehouseProductsPanel = new JPanel(new GridBagLayout());
         c.gridx = 0;
