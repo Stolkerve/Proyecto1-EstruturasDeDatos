@@ -4,6 +4,7 @@ import com.proyecto1.containers.Graph;
 import com.proyecto1.containers.Vector;
 import com.proyecto1.models.Edge;
 import com.proyecto1.models.Warehouse;
+import java.awt.Color;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -114,8 +115,10 @@ public class AgregarAlmacen extends MenuComponent {
         botonAgregarAlmacen = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         rutasAgregadas = new javax.swing.JList<>();
-        jButton1 = new javax.swing.JButton();
+        retrocederPanel = new javax.swing.JPanel();
+        retrocederText = new javax.swing.JLabel();
 
+        setForeground(new java.awt.Color(255, 255, 255));
         setFocusable(false);
         setMaximumSize(new java.awt.Dimension(960, 720));
         setMinimumSize(new java.awt.Dimension(960, 720));
@@ -204,13 +207,40 @@ public class AgregarAlmacen extends MenuComponent {
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 200, 380, 410));
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        retrocederPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        retrocederPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                retrocederPanelMouseEntered(evt);
             }
         });
-        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, -1, -1));
+
+        retrocederText.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        retrocederText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        retrocederText.setText("<");
+        retrocederText.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                retrocederTextMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                retrocederTextMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                retrocederTextMouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout retrocederPanelLayout = new javax.swing.GroupLayout(retrocederPanel);
+        retrocederPanel.setLayout(retrocederPanelLayout);
+        retrocederPanelLayout.setHorizontalGroup(
+            retrocederPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(retrocederText, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+        );
+        retrocederPanelLayout.setVerticalGroup(
+            retrocederPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(retrocederText, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+        );
+
+        add(retrocederPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 70, 50));
     }// </editor-fold>//GEN-END:initComponents
 
     private void fieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldNombreActionPerformed
@@ -272,18 +302,33 @@ public class AgregarAlmacen extends MenuComponent {
 
     }//GEN-LAST:event_fieldNombreFocusLost
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void retrocederTextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederTextMouseClicked
         this.backToMainMenu();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_retrocederTextMouseClicked
+
+    private void retrocederTextMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederTextMouseEntered
+        retrocederPanel.setBackground(Color.red);
+        retrocederText.setForeground(Color.black);
+    }//GEN-LAST:event_retrocederTextMouseEntered
+
+    private void retrocederPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederPanelMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_retrocederPanelMouseEntered
+
+    private void retrocederTextMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederTextMouseExited
+        retrocederText.setForeground(Color.black);
+        retrocederPanel.setBackground(Color.white);
+    }//GEN-LAST:event_retrocederTextMouseExited
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAgregar;
     private javax.swing.JButton botonAgregarAlmacen;
     private javax.swing.JTextField fieldNombre;
-    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JPanel retrocederPanel;
+    private javax.swing.JLabel retrocederText;
     private javax.swing.JList<String> rutasAgregadas;
     private javax.swing.JList<String> rutasDisponibles;
     private javax.swing.JLabel titulo1;
