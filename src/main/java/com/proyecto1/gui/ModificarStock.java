@@ -52,53 +52,90 @@ public class ModificarStock extends MenuComponent {
         titulo4 = new javax.swing.JLabel();
         fieldCantidad = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
-        botonModificar = new javax.swing.JButton();
-        retrocederPanel1 = new javax.swing.JPanel();
+        retrocederPanel = new javax.swing.JPanel();
         retrocederText = new javax.swing.JLabel();
+        modificarPanel = new javax.swing.JPanel();
+        modificarText = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(60, 63, 65));
+        setToolTipText("");
         setMaximumSize(new java.awt.Dimension(960, 720));
         setMinimumSize(new java.awt.Dimension(960, 720));
         setPreferredSize(new java.awt.Dimension(960, 720));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        titulo1.setFont(new java.awt.Font("Silom", 0, 65)); // NOI18N
+        titulo1.setFont(new java.awt.Font("SansSerif", 1, 70)); // NOI18N
+        titulo1.setForeground(javax.swing.UIManager.getDefaults().getColor("Actions.Yellow"));
+        titulo1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         titulo1.setText("MODIFICAR STOCK");
-        add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 50, -1, -1));
+        titulo1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        titulo1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 960, -1));
 
-        titulo2.setFont(new java.awt.Font("Silom", 1, 24)); // NOI18N
+        titulo2.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
+        titulo2.setForeground(new java.awt.Color(242, 242, 242));
         titulo2.setText("SELECCIONE EL ALMACEN :");
-        add(titulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, 330, -1));
+        titulo2.setToolTipText("");
+        add(titulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, 330, 20));
 
+        listaAlmacenes.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
+        listaAlmacenes.setForeground(new java.awt.Color(51, 109, 174));
         listaAlmacenes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        listaAlmacenes.setToolTipText("");
+        listaAlmacenes.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Almacenes", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("SansSerif", 0, 13))); // NOI18N
+        listaAlmacenes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        listaAlmacenes.setName(""); // NOI18N
+        listaAlmacenes.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                listaAlmacenesFocusLost(evt);
+            }
+        });
         listaAlmacenes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 listaAlmacenesActionPerformed(evt);
             }
         });
-        add(listaAlmacenes, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 210, 520, 30));
+        add(listaAlmacenes, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 200, 520, 50));
 
-        jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
-        add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 270, 850, 20));
+        jSeparator1.setForeground(new java.awt.Color(51, 109, 174));
+        add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 270, 860, 20));
 
-        titulo3.setFont(new java.awt.Font("Silom", 1, 24)); // NOI18N
+        titulo3.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
+        titulo3.setForeground(new java.awt.Color(242, 242, 242));
         titulo3.setText("SELECCIONE EL NOMBRE DEL PRODUCTO :");
-        add(titulo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 320, 490, 20));
+        titulo3.setToolTipText("");
+        add(titulo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 320, 530, 20));
 
+        listaProductos.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
+        listaProductos.setForeground(new java.awt.Color(51, 109, 174));
         listaProductos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        listaProductos.setToolTipText("");
+        listaProductos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Productos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("SansSerif", 0, 13))); // NOI18N
+        listaProductos.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                listaProductosFocusLost(evt);
+            }
+        });
         listaProductos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 listaProductosActionPerformed(evt);
             }
         });
-        add(listaProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 313, 350, 30));
+        add(listaProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 300, 330, 50));
 
-        jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
-        add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, 850, 20));
+        jSeparator2.setForeground(new java.awt.Color(51, 109, 174));
+        add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, 860, 20));
 
-        titulo4.setFont(new java.awt.Font("Silom", 1, 24)); // NOI18N
+        titulo4.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
+        titulo4.setForeground(new java.awt.Color(242, 242, 242));
         titulo4.setText("INGRESE LA CANTIDAD A AUMENTAR  DEL PRODUCTO :");
-        add(titulo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 410, 640, 20));
+        titulo4.setToolTipText("");
+        add(titulo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 410, 690, 20));
 
+        fieldCantidad.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        fieldCantidad.setForeground(new java.awt.Color(204, 204, 204));
+        fieldCantidad.setToolTipText("");
+        fieldCantidad.setBorder(null);
         fieldCantidad.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 fieldCantidadFocusLost(evt);
@@ -109,30 +146,17 @@ public class ModificarStock extends MenuComponent {
                 fieldCantidadActionPerformed(evt);
             }
         });
-        add(fieldCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 410, 220, 30));
+        add(fieldCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 400, 160, 40));
 
-        jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
-        add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 470, 850, 20));
+        jSeparator3.setForeground(new java.awt.Color(51, 109, 174));
+        add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 470, 860, 20));
 
-        botonModificar.setFont(new java.awt.Font("Silom", 0, 24)); // NOI18N
-        botonModificar.setText("MODIFICAR");
-        botonModificar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botonModificar.setEnabled(false);
-        botonModificar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonModificarActionPerformed(evt);
-            }
-        });
-        add(botonModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 630, 250, -1));
+        retrocederPanel.setBackground(new java.awt.Color(60, 63, 65));
+        retrocederPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        retrocederPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        retrocederPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                retrocederPanel1MouseEntered(evt);
-            }
-        });
-
+        retrocederText.setBackground(new java.awt.Color(60, 63, 65));
         retrocederText.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        retrocederText.setForeground(new java.awt.Color(255, 255, 255));
         retrocederText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         retrocederText.setText("<");
         retrocederText.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -147,19 +171,68 @@ public class ModificarStock extends MenuComponent {
             }
         });
 
-        javax.swing.GroupLayout retrocederPanel1Layout = new javax.swing.GroupLayout(retrocederPanel1);
-        retrocederPanel1.setLayout(retrocederPanel1Layout);
-        retrocederPanel1Layout.setHorizontalGroup(
-            retrocederPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout retrocederPanelLayout = new javax.swing.GroupLayout(retrocederPanel);
+        retrocederPanel.setLayout(retrocederPanelLayout);
+        retrocederPanelLayout.setHorizontalGroup(
+            retrocederPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(retrocederText, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
         );
-        retrocederPanel1Layout.setVerticalGroup(
-            retrocederPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        retrocederPanelLayout.setVerticalGroup(
+            retrocederPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(retrocederText, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
         );
 
-        add(retrocederPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 70, 50));
+        add(retrocederPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 70, 50));
+
+        modificarPanel.setBackground(new java.awt.Color(51, 109, 174));
+        modificarPanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true));
+        modificarPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        modificarText.setBackground(new java.awt.Color(37, 46, 61));
+        modificarText.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
+        modificarText.setForeground(new java.awt.Color(255, 255, 255));
+        modificarText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        modificarText.setText("MODIFICAR");
+        modificarText.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                modificarTextMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                modificarTextMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                modificarTextMouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout modificarPanelLayout = new javax.swing.GroupLayout(modificarPanel);
+        modificarPanel.setLayout(modificarPanelLayout);
+        modificarPanelLayout.setHorizontalGroup(
+            modificarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(modificarText, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
+        );
+        modificarPanelLayout.setVerticalGroup(
+            modificarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(modificarText, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
+        );
+
+        add(modificarPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 590, 290, 60));
     }// </editor-fold>//GEN-END:initComponents
+    private void reiniciarVentana(){
+        modificarText.setEnabled(false);
+        fieldCantidad.setText("");
+        fieldCantidad.setEnabled(true);
+        listaAlmacenes.setEnabled(true);
+        listaProductos.setEnabled(true);
+    }
+    
+    private void accionDelFieldCantidad(){
+        String num =fieldCantidad.getText();
+        stock = validarInt(num);
+        if(stock>0){
+            modificarText.setEnabled(true);  
+        }
+    }
     
     private void cargarComboAlmacenes(JComboBox c) {
         c.setModel(almacenesDisponibles);
@@ -208,30 +281,8 @@ public class ModificarStock extends MenuComponent {
     }
     
     private void fieldCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldCantidadActionPerformed
-        String num =fieldCantidad.getText();
-        stock = validarInt(num);
-        if(stock>0){
-            botonModificar.setEnabled(true);
-        }
+        accionDelFieldCantidad();
     }//GEN-LAST:event_fieldCantidadActionPerformed
-
-    private void botonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarActionPerformed
-
-        for (Warehouse almacen : almacenes){
-            if(almacenSeleccionadoW.name.equals(almacen.name)){
-                for (Product producto : almacen.products){
-                    if(productoSeleccionadoP.name.equals(producto.name)){
-                        producto.stock+=stock;
-                        Graph.getInstance().needsSave = true;
-                        return;
-                    }
-                }
-            }    
-        }
-        botonModificar.setEnabled(false);
-        fieldCantidad.setText("");
-        fieldCantidad.setEnabled(true);
-    }//GEN-LAST:event_botonModificarActionPerformed
 
     private void listaAlmacenesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaAlmacenesActionPerformed
         String almacenSeleccionado=listaAlmacenes.getSelectedItem().toString();
@@ -243,6 +294,10 @@ public class ModificarStock extends MenuComponent {
                     productosDisponibles.addElement(producto.name);
                 }
             }
+        }
+        if(productosDisponibles.getSize()==0){
+            JOptionPane.showMessageDialog(null, " ERROR! NO EXISTEN PRODUCTOS EN ESTE ALMACEN ");
+            reiniciarVentana();
         }
     }//GEN-LAST:event_listaAlmacenesActionPerformed
 
@@ -256,41 +311,67 @@ public class ModificarStock extends MenuComponent {
     }//GEN-LAST:event_listaProductosActionPerformed
 
     private void fieldCantidadFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldCantidadFocusLost
-        String num =fieldCantidad.getText();
-        stock = validarInt(num);
-        if(stock>0){
-            botonModificar.setEnabled(true);
-        }
+        accionDelFieldCantidad();
     }//GEN-LAST:event_fieldCantidadFocusLost
-
-    private void retrocederPanel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederPanel1MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_retrocederPanel1MouseEntered
 
     private void retrocederTextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederTextMouseClicked
         this.backToMainMenu();
     }//GEN-LAST:event_retrocederTextMouseClicked
 
     private void retrocederTextMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederTextMouseEntered
-        retrocederPanel1.setBackground(Color.red);
-        retrocederText.setForeground(Color.BLACK);
+        retrocederPanel.setBackground(Color.red);
     }//GEN-LAST:event_retrocederTextMouseEntered
 
     private void retrocederTextMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederTextMouseExited
-        retrocederText.setForeground(Color.black);
-        retrocederPanel1.setBackground(Color.white);
+        retrocederPanel.setBackground(Color.darkGray);
     }//GEN-LAST:event_retrocederTextMouseExited
+
+    private void listaAlmacenesFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_listaAlmacenesFocusLost
+        String almacenSeleccionado=listaAlmacenes.getSelectedItem().toString();
+        almacenSeleccionadoW=buscarWearhouse(almacenes, almacenSeleccionado);
+        listaAlmacenes.setEnabled(false);
+    }//GEN-LAST:event_listaAlmacenesFocusLost
+
+    private void listaProductosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_listaProductosFocusLost
+        String productoSeleccionado=listaProductos.getSelectedItem().toString();
+        productoSeleccionadoP=buscarProducto(almacenSeleccionadoW.name,productoSeleccionado);
+        listaProductos.setEnabled(false);
+    }//GEN-LAST:event_listaProductosFocusLost
+
+    private void modificarTextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modificarTextMouseClicked
+        for (Warehouse almacen : almacenes){
+            if(almacenSeleccionadoW.name.equals(almacen.name)){
+                for (Product producto : almacen.products){
+                    if(productoSeleccionadoP.name.equals(producto.name)){
+                        producto.stock+=stock;
+                        Graph.getInstance().needsSave = true;
+                        reiniciarVentana();
+                        return;
+                    }
+                }
+            }    
+        }
+    }//GEN-LAST:event_modificarTextMouseClicked
+
+    private void modificarTextMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modificarTextMouseEntered
+        modificarPanel.setBackground(new Color(30,140,250));
+    }//GEN-LAST:event_modificarTextMouseEntered
+
+    private void modificarTextMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modificarTextMouseExited
+        modificarPanel.setBackground(new Color(51,109,174));
+    }//GEN-LAST:event_modificarTextMouseExited
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botonModificar;
     private javax.swing.JTextField fieldCantidad;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JComboBox<String> listaAlmacenes;
     private javax.swing.JComboBox<String> listaProductos;
-    private javax.swing.JPanel retrocederPanel1;
+    private javax.swing.JPanel modificarPanel;
+    private javax.swing.JLabel modificarText;
+    private javax.swing.JPanel retrocederPanel;
     private javax.swing.JLabel retrocederText;
     private javax.swing.JLabel titulo1;
     private javax.swing.JLabel titulo2;
