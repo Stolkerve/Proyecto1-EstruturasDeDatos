@@ -54,7 +54,7 @@ public class ModificarStock extends MenuComponent {
         jSeparator3 = new javax.swing.JSeparator();
         botonModificar = new javax.swing.JButton();
         retrocederPanel1 = new javax.swing.JPanel();
-        retrocederText1 = new javax.swing.JLabel();
+        retrocederText = new javax.swing.JLabel();
 
         setMaximumSize(new java.awt.Dimension(960, 720));
         setMinimumSize(new java.awt.Dimension(960, 720));
@@ -132,18 +132,18 @@ public class ModificarStock extends MenuComponent {
             }
         });
 
-        retrocederText1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        retrocederText1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        retrocederText1.setText("<");
-        retrocederText1.addMouseListener(new java.awt.event.MouseAdapter() {
+        retrocederText.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        retrocederText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        retrocederText.setText("<");
+        retrocederText.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                retrocederText1MouseClicked(evt);
+                retrocederTextMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                retrocederText1MouseEntered(evt);
+                retrocederTextMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                retrocederText1MouseExited(evt);
+                retrocederTextMouseExited(evt);
             }
         });
 
@@ -151,11 +151,11 @@ public class ModificarStock extends MenuComponent {
         retrocederPanel1.setLayout(retrocederPanel1Layout);
         retrocederPanel1Layout.setHorizontalGroup(
             retrocederPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(retrocederText1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+            .addComponent(retrocederText, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
         );
         retrocederPanel1Layout.setVerticalGroup(
             retrocederPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(retrocederText1, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+            .addComponent(retrocederText, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
         );
 
         add(retrocederPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 70, 50));
@@ -263,23 +263,23 @@ public class ModificarStock extends MenuComponent {
         }
     }//GEN-LAST:event_fieldCantidadFocusLost
 
-    private void retrocederText1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederText1MouseClicked
-        this.backToMainMenu();
-    }//GEN-LAST:event_retrocederText1MouseClicked
-
-    private void retrocederText1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederText1MouseEntered
-        retrocederPanel.setBackground(Color.red);
-        retrocederText.setForeground(Color.black);
-    }//GEN-LAST:event_retrocederText1MouseEntered
-
-    private void retrocederText1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederText1MouseExited
-        retrocederText.setForeground(Color.black);
-        retrocederPanel.setBackground(Color.white);
-    }//GEN-LAST:event_retrocederText1MouseExited
-
     private void retrocederPanel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederPanel1MouseEntered
         // TODO add your handling code here:
     }//GEN-LAST:event_retrocederPanel1MouseEntered
+
+    private void retrocederTextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederTextMouseClicked
+        this.backToMainMenu();
+    }//GEN-LAST:event_retrocederTextMouseClicked
+
+    private void retrocederTextMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederTextMouseEntered
+        retrocederPanel1.setBackground(Color.red);
+        retrocederText.setForeground(Color.BLACK);
+    }//GEN-LAST:event_retrocederTextMouseEntered
+
+    private void retrocederTextMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederTextMouseExited
+        retrocederText.setForeground(Color.black);
+        retrocederPanel1.setBackground(Color.white);
+    }//GEN-LAST:event_retrocederTextMouseExited
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -290,10 +290,8 @@ public class ModificarStock extends MenuComponent {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JComboBox<String> listaAlmacenes;
     private javax.swing.JComboBox<String> listaProductos;
-    private javax.swing.JPanel retrocederPanel;
     private javax.swing.JPanel retrocederPanel1;
     private javax.swing.JLabel retrocederText;
-    private javax.swing.JLabel retrocederText1;
     private javax.swing.JLabel titulo1;
     private javax.swing.JLabel titulo2;
     private javax.swing.JLabel titulo3;

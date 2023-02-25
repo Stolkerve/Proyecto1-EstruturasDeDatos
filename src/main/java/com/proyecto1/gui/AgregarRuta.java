@@ -230,23 +230,23 @@ public class AgregarRuta extends MenuComponent {
         } 
     }//GEN-LAST:event_rutasDisponiblesMouseClicked
 
-    private void retrocederTextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederTextMouseClicked
-        this.backToMainMenu();
-    }//GEN-LAST:event_retrocederTextMouseClicked
-
-    private void retrocederTextMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederTextMouseEntered
-        retrocederPanel.setBackground(Color.red);
-        retrocederText.setForeground(Color.black);
-    }//GEN-LAST:event_retrocederTextMouseEntered
+    private void retrocederPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederPanelMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_retrocederPanelMouseEntered
 
     private void retrocederTextMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederTextMouseExited
         retrocederText.setForeground(Color.red);
         retrocederPanel.setBackground(Color.white);
     }//GEN-LAST:event_retrocederTextMouseExited
 
-    private void retrocederPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederPanelMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_retrocederPanelMouseEntered
+    private void retrocederTextMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederTextMouseEntered
+        retrocederPanel.setBackground(Color.red);
+        retrocederText.setForeground(Color.black);
+    }//GEN-LAST:event_retrocederTextMouseEntered
+
+    private void retrocederTextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederTextMouseClicked
+        this.backToMainMenu();
+    }//GEN-LAST:event_retrocederTextMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

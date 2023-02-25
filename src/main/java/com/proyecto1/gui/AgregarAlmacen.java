@@ -5,7 +5,6 @@ import com.proyecto1.containers.Vector;
 import com.proyecto1.models.Edge;
 import com.proyecto1.models.Warehouse;
 import java.awt.Color;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -308,7 +307,7 @@ public class AgregarAlmacen extends MenuComponent {
 
     private void retrocederTextMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederTextMouseEntered
         retrocederPanel.setBackground(Color.red);
-        retrocederText.setForeground(Color.black);
+        retrocederText.setForeground(Color.BLACK);
     }//GEN-LAST:event_retrocederTextMouseEntered
 
     private void retrocederPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederPanelMouseEntered
