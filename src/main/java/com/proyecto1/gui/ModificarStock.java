@@ -4,13 +4,14 @@ import com.proyecto1.containers.Graph;
 import com.proyecto1.containers.Vector;
 import com.proyecto1.models.Product;
 import com.proyecto1.models.Warehouse;
+import java.awt.Color;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 // @author andresbucarello
 
-public class ModificarStock extends javax.swing.JPanel {
+public class ModificarStock extends MenuComponent {
     
     Vector<Warehouse> almacenes;
     Warehouse almacenSeleccionadoW;
@@ -22,7 +23,9 @@ public class ModificarStock extends javax.swing.JPanel {
     /**
      * Creates new form ModificarStockk
      */
-    public ModificarStock() {
+    public ModificarStock(MainPanel mainMenuPanel) {
+
+        super(mainMenuPanel);
         initComponents();
         
         almacenes= Graph.getInstance().warehouses;
@@ -50,6 +53,8 @@ public class ModificarStock extends javax.swing.JPanel {
         fieldCantidad = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
         botonModificar = new javax.swing.JButton();
+        retrocederPanel1 = new javax.swing.JPanel();
+        retrocederText1 = new javax.swing.JLabel();
 
         setMaximumSize(new java.awt.Dimension(960, 720));
         setMinimumSize(new java.awt.Dimension(960, 720));
@@ -119,6 +124,41 @@ public class ModificarStock extends javax.swing.JPanel {
             }
         });
         add(botonModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 630, 250, -1));
+
+        retrocederPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        retrocederPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                retrocederPanel1MouseEntered(evt);
+            }
+        });
+
+        retrocederText1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        retrocederText1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        retrocederText1.setText("<");
+        retrocederText1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                retrocederText1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                retrocederText1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                retrocederText1MouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout retrocederPanel1Layout = new javax.swing.GroupLayout(retrocederPanel1);
+        retrocederPanel1.setLayout(retrocederPanel1Layout);
+        retrocederPanel1Layout.setHorizontalGroup(
+            retrocederPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(retrocederText1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+        );
+        retrocederPanel1Layout.setVerticalGroup(
+            retrocederPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(retrocederText1, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+        );
+
+        add(retrocederPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 70, 50));
     }// </editor-fold>//GEN-END:initComponents
     
     private void cargarComboAlmacenes(JComboBox c) {
@@ -223,6 +263,24 @@ public class ModificarStock extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_fieldCantidadFocusLost
 
+    private void retrocederText1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederText1MouseClicked
+        this.backToMainMenu();
+    }//GEN-LAST:event_retrocederText1MouseClicked
+
+    private void retrocederText1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederText1MouseEntered
+        retrocederPanel.setBackground(Color.red);
+        retrocederText.setForeground(Color.black);
+    }//GEN-LAST:event_retrocederText1MouseEntered
+
+    private void retrocederText1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederText1MouseExited
+        retrocederText.setForeground(Color.black);
+        retrocederPanel.setBackground(Color.white);
+    }//GEN-LAST:event_retrocederText1MouseExited
+
+    private void retrocederPanel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederPanel1MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_retrocederPanel1MouseEntered
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonModificar;
@@ -232,6 +290,10 @@ public class ModificarStock extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JComboBox<String> listaAlmacenes;
     private javax.swing.JComboBox<String> listaProductos;
+    private javax.swing.JPanel retrocederPanel;
+    private javax.swing.JPanel retrocederPanel1;
+    private javax.swing.JLabel retrocederText;
+    private javax.swing.JLabel retrocederText1;
     private javax.swing.JLabel titulo1;
     private javax.swing.JLabel titulo2;
     private javax.swing.JLabel titulo3;

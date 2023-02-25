@@ -4,6 +4,7 @@ import com.proyecto1.containers.Graph;
 import com.proyecto1.containers.Vector;
 import com.proyecto1.models.Edge;
 import com.proyecto1.models.Warehouse;
+import java.awt.Color;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
@@ -11,7 +12,7 @@ import javax.swing.JOptionPane;
 
 // @author andresbucarello
 
-public class AgregarRuta extends javax.swing.JPanel {
+public class AgregarRuta extends MenuComponent {
     
     Vector<Warehouse> almacenes;
     Warehouse almacenSeleccionadoW;
@@ -23,8 +24,8 @@ public class AgregarRuta extends javax.swing.JPanel {
     /**
      * Creates new form AgregarRuta
      */
-    public AgregarRuta() {
-        initComponents();
+    public AgregarRuta(MainPanel mainMenuPanel){
+        super(mainMenuPanel);
         
         rutasDisponibles.setModel(disponibles);
         rutasAgregadas.setModel(agregadas);
@@ -61,6 +62,8 @@ public class AgregarRuta extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         rutasAgregadas = new javax.swing.JList<>();
         listaAlmacenes = new javax.swing.JComboBox<>();
+        retrocederPanel = new javax.swing.JPanel();
+        retrocederText = new javax.swing.JLabel();
 
         setMaximumSize(new java.awt.Dimension(970, 720));
         setMinimumSize(new java.awt.Dimension(970, 720));
@@ -127,6 +130,41 @@ public class AgregarRuta extends javax.swing.JPanel {
             }
         });
         add(listaAlmacenes, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 140, 570, 30));
+
+        retrocederPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        retrocederPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                retrocederPanelMouseEntered(evt);
+            }
+        });
+
+        retrocederText.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        retrocederText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        retrocederText.setText("<");
+        retrocederText.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                retrocederTextMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                retrocederTextMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                retrocederTextMouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout retrocederPanelLayout = new javax.swing.GroupLayout(retrocederPanel);
+        retrocederPanel.setLayout(retrocederPanelLayout);
+        retrocederPanelLayout.setHorizontalGroup(
+            retrocederPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(retrocederText, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+        );
+        retrocederPanelLayout.setVerticalGroup(
+            retrocederPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(retrocederText, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+        );
+
+        add(retrocederPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 70, 50));
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarActionPerformed
@@ -192,6 +230,24 @@ public class AgregarRuta extends javax.swing.JPanel {
         } 
     }//GEN-LAST:event_rutasDisponiblesMouseClicked
 
+    private void retrocederTextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederTextMouseClicked
+        this.backToMainMenu();
+    }//GEN-LAST:event_retrocederTextMouseClicked
+
+    private void retrocederTextMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederTextMouseEntered
+        retrocederPanel.setBackground(Color.red);
+        retrocederText.setForeground(Color.black);
+    }//GEN-LAST:event_retrocederTextMouseEntered
+
+    private void retrocederTextMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederTextMouseExited
+        retrocederText.setForeground(Color.red);
+        retrocederPanel.setBackground(Color.white);
+    }//GEN-LAST:event_retrocederTextMouseExited
+
+    private void retrocederPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederPanelMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_retrocederPanelMouseEntered
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAgregar;
@@ -199,6 +255,8 @@ public class AgregarRuta extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JComboBox<String> listaAlmacenes;
+    private javax.swing.JPanel retrocederPanel;
+    private javax.swing.JLabel retrocederText;
     private javax.swing.JList<String> rutasAgregadas;
     private javax.swing.JList<String> rutasDisponibles;
     private javax.swing.JLabel titulo1;

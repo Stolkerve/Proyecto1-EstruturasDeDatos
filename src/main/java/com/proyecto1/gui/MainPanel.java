@@ -67,12 +67,12 @@ public class MainPanel extends javax.swing.JPanel {
 
         JButton addPathBtn = new JButton("Agregar caminos a almacen");
         addPathBtn.addActionListener(e -> {
-            this.addMenuComponent(new AgregarRuta());
+            this.addMenuComponent(new AgregarRuta(this));
         });
 
         JButton manageStockBtn = new JButton("Gestionar stock de almacenes");
         manageStockBtn.addActionListener(e -> {
-            this.addMenuComponent(new ModificarStock());
+            this.addMenuComponent(new ModificarStock(this));
             
         });
 
