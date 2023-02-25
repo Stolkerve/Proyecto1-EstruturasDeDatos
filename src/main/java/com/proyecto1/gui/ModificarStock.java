@@ -295,7 +295,10 @@ public class ModificarStock extends MenuComponent {
                 }
             }
         }
-        
+        if(productosDisponibles.getSize()==0){
+            JOptionPane.showMessageDialog(null, " ERROR! NO EXISTEN PRODUCTOS EN ESTE ALMACEN ");
+            reiniciarVentana();
+        }
     }//GEN-LAST:event_listaAlmacenesActionPerformed
 
     private void listaProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaProductosActionPerformed
