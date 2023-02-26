@@ -24,7 +24,11 @@ public class ModificarStock extends MenuComponent {
     /**
      * Creates new form ModificarStockk
      */
-    //Funcion para modficar el stock mediante al input del usuario
+    
+    /**
+     * @param ModificarStock Funcion para modficar el stock mediante al input del usuario
+     **/
+    
     public ModificarStock(MainPanel mainMenuPanel) {
         //Se usa herencia de la clase padre inicial que es el main menu
         super(mainMenuPanel);
@@ -90,7 +94,7 @@ public class ModificarStock extends MenuComponent {
         listaAlmacenes.setForeground(new java.awt.Color(51, 109, 174));
         listaAlmacenes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         listaAlmacenes.setToolTipText("");
-        listaAlmacenes.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Almacenes", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("SansSerif", 0, 13))); // NOI18N
+        listaAlmacenes.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Almacenes", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("SansSerif", 0, 13))); // NOI18N
         listaAlmacenes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         listaAlmacenes.setName(""); // NOI18N
         listaAlmacenes.addActionListener(new java.awt.event.ActionListener() {
@@ -113,7 +117,7 @@ public class ModificarStock extends MenuComponent {
         listaProductos.setForeground(new java.awt.Color(51, 109, 174));
         listaProductos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         listaProductos.setToolTipText("");
-        listaProductos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Productos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("SansSerif", 0, 13))); // NOI18N
+        listaProductos.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Productos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("SansSerif", 0, 13))); // NOI18N
         listaProductos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 listaProductosActionPerformed(evt);
@@ -191,6 +195,12 @@ public class ModificarStock extends MenuComponent {
         this.modificarBtn.setEnabled(false);
         this.fieldCantidad.setText("");
     }
+    
+    /**
+     * @param reset Se reinicia la ventana
+     * @param  modificarAction Esta opcion es para que en caso que el usuario no escoja un almacen se active un JOptionPane con el mensaje de error
+     **/
+    
     //Se reinicia la ventana 
     //Esta opcion es para que en caso que el usuario no escoja un almacen se active un JOptionPane con el mensaje de error
     protected void modificarAction(ActionEvent evt) {
@@ -225,9 +235,11 @@ public class ModificarStock extends MenuComponent {
         }
     }
     
-    private void fieldCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldCantidadActionPerformed
-    }//GEN-LAST:event_fieldCantidadActionPerformed
-    //Funcion para que se seleccionen y se muestren las listas correctamente
+     /**
+     * @param listaAlmacenesActionPerformed Funcion para que se seleccionen y se muestren las listas correctamente
+     * 
+     **/
+       
     private void listaAlmacenesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaAlmacenesActionPerformed
         int wIndex = this.listaAlmacenes.getSelectedIndex();
         if (wIndex < 0) return;
@@ -262,6 +274,10 @@ public class ModificarStock extends MenuComponent {
     private void retrocederTextMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederTextMouseExited
         retrocederPanel.setBackground(Color.darkGray);
     }//GEN-LAST:event_retrocederTextMouseExited
+
+    private void fieldCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldCantidadActionPerformed
+
+    }//GEN-LAST:event_fieldCantidadActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField fieldCantidad;
