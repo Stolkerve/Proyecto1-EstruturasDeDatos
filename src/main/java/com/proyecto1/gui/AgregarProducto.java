@@ -59,58 +59,53 @@ public class AgregarProducto extends MenuComponent {
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         titulo1.setFont(new java.awt.Font("Silom", 0, 65)); // NOI18N
+        titulo1.setForeground(javax.swing.UIManager.getDefaults().getColor("Actions.Yellow"));
         titulo1.setText("AGREGAR PRODUCTO");
         add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, -1, -1));
 
         titulo2.setFont(new java.awt.Font("Silom", 1, 24)); // NOI18N
         titulo2.setText("SELECCIONE EL ALMACEN :");
-        add(titulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, 380, -1));
+        add(titulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 380, -1));
 
+        listaAlmacenes.setForeground(new java.awt.Color(51, 109, 174));
         listaAlmacenes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        listaAlmacenes.setBorder(javax.swing.BorderFactory.createTitledBorder("Almacenes"));
         listaAlmacenes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 listaAlmacenesActionPerformed(evt);
             }
         });
-        add(listaAlmacenes, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 240, 320, 30));
+        add(listaAlmacenes, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 230, 410, 60));
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
         add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 880, 20));
 
         titulo3.setFont(new java.awt.Font("Silom", 1, 24)); // NOI18N
         titulo3.setText("INGRESE EL NOMBRE DEL PRODUCTO :");
-        add(titulo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 330, 450, 20));
+        add(titulo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 490, 30));
 
-        fieldNombre.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                fieldNombreFocusLost(evt);
-            }
-        });
+        fieldNombre.setForeground(new java.awt.Color(51, 109, 174));
         fieldNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fieldNombreActionPerformed(evt);
             }
         });
-        add(fieldNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 320, 420, 30));
+        add(fieldNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 320, 410, 30));
 
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
         add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 380, 880, 20));
 
         titulo4.setFont(new java.awt.Font("Silom", 1, 24)); // NOI18N
         titulo4.setText("INGRESE LA CANTIDAD DEL PRODUCTO :");
-        add(titulo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 420, 470, 20));
+        add(titulo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, 500, 40));
 
-        fieldCantidad.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                fieldCantidadFocusLost(evt);
-            }
-        });
+        fieldCantidad.setForeground(new java.awt.Color(51, 109, 174));
         fieldCantidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fieldCantidadActionPerformed(evt);
             }
         });
-        add(fieldCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 410, 400, 30));
+        add(fieldCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 400, 410, 30));
 
         jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
         add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 470, 880, 20));
@@ -258,6 +253,7 @@ public class AgregarProducto extends MenuComponent {
                 fieldNombre.setEnabled(true);
                 botonGuardar.setEnabled(false);
                 Graph.getInstance().needsSave = true;
+                stock = 0;
                 return;
             }
         }
@@ -267,22 +263,6 @@ public class AgregarProducto extends MenuComponent {
         String almacenSeleccionado=listaAlmacenes.getSelectedItem().toString();
         almacenSeleccionadoW=buscarWearhouse(almacenes, almacenSeleccionado);
     }//GEN-LAST:event_listaAlmacenesActionPerformed
-
-    private void fieldNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldNombreFocusLost
-        String nombreProducto=fieldNombre.getText();
-        nombre=validarStr(nombreProducto);
-        if(stock>0 && !nombre.isEmpty()){
-            botonGuardar.setEnabled(true);
-        }
-    }//GEN-LAST:event_fieldNombreFocusLost
-
-    private void fieldCantidadFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldCantidadFocusLost
-        String num =fieldCantidad.getText();
-        stock = validarInt(num);
-        if(stock>0 && !nombre.isEmpty()){
-            botonGuardar.setEnabled(true);
-        }
-    }//GEN-LAST:event_fieldCantidadFocusLost
 
     private void retrocederTextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederTextMouseClicked
         this.backToMainMenu();

@@ -1,7 +1,6 @@
 package com.proyecto1.gui;
 
-import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.util.Collection;
 
 import javax.swing.BorderFactory;
@@ -14,12 +13,13 @@ import org.jgrapht.graph.DefaultListenableGraph;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
-import com.mxgraph.layout.mxCircleLayout;
+import com.mxgraph.layout.mxFastOrganicLayout;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGeometry;
 import com.mxgraph.model.mxGraphModel;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.util.mxConstants;
+import com.mxgraph.util.mxPoint;
 import com.proyecto1.containers.Graph;
 import com.proyecto1.containers.Vector;
 import com.proyecto1.models.Edge;
@@ -63,15 +63,20 @@ public class GraphTheGraphMenu extends MenuComponent {
         component.getGraph().setAllowDanglingEdges(false);
         mxGraphModel graphModel = (mxGraphModel) component.getGraph().getModel();
         Collection<Object> cells = graphModel.getCells().values();
+        Dimension d = this.mainMenuPanel.mainFrame.getSize();
         for (Object c : cells) {
             mxCell cell = (mxCell) c;
             cell.setAttribute(mxConstants.STYLE_ENDARROW, mxConstants.NONE);
             mxGeometry geometry = cell.getGeometry();
 
-            graphModel.setStyle(cell, "rounded=1;endArrow=none");
+            graphModel.setStyle(cell, "rounded=1;endArrow=none;spacing=20");
             if (cell.isVertex()) {
-                geometry.setWidth(40);
-                geometry.setHeight(40);
+                geometry.setWidth(20);
+                geometry.setHeight(20);
+                geometry.setX((d.width - 200) / 2.0);
+                geometry.setY((d.height - 300) / 2.0);
+                geometry.setOffset(new mxPoint(00, 00));
+                geometry.grow(10);
             }
         }
 
@@ -82,17 +87,8 @@ public class GraphTheGraphMenu extends MenuComponent {
         this.add(panel);
 
         // positioning via jgraphx layouts
-        mxCircleLayout layout = new mxCircleLayout(jgxAdapter);
-
-        // center the circle
-        int radius = 200;
-
-        Dimension d = this.mainMenuPanel.mainFrame.getSize();
-        layout.setX0((d.width / 2.0) - radius);
-        layout.setY0(((d.height - 100) / 2.0) - radius);
-        layout.setRadius(radius);
-        layout.setMoveCircle(true);
-
+        mxFastOrganicLayout layout = new mxFastOrganicLayout(jgxAdapter);
+        layout.setUseBoundingBox(true);
         layout.execute(jgxAdapter.getDefaultParent());
     }
 }

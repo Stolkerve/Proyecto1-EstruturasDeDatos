@@ -5,8 +5,9 @@ import com.proyecto1.containers.Vector;
 import com.proyecto1.models.Product;
 import com.proyecto1.models.Warehouse;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 // @author andresbucarello
@@ -14,10 +15,10 @@ import javax.swing.JOptionPane;
 public class ModificarStock extends MenuComponent {
     
     Vector<Warehouse> almacenes;
+    Vector<Product> products;
     Warehouse almacenSeleccionadoW;
     Product productoSeleccionadoP;
     int stock;
-    DefaultComboBoxModel<String> almacenesDisponibles = new DefaultComboBoxModel();
     DefaultComboBoxModel<String> productosDisponibles = new DefaultComboBoxModel();
     
     /**
@@ -29,8 +30,15 @@ public class ModificarStock extends MenuComponent {
         initComponents();
         
         almacenes= Graph.getInstance().warehouses;
-        cargarComboAlmacenes(listaAlmacenes);
-        listaProductos.setModel(productosDisponibles);
+
+        DefaultComboBoxModel<String> waerhouseComboBoxModel = new DefaultComboBoxModel<>();
+        for (Warehouse w : almacenes)
+            waerhouseComboBoxModel.addElement(w.name);
+        this.listaAlmacenes.setModel(waerhouseComboBoxModel);
+        this.listaAlmacenes.setSelectedIndex(-1);
+
+        this.listaProductos.setModel(this.productosDisponibles);
+        this.reset();
     }
 
     /**
@@ -54,10 +62,8 @@ public class ModificarStock extends MenuComponent {
         jSeparator3 = new javax.swing.JSeparator();
         retrocederPanel = new javax.swing.JPanel();
         retrocederText = new javax.swing.JLabel();
-        modificarPanel = new javax.swing.JPanel();
-        modificarText = new javax.swing.JLabel();
+        modificarBtn = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(60, 63, 65));
         setToolTipText("");
         setMaximumSize(new java.awt.Dimension(960, 720));
         setMinimumSize(new java.awt.Dimension(960, 720));
@@ -70,13 +76,13 @@ public class ModificarStock extends MenuComponent {
         titulo1.setText("MODIFICAR STOCK");
         titulo1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         titulo1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 960, -1));
+        add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 960, 100));
 
         titulo2.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
         titulo2.setForeground(new java.awt.Color(242, 242, 242));
         titulo2.setText("SELECCIONE EL ALMACEN :");
         titulo2.setToolTipText("");
-        add(titulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, 330, 20));
+        add(titulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, 360, 40));
 
         listaAlmacenes.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
         listaAlmacenes.setForeground(new java.awt.Color(51, 109, 174));
@@ -85,17 +91,12 @@ public class ModificarStock extends MenuComponent {
         listaAlmacenes.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Almacenes", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("SansSerif", 0, 13))); // NOI18N
         listaAlmacenes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         listaAlmacenes.setName(""); // NOI18N
-        listaAlmacenes.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                listaAlmacenesFocusLost(evt);
-            }
-        });
         listaAlmacenes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 listaAlmacenesActionPerformed(evt);
             }
         });
-        add(listaAlmacenes, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 200, 520, 50));
+        add(listaAlmacenes, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 190, 520, 70));
 
         jSeparator1.setForeground(new java.awt.Color(51, 109, 174));
         add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 270, 860, 20));
@@ -104,24 +105,19 @@ public class ModificarStock extends MenuComponent {
         titulo3.setForeground(new java.awt.Color(242, 242, 242));
         titulo3.setText("SELECCIONE EL NOMBRE DEL PRODUCTO :");
         titulo3.setToolTipText("");
-        add(titulo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 320, 530, 20));
+        add(titulo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, 530, 40));
 
         listaProductos.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
         listaProductos.setForeground(new java.awt.Color(51, 109, 174));
         listaProductos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         listaProductos.setToolTipText("");
         listaProductos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Productos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("SansSerif", 0, 13))); // NOI18N
-        listaProductos.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                listaProductosFocusLost(evt);
-            }
-        });
         listaProductos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 listaProductosActionPerformed(evt);
             }
         });
-        add(listaProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 300, 330, 50));
+        add(listaProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 300, 330, 60));
 
         jSeparator2.setForeground(new java.awt.Color(51, 109, 174));
         add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, 860, 20));
@@ -130,31 +126,25 @@ public class ModificarStock extends MenuComponent {
         titulo4.setForeground(new java.awt.Color(242, 242, 242));
         titulo4.setText("INGRESE LA CANTIDAD A AUMENTAR  DEL PRODUCTO :");
         titulo4.setToolTipText("");
-        add(titulo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 410, 690, 20));
+        add(titulo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 410, 690, 30));
 
         fieldCantidad.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        fieldCantidad.setForeground(new java.awt.Color(204, 204, 204));
+        fieldCantidad.setForeground(new java.awt.Color(51, 109, 174));
         fieldCantidad.setToolTipText("");
         fieldCantidad.setBorder(null);
-        fieldCantidad.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                fieldCantidadFocusLost(evt);
-            }
-        });
         fieldCantidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fieldCantidadActionPerformed(evt);
             }
         });
         add(fieldCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 400, 160, 40));
+        fieldCantidad.getAccessibleContext().setAccessibleName("");
 
         jSeparator3.setForeground(new java.awt.Color(51, 109, 174));
         add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 470, 860, 20));
 
-        retrocederPanel.setBackground(new java.awt.Color(60, 63, 65));
         retrocederPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        retrocederText.setBackground(new java.awt.Color(60, 63, 65));
         retrocederText.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         retrocederText.setForeground(new java.awt.Color(255, 255, 255));
         retrocederText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -184,135 +174,74 @@ public class ModificarStock extends MenuComponent {
 
         add(retrocederPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 70, 50));
 
-        modificarPanel.setBackground(new java.awt.Color(51, 109, 174));
-        modificarPanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true));
-        modificarPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        modificarText.setBackground(new java.awt.Color(37, 46, 61));
-        modificarText.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
-        modificarText.setForeground(new java.awt.Color(255, 255, 255));
-        modificarText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        modificarText.setText("MODIFICAR");
-        modificarText.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                modificarTextMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                modificarTextMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                modificarTextMouseExited(evt);
+        modificarBtn.setText("Modificar");
+        modificarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modificarAction(evt);
             }
         });
-
-        javax.swing.GroupLayout modificarPanelLayout = new javax.swing.GroupLayout(modificarPanel);
-        modificarPanel.setLayout(modificarPanelLayout);
-        modificarPanelLayout.setHorizontalGroup(
-            modificarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(modificarText, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
-        );
-        modificarPanelLayout.setVerticalGroup(
-            modificarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(modificarText, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
-        );
-
-        add(modificarPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 590, 290, 60));
+        add(modificarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 630, 120, 40));
     }// </editor-fold>//GEN-END:initComponents
-    private void reiniciarVentana(){
-        modificarText.setEnabled(false);
-        fieldCantidad.setText("");
-        fieldCantidad.setEnabled(true);
-        listaAlmacenes.setEnabled(true);
-        listaProductos.setEnabled(true);
+
+    private void reset() {
+        this.listaProductos.setEnabled(false);
+        this.fieldCantidad.setEnabled(false);
+        this.modificarBtn.setEnabled(false);
+        this.fieldCantidad.setText("");
     }
-    
-    private void accionDelFieldCantidad(){
+
+    protected void modificarAction(ActionEvent evt) {
+        if (this.almacenSeleccionadoW == null)
+            JOptionPane.showMessageDialog(this,
+                String.format("Ningun almacen fue seleccionado, seleccione uno por favor"), "ERROR",
+                JOptionPane.ERROR_MESSAGE);
+        
         String num =fieldCantidad.getText();
         stock = validarInt(num);
-        if(stock>0){
-            modificarText.setEnabled(true);  
-        }
-    }
-    
-    private void cargarComboAlmacenes(JComboBox c) {
-        c.setModel(almacenesDisponibles);
-        for (Warehouse almacen: almacenes) {
-            almacenesDisponibles.addElement(almacen.name);
-        }
-    }
-    
-    private Warehouse buscarWearhouse(Vector<Warehouse> almacenes, String nombre){
-        for (Warehouse almacen : almacenes) {
-            if(nombre.equals(almacen.name)){
-                return almacen;    
-            }
-        }
-        return null;
-    }
-    
-    private Product buscarProducto(String nombreAlmacen,String nombreProducto){
-        for (Warehouse almacen : almacenes) {
-            if(nombreAlmacen.equals(almacen.name)){
-                for(Product producto: almacen.products){
-                    if(producto.name.equalsIgnoreCase(nombreProducto)){
-                        return producto;   
-                    }
-                } 
-            }
-        }
-        return null;
+        if (stock == 0) return;
+        this.reset();   
     }
     
     private int validarInt(String num){
         try{
             stock=Integer.parseInt(num);
             if(stock<=0){
-                JOptionPane.showMessageDialog(null, " ERROR LA CANTIDAD INGRSADA NO ES VALIDA ");
+                JOptionPane.showMessageDialog(null, " ERROR LA CANTIDAD INGRESADA NO ES VALIDA ");
                 fieldCantidad.setText("");
                 return 0;
             }
             fieldCantidad.setEnabled(false);
             return stock;
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null, " ERROR LA CANTIDAD INGRSADA NO ES VALIDA ");
+            JOptionPane.showMessageDialog(null, " ERROR LA CANTIDAD INGRESADA NO ES VALIDA ");
             fieldCantidad.setText("");
             return 0;
         }
     }
     
     private void fieldCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldCantidadActionPerformed
-        accionDelFieldCantidad();
     }//GEN-LAST:event_fieldCantidadActionPerformed
 
     private void listaAlmacenesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaAlmacenesActionPerformed
-        String almacenSeleccionado=listaAlmacenes.getSelectedItem().toString();
-        almacenSeleccionadoW=buscarWearhouse(almacenes, almacenSeleccionado);
-        productosDisponibles.removeAllElements();
-        for (Warehouse almacen: almacenes) {
-            if(almacenSeleccionadoW.name.equalsIgnoreCase(almacen.name)){
-                for (Product producto : almacen.products) {
-                    productosDisponibles.addElement(producto.name);
-                }
-            }
-        }
-        if(productosDisponibles.getSize()==0){
-            JOptionPane.showMessageDialog(null, " ERROR! NO EXISTEN PRODUCTOS EN ESTE ALMACEN ");
-            reiniciarVentana();
-        }
+        int wIndex = this.listaAlmacenes.getSelectedIndex();
+        if (wIndex < 0) return;
+        this.almacenSeleccionadoW = this.almacenes.get(wIndex);
+        this.products = this.almacenSeleccionadoW.products;
+
+        this.productosDisponibles = new DefaultComboBoxModel<>();
+        for (Product p : this.products)
+            this.productosDisponibles.addElement(p.name);
+        this.listaProductos.setModel(this.productosDisponibles);
+        
+        this.listaProductos.setEnabled(true);
+        this.fieldCantidad.setEnabled(true);
+        this.modificarBtn.setEnabled(true);
     }//GEN-LAST:event_listaAlmacenesActionPerformed
 
     private void listaProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaProductosActionPerformed
-        try{
-            String productoSeleccionado=listaProductos.getSelectedItem().toString();
-            productoSeleccionadoP=buscarProducto(almacenSeleccionadoW.name,productoSeleccionado);
-        }catch(Exception e){
-            
-        }
+        int pIndex = this.listaProductos.getSelectedIndex();
+        this.productoSeleccionadoP = this.products.get(pIndex);
     }//GEN-LAST:event_listaProductosActionPerformed
-
-    private void fieldCantidadFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldCantidadFocusLost
-        accionDelFieldCantidad();
-    }//GEN-LAST:event_fieldCantidadFocusLost
 
     private void retrocederTextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederTextMouseClicked
         this.backToMainMenu();
@@ -326,42 +255,6 @@ public class ModificarStock extends MenuComponent {
         retrocederPanel.setBackground(Color.darkGray);
     }//GEN-LAST:event_retrocederTextMouseExited
 
-    private void listaAlmacenesFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_listaAlmacenesFocusLost
-        String almacenSeleccionado=listaAlmacenes.getSelectedItem().toString();
-        almacenSeleccionadoW=buscarWearhouse(almacenes, almacenSeleccionado);
-        listaAlmacenes.setEnabled(false);
-    }//GEN-LAST:event_listaAlmacenesFocusLost
-
-    private void listaProductosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_listaProductosFocusLost
-        String productoSeleccionado=listaProductos.getSelectedItem().toString();
-        productoSeleccionadoP=buscarProducto(almacenSeleccionadoW.name,productoSeleccionado);
-        listaProductos.setEnabled(false);
-    }//GEN-LAST:event_listaProductosFocusLost
-
-    private void modificarTextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modificarTextMouseClicked
-        for (Warehouse almacen : almacenes){
-            if(almacenSeleccionadoW.name.equals(almacen.name)){
-                for (Product producto : almacen.products){
-                    if(productoSeleccionadoP.name.equals(producto.name)){
-                        producto.stock+=stock;
-                        Graph.getInstance().needsSave = true;
-                        reiniciarVentana();
-                        return;
-                    }
-                }
-            }    
-        }
-    }//GEN-LAST:event_modificarTextMouseClicked
-
-    private void modificarTextMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modificarTextMouseEntered
-        modificarPanel.setBackground(new Color(30,140,250));
-    }//GEN-LAST:event_modificarTextMouseEntered
-
-    private void modificarTextMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modificarTextMouseExited
-        modificarPanel.setBackground(new Color(51,109,174));
-    }//GEN-LAST:event_modificarTextMouseExited
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField fieldCantidad;
     private javax.swing.JSeparator jSeparator1;
@@ -369,8 +262,7 @@ public class ModificarStock extends MenuComponent {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JComboBox<String> listaAlmacenes;
     private javax.swing.JComboBox<String> listaProductos;
-    private javax.swing.JPanel modificarPanel;
-    private javax.swing.JLabel modificarText;
+    private javax.swing.JButton modificarBtn;
     private javax.swing.JPanel retrocederPanel;
     private javax.swing.JLabel retrocederText;
     private javax.swing.JLabel titulo1;

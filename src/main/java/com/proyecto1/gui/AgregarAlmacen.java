@@ -126,13 +126,15 @@ public class AgregarAlmacen extends MenuComponent {
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         titulo1.setFont(new java.awt.Font("Silom", 0, 65)); // NOI18N
+        titulo1.setForeground(javax.swing.UIManager.getDefaults().getColor("Actions.Yellow"));
         titulo1.setText("AGREGAR ALMACEN");
-        add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 0, -1, -1));
+        add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 10, -1, -1));
 
         titulo2.setFont(new java.awt.Font("Silom", 1, 24)); // NOI18N
         titulo2.setText("INGRESE EL NOMBRE :");
         add(titulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 280, -1));
 
+        fieldNombre.setForeground(new java.awt.Color(51, 109, 174));
         fieldNombre.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 fieldNombreFocusLost(evt);
@@ -143,7 +145,7 @@ public class AgregarAlmacen extends MenuComponent {
                 fieldNombreActionPerformed(evt);
             }
         });
-        add(fieldNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 100, 590, 30));
+        add(fieldNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 90, 590, 40));
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
         add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 860, 10));
@@ -152,6 +154,7 @@ public class AgregarAlmacen extends MenuComponent {
         titulo3.setText("RUTAS DISPONIBLES");
         add(titulo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 380, 30));
 
+        rutasDisponibles.setForeground(new java.awt.Color(51, 109, 174));
         rutasDisponibles.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -196,6 +199,7 @@ public class AgregarAlmacen extends MenuComponent {
         });
         add(botonAgregarAlmacen, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 630, 860, -1));
 
+        rutasAgregadas.setForeground(new java.awt.Color(51, 109, 174));
         rutasAgregadas.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }

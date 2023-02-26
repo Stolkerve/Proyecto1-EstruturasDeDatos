@@ -67,12 +67,13 @@ public class AgregarRuta extends MenuComponent {
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         titulo1.setFont(new java.awt.Font("Silom", 0, 65)); // NOI18N
+        titulo1.setForeground(javax.swing.UIManager.getDefaults().getColor("Actions.Yellow"));
         titulo1.setText("AGREGAR RUTA");
-        add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 10, -1, -1));
+        add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, -1, -1));
 
         titulo2.setFont(new java.awt.Font("Silom", 1, 24)); // NOI18N
         titulo2.setText("SELECCIONE EL ALMACEN :");
-        add(titulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 330, -1));
+        add(titulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 350, -1));
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
         add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 900, 10));
@@ -81,6 +82,7 @@ public class AgregarRuta extends MenuComponent {
         titulo3.setText("RUTAS DISPONIBLES");
         add(titulo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 330, 30));
 
+        rutasDisponibles.setForeground(new java.awt.Color(51, 109, 174));
         rutasDisponibles.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -110,6 +112,7 @@ public class AgregarRuta extends MenuComponent {
         titulo4.setText("RUTAS AGREGADAS");
         add(titulo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 220, 220, 30));
 
+        rutasAgregadas.setForeground(new java.awt.Color(51, 109, 174));
         rutasAgregadas.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -119,13 +122,15 @@ public class AgregarRuta extends MenuComponent {
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 250, 400, 420));
 
+        listaAlmacenes.setForeground(new java.awt.Color(51, 109, 174));
         listaAlmacenes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        listaAlmacenes.setBorder(javax.swing.BorderFactory.createTitledBorder("Almacenes"));
         listaAlmacenes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 listaAlmacenesActionPerformed(evt);
             }
         });
-        add(listaAlmacenes, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 140, 570, 30));
+        add(listaAlmacenes, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 100, 570, 70));
 
         retrocederPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         retrocederPanel.addMouseListener(new java.awt.event.MouseAdapter() {
