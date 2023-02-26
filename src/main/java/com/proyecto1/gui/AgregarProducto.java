@@ -15,7 +15,7 @@ public class AgregarProducto extends MenuComponent {
     
     Vector<Warehouse> almacenes;
     Warehouse almacenSeleccionadoW;
-    String nombre;
+    String nombre = "";
     int stock;
     DefaultComboBoxModel<String> disponibles = new DefaultComboBoxModel();
     
@@ -28,6 +28,7 @@ public class AgregarProducto extends MenuComponent {
         
         almacenes= Graph.getInstance().warehouses;
         cargarCombo(listaAlmacenes);
+        botonGuardar.setEnabled(true);
     }
 
     /**
@@ -85,11 +86,6 @@ public class AgregarProducto extends MenuComponent {
         add(titulo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 490, 30));
 
         fieldNombre.setForeground(new java.awt.Color(51, 109, 174));
-        fieldNombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldNombreActionPerformed(evt);
-            }
-        });
         add(fieldNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 320, 410, 30));
 
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
@@ -100,11 +96,6 @@ public class AgregarProducto extends MenuComponent {
         add(titulo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, 500, 40));
 
         fieldCantidad.setForeground(new java.awt.Color(51, 109, 174));
-        fieldCantidad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldCantidadActionPerformed(evt);
-            }
-        });
         add(fieldCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 400, 410, 30));
 
         jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
@@ -197,7 +188,6 @@ public class AgregarProducto extends MenuComponent {
             return stock;
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, " ERROR LA CANTIDAD INGRSADA NO ES VALIDA ");
-            fieldCantidad.setText("");
             return 0;
         }
     }
@@ -214,7 +204,6 @@ public class AgregarProducto extends MenuComponent {
                 fieldNombre.setText("");
                 return "";
             }
-            fieldNombre.setEnabled(false);
             listaAlmacenes.setEnabled(false);
             return nombreProducto;
             
@@ -225,23 +214,27 @@ public class AgregarProducto extends MenuComponent {
         }
     }
     
-    private void fieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldNombreActionPerformed
+    private boolean validateStr() {
         String nombreProducto=fieldNombre.getText();
         nombre=validarStr(nombreProducto);
-        if(stock>0 && !nombre.isEmpty()){
-            botonGuardar.setEnabled(true);
+        if(!nombre.isEmpty()){
+            return true;
         }
-    }//GEN-LAST:event_fieldNombreActionPerformed
+        return false;
+    }
 
-    private void fieldCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldCantidadActionPerformed
+    private boolean validateInt() {
         String num =fieldCantidad.getText();
         stock = validarInt(num);
-        if(stock>0 && !nombre.isEmpty()){
-            botonGuardar.setEnabled(true);
+        if(stock>0){
+            return true;
         }
-    }//GEN-LAST:event_fieldCantidadActionPerformed
+        return false;
+    }
 
     private void botonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActionPerformed
+        if (!this.validateStr()) return;
+        if (!this.validateInt()) return;
         Product producto=new Product(nombre, stock);
         for (Warehouse almacen : almacenes) {
             if(almacenSeleccionadoW.name.equals(almacen.name)){
@@ -251,7 +244,6 @@ public class AgregarProducto extends MenuComponent {
                 listaAlmacenes.setEnabled(true);
                 fieldNombre.setText("");
                 fieldNombre.setEnabled(true);
-                botonGuardar.setEnabled(false);
                 Graph.getInstance().needsSave = true;
                 stock = 0;
                 return;

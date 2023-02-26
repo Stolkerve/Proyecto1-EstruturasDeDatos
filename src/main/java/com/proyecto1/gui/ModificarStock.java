@@ -196,9 +196,11 @@ public class ModificarStock extends MenuComponent {
                 String.format("Ningun almacen fue seleccionado, seleccione uno por favor"), "ERROR",
                 JOptionPane.ERROR_MESSAGE);
         
-        String num =fieldCantidad.getText();
+        String num = fieldCantidad.getText();
         stock = validarInt(num);
         if (stock == 0) return;
+        this.productoSeleccionadoP.stock += stock;
+        Graph.getInstance().needsSave = true;
         this.reset();   
     }
     

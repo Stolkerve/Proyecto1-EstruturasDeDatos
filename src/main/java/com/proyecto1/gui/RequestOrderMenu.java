@@ -39,7 +39,7 @@ public class RequestOrderMenu extends MenuComponent {
         super(mainPanel);
         this.productListPattern = Pattern.compile("([a-zA-Z0-9]+)\\(([0-9]+)\\)"); 
 
-        this.setBorder(BorderFactory.createEmptyBorder(-5,0,0,0));
+        this.setBorder(BorderFactory.createEmptyBorder(-5,-5,-5,-5));
 
         this.orderProductsListModel = new DefaultListModel<>();
         this.warehouses = Graph.getInstance().warehouses;
