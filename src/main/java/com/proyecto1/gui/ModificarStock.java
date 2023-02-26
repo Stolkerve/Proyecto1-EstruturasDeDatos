@@ -217,6 +217,7 @@ public class ModificarStock extends MenuComponent {
         Graph.getInstance().needsSave = true;
         this.reset();   
     }
+    
     //Se valida en el caso de que el usuario no ponga un numero entero
     private int validarInt(String num){
         try{
