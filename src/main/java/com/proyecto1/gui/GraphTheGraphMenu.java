@@ -25,6 +25,10 @@ import com.proyecto1.containers.Vector;
 import com.proyecto1.models.Edge;
 import com.proyecto1.models.Warehouse;
 
+/**
+ * Clase para mxGraph pueda convertir los pesos a strings
+ * @author sebas
+ */
 class MyWeightedEdge extends DefaultWeightedEdge {
   @Override
   public String toString() {
@@ -32,12 +36,21 @@ class MyWeightedEdge extends DefaultWeightedEdge {
   }
 }
 
+/**
+ * @author sebas
+ */
 public class GraphTheGraphMenu extends MenuComponent {
 
+    /**
+     * @param mainMenuPanel Panel principal
+     */
     protected GraphTheGraphMenu(MainPanel mainMenuPanel) {
         super(mainMenuPanel, "Mapa de los almacenes");
     }
 
+    /**
+     * Iniciar componentes
+     */
     @Override
     protected void initMenuComponents() {
         ListenableGraph<String, MyWeightedEdge> g = new DefaultListenableGraph<>(

@@ -25,6 +25,9 @@ import com.proyecto1.models.Warehouse;
 import com.proyecto1.utils.AssetsManager;
 import com.proyecto1.utils.ImageAsset;
 
+/**
+ * @author sebas
+ */
 public class RequestOrderMenu extends MenuComponent {
     Vector<Warehouse> warehouses;
     JList<String> warehouseProductsList;
@@ -35,6 +38,9 @@ public class RequestOrderMenu extends MenuComponent {
     JButton addProductBtn;
     Pattern productListPattern;
 
+    /**
+     * @param mainPanel Menu principal
+     */
     RequestOrderMenu(MainPanel mainPanel) {
         super(mainPanel);
         this.productListPattern = Pattern.compile("([a-zA-Z0-9]+)\\(([0-9]+)\\)"); 
@@ -72,6 +78,9 @@ public class RequestOrderMenu extends MenuComponent {
         this.initMenuComponents();
     }
 
+    /**
+     * Iniciar componenetes
+     */
     @Override
     protected void initMenuComponents() {
         GridBagConstraints c = new GridBagConstraints();
@@ -96,6 +105,10 @@ public class RequestOrderMenu extends MenuComponent {
         this.add(warehouseProductsPanel);
     }
 
+    /**
+     * @param left Si es la lista de productos del almacen
+     * @return Componente JList
+     */
     JComponent createList(boolean left) {
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
@@ -131,6 +144,9 @@ public class RequestOrderMenu extends MenuComponent {
         return panel;
     }
 
+    /**
+     * Reinicar la lista de productos de almacen
+     */
     private void resetWarehouseProductsList() {
         this.warehouseProductsListModel = new DefaultListModel<>();
         String warehouseName = (String) this.warehousesComboBox.getSelectedItem();
@@ -143,6 +159,9 @@ public class RequestOrderMenu extends MenuComponent {
         this.warehouseProductsList.setModel(this.warehouseProductsListModel);
     }
 
+    /**
+     * Seleccion del almacen
+     */
     private void onWarehousesSelectionComboBox() {
         this.addProductBtn.setEnabled(true);
         this.resetWarehouseProductsList();
@@ -151,6 +170,9 @@ public class RequestOrderMenu extends MenuComponent {
         this.orderProductsList.setModel(this.orderProductsListModel);
     }
 
+    /**
+     * Anadir productos de la lista de productos de almacen a la lista de pedidos
+     */
     private void onAddProductToOrderList() {
         int index = this.warehouseProductsList.getSelectedIndex();
         if (index < 0) return;
@@ -194,6 +216,9 @@ public class RequestOrderMenu extends MenuComponent {
         this.orderProductsListModel.addElement(String.format("%s(%d)", selectedProductName, amount));
     }
 
+    /**
+     * Finalizar la orden
+     */
     private void onFinishOrder() {
         if (this.orderProductsListModel.size() == 0) return;
 

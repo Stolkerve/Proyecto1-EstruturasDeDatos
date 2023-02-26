@@ -29,6 +29,9 @@ public class MainPanel extends javax.swing.JPanel {
         initComponents();
     }
 
+    /**
+     * Iniciar componentes
+     */
     public void initComponents() {
         this.setLayout(new GridLayout());
         Graph graph = Graph.getInstance();
@@ -148,7 +151,10 @@ public class MainPanel extends javax.swing.JPanel {
         }
     }
 
-    void addMenuComponent(JPanel c) {
+    /**
+     * @param Menu a insertar
+     */
+    void addMenuComponent(MenuComponent c) {
         this.removeAll();
         this.add(c);
         this.repaint();

@@ -182,6 +182,10 @@ public class GraphFileDialog {
         }
     }
 
+    /**
+     * Metodo estatico que guarda el estado del grafo en el .txt
+     * @return True si todo bien
+     */
     public static boolean saveFileDialog() {
         JFileChooser fileDialog = new JFileChooser("./", FileSystemView.getFileSystemView());
         fileDialog.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);

@@ -14,6 +14,9 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+/**
+ * @author sebas
+ */
 class Cell {
 	int alive;
 	int color;
@@ -24,6 +27,9 @@ class Cell {
 	}
 }
 
+/**
+ * @author sebas
+ */
 class GameOfLife extends JPanel {
 	int nXCells;
 	int nYCells;
@@ -140,6 +146,9 @@ class GameOfLife extends JPanel {
 	}
 }
 
+/**
+ *@author sebas
+ */
 public class HelpDialog {
 	HelpDialog() {
 		int width = 800;

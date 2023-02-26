@@ -30,6 +30,9 @@ public class ShowStockMenu extends MenuComponent {
         super(mainMenuPanel, "Stock de los almacenes");
     }
 
+    /**
+     * Iniciar componentes
+     */
     @Override
     protected void initMenuComponents() {
         GridBagConstraints c = new GridBagConstraints();
@@ -47,6 +50,10 @@ public class ShowStockMenu extends MenuComponent {
         this.add(wearhouseProductsPanel);
     }
 
+    /**
+     * @param type Si el BFS o BFS
+     * @return componente JTable
+     */
     private JComponent createTable(boolean type) {
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
@@ -85,6 +92,10 @@ public class ShowStockMenu extends MenuComponent {
         return panel;
     }
 
+    /**
+     * Búsqueda en anchura
+     * @param model Modelo de JTable a modificar
+     */
     private void bfs(DefaultTableModel model) {
         Vector<Warehouse> warehouses = Graph.getInstance().warehouses;
         Vector<Warehouse> queue = new Vector<>(warehouses.size());
@@ -118,6 +129,10 @@ public class ShowStockMenu extends MenuComponent {
         }
     }
 
+    /**
+     * Búsqueda en profundidad
+     * @param model Modelo de JTable a modificar
+     */
     private void dfs(DefaultTableModel model) {
         Vector<Warehouse> warehouses = Graph.getInstance().warehouses;
 
@@ -129,6 +144,13 @@ public class ShowStockMenu extends MenuComponent {
                 recursiveDfs(i, warehouses, visited, model);
     }
 
+    /**
+     * Funcion auxiliar de la funcion dfs
+     * @param w Indice del alamacen
+     * @param warehouses Vector de alamacenes
+     * @param visited Lista de almacenes visitados
+     * @param model Modelo de JTable a modificar
+     */
     private void recursiveDfs(int w, Vector<Warehouse> warehouses, boolean[] visited, DefaultTableModel model) {
         visited[w] = true;
 
