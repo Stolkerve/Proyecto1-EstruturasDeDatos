@@ -222,9 +222,6 @@
           <Color id="Hand Cursor"/>
         </Property>
       </Properties>
-      <Events>
-        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="retrocederPanelMouseEntered"/>
-      </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="0" y="0" width="70" height="50"/>

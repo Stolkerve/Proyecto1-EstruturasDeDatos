@@ -70,7 +70,6 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="fieldNombreFocusLost"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fieldNombreActionPerformed"/>
       </Events>
       <Constraints>
@@ -243,9 +242,6 @@
           <Color id="Hand Cursor"/>
         </Property>
       </Properties>
-      <Events>
-        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="retrocederPanelMouseEntered"/>
-      </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="0" y="0" width="70" height="50"/>
