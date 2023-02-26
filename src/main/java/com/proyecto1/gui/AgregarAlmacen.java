@@ -30,7 +30,9 @@ public class AgregarAlmacen extends MenuComponent {
         almacenes= Graph.getInstance().warehouses;
         cargarDisponibles();
     }
-    
+    /**
+     * Este metodo privado carga la lista de almacenes disponibles para establecer rutas.
+    **/
     private void cargarDisponibles(){
         for (Warehouse almacen: almacenes) {
             boolean encontrado=false;
@@ -45,6 +47,12 @@ public class AgregarAlmacen extends MenuComponent {
         }
     }
     
+    /**
+     * Este metodo privado busca y retorna un almacen del vector que contiene los almacenes a partir de un nombre dado como parametro
+     * @param almacenes Vector<Warehouse> Vector que contiene los almacenes
+     * @param nombre String Nombre del almacen que se quiere buscar
+     * @return Warehouse Devuelve el almacen buscado
+    **/
     private Warehouse buscarWearhouse(Vector<Warehouse> almacenes, String nombre){
         for (Warehouse almacen : almacenes) {
             if(nombre.equals(almacen.name)){
@@ -54,6 +62,10 @@ public class AgregarAlmacen extends MenuComponent {
         return null;
     }
     
+    /**
+     * Este metodo privado verifica que el nombre sea valido y no pertenezca a un almacen existente
+     * @param nombre String Nombre del almacen que se quiere crear
+    **/
     private void validarStr(String str){
         try{
             boolean encontrado=false;
@@ -81,6 +93,9 @@ public class AgregarAlmacen extends MenuComponent {
         }
     }
     
+    /**
+     * Este metodo privado reinicia todas las opciones de la ventana
+    **/
     private void reiniciarVentana(){
         fieldNombre.setText("");
         fieldNombre.setEnabled(true);
@@ -135,11 +150,6 @@ public class AgregarAlmacen extends MenuComponent {
         add(titulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 280, -1));
 
         fieldNombre.setForeground(new java.awt.Color(51, 109, 174));
-        fieldNombre.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                fieldNombreFocusLost(evt);
-            }
-        });
         fieldNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fieldNombreActionPerformed(evt);
@@ -211,11 +221,6 @@ public class AgregarAlmacen extends MenuComponent {
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 200, 380, 410));
 
         retrocederPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        retrocederPanel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                retrocederPanelMouseEntered(evt);
-            }
-        });
 
         retrocederText.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         retrocederText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -245,12 +250,17 @@ public class AgregarAlmacen extends MenuComponent {
 
         add(retrocederPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 70, 50));
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Este metodo privado pertenece al text field donde se ingresa el nombre del almacen a agregar
+    **/
     private void fieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldNombreActionPerformed
         String str=fieldNombre.getText();
         validarStr(str);
     }//GEN-LAST:event_fieldNombreActionPerformed
-
+    
+    /**
+     * Este metodo privado pertenece al boton que agrega el almacen seleccionado para establecer una ruta
+    **/
     private void botonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarActionPerformed
         boolean comprobado=false;
         do{
@@ -283,7 +293,10 @@ public class AgregarAlmacen extends MenuComponent {
         }while(!comprobado);
         
     }//GEN-LAST:event_botonAgregarActionPerformed
-
+    
+    /**
+     * Este metodo privado pertenece al boton que crea el almacen y lo agrega al vector almacenes
+    **/
     private void botonAgregarAlmacenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarAlmacenActionPerformed
         Warehouse almacenNuevo= new Warehouse(nombre);
         for(Edge aristaC : aristas){
@@ -293,31 +306,35 @@ public class AgregarAlmacen extends MenuComponent {
         Graph.getInstance().needsSave = true;
         reiniciarVentana();
     }//GEN-LAST:event_botonAgregarAlmacenActionPerformed
-
+    
+    /**
+     * Este metodo privado pertenece al la lista de rutas disponibles y verifica que haya algun item seleccionado
+    **/
     private void rutasDisponiblesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rutasDisponiblesMouseClicked
         int index= rutasDisponibles.getSelectedIndex();
         if (index != -1) {
             botonAgregar.setEnabled(true);
         }
     }//GEN-LAST:event_rutasDisponiblesMouseClicked
-
-    private void fieldNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldNombreFocusLost
-
-    }//GEN-LAST:event_fieldNombreFocusLost
-
+    
+    /**
+     * Este metodo privado pertenece al text field de retroceder y ejecuta la accion de volver al menu
+    **/
     private void retrocederTextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederTextMouseClicked
         this.backToMainMenu();
     }//GEN-LAST:event_retrocederTextMouseClicked
-
+    
+    /**
+     * Este metodo privado pertenece al text field de retroceder y cambia de color el fondo mietras el cursor esta encima
+    **/
     private void retrocederTextMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederTextMouseEntered
         retrocederPanel.setBackground(Color.red);
         retrocederText.setForeground(Color.BLACK);
     }//GEN-LAST:event_retrocederTextMouseEntered
-
-    private void retrocederPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederPanelMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_retrocederPanelMouseEntered
-
+    
+    /**
+     * Este metodo privado pertenece al text field de retroceder y cambia de color el fondo cuando el cursor sale
+    **/
     private void retrocederTextMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retrocederTextMouseExited
         retrocederText.setForeground(Color.black);
         retrocederPanel.setBackground(Color.white);
