@@ -24,17 +24,19 @@ public class ModificarStock extends MenuComponent {
     /**
      * Creates new form ModificarStockk
      */
+    //Funcion para modficar el stock mediante al input del usuario
     public ModificarStock(MainPanel mainMenuPanel) {
-
+        //Se usa herencia de la clase padre inicial que es el main menu
         super(mainMenuPanel);
         initComponents();
-        
+        //Se importa el metodo de los grafos
         almacenes= Graph.getInstance().warehouses;
-
+        //Se crea una combobox para los warehouse
         DefaultComboBoxModel<String> waerhouseComboBoxModel = new DefaultComboBoxModel<>();
         for (Warehouse w : almacenes)
             waerhouseComboBoxModel.addElement(w.name);
         this.listaAlmacenes.setModel(waerhouseComboBoxModel);
+        //Se le resta uno para que sea exactamente el input del usuario (si no este comenzaria en 0)
         this.listaAlmacenes.setSelectedIndex(-1);
 
         this.listaProductos.setModel(this.productosDisponibles);
@@ -189,13 +191,15 @@ public class ModificarStock extends MenuComponent {
         this.modificarBtn.setEnabled(false);
         this.fieldCantidad.setText("");
     }
-
+    //Se reinicia la ventana 
+    //Esta opcion es para que en caso que el usuario no escoja un almacen se active un JOptionPane con el mensaje de error
     protected void modificarAction(ActionEvent evt) {
         if (this.almacenSeleccionadoW == null)
             JOptionPane.showMessageDialog(this,
                 String.format("Ningun almacen fue seleccionado, seleccione uno por favor"), "ERROR",
                 JOptionPane.ERROR_MESSAGE);
         
+        //Se ontiene la cantidad verdadera del producto elegido por el usuario
         String num = fieldCantidad.getText();
         stock = validarInt(num);
         if (stock == 0) return;
@@ -203,7 +207,7 @@ public class ModificarStock extends MenuComponent {
         Graph.getInstance().needsSave = true;
         this.reset();   
     }
-    
+    //Se valida en el caso de que el usuario no ponga un numero entero
     private int validarInt(String num){
         try{
             stock=Integer.parseInt(num);
@@ -223,7 +227,7 @@ public class ModificarStock extends MenuComponent {
     
     private void fieldCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldCantidadActionPerformed
     }//GEN-LAST:event_fieldCantidadActionPerformed
-
+    //Funcion para que se seleccionen y se muestren las listas correctamente
     private void listaAlmacenesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaAlmacenesActionPerformed
         int wIndex = this.listaAlmacenes.getSelectedIndex();
         if (wIndex < 0) return;
