@@ -39,7 +39,7 @@ public class MenuComponent extends JPanel {
 
         this.add(topPanel);
 
-        this.initComponents();
+        this.initMenuComponents();
     }
 
     /**
@@ -54,7 +54,7 @@ public class MenuComponent extends JPanel {
     /**
      * Interfaz para inicar los componentes del menu
      */
-    protected void initComponents() {}
+    protected void initMenuComponents() {}
 
     /**
      * Volver al menu principal

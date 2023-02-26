@@ -110,12 +110,30 @@ public class GraphFileDialog {
                             if (match.matches()) {
                                 String name = match.group(1);
                                 int stock = Integer.parseInt(match.group(2));
+                                String endChar = match.group(3);
+
+                                for (Product p : warehouse.products) {
+                                    if (p.name.equals(name)) {
+                                        JOptionPane.showMessageDialog(fileDialog,
+                                            String.format("Ya existe un producto con nombre %. Se procede a ignoralo", name), "ERROR",
+                                            JOptionPane.ERROR_MESSAGE);
+                                        if (endChar.length() != 0)
+                                            state = FileState.BeginWarehouse;
+                                    }
+                                }
+
                                 warehouse.products.pushBack(new Product(name, stock));
 
-                                String endChar = match.group(3);
-                                if (endChar.length() != 0) {
+                                if (endChar.length() != 0)
                                     state = FileState.BeginWarehouse;
+                            }
+                            else {
+                                // Error, continuar que hay
+                                if (line.equals("Rutas;")) {
+                                    state = FileState.OnGraph;
+                                    break;
                                 }
+                                state = FileState.BeginWarehouse;
                             }
                             break;
                         }
@@ -151,9 +169,8 @@ public class GraphFileDialog {
                     instance.init = true;
                     instance.warehouses.reserve(warehouses.capacity());
                 }
-                else {
+                else
                     instance.warehouses.clear();
-                }
                 for (Warehouse w : warehouses)
                     instance.warehouses.pushBack(w);
             } catch (FileNotFoundException e) {

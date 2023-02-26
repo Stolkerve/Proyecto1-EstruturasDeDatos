@@ -39,7 +39,7 @@ public class RequestOrderMenu extends MenuComponent {
         super(mainPanel);
         this.productListPattern = Pattern.compile("([a-zA-Z0-9]+)\\(([0-9]+)\\)"); 
 
-        this.setBorder(BorderFactory.createEmptyBorder(-5,0,0,0));
+        this.setBorder(BorderFactory.createEmptyBorder(-5,-5,-5,-5));
 
         this.orderProductsListModel = new DefaultListModel<>();
         this.warehouses = Graph.getInstance().warehouses;
@@ -69,11 +69,11 @@ public class RequestOrderMenu extends MenuComponent {
 
         this.add(topPanel);
 
-        this.initComponents();
+        this.initMenuComponents();
     }
 
     @Override
-    protected void initComponents() {
+    protected void initMenuComponents() {
         GridBagConstraints c = new GridBagConstraints();
         JPanel warehouseProductsPanel = new JPanel(new GridBagLayout());
         c.gridx = 0;
@@ -83,7 +83,7 @@ public class RequestOrderMenu extends MenuComponent {
         warehouseProductsPanel.add(this.createList(true), c);
 
         c.gridx = 1;
-        this.addProductBtn = new JButton("->");
+        this.addProductBtn = new JButton(">>");
         this.addProductBtn.addActionListener(e -> this.onAddProductToOrderList());
         this.addProductBtn.setBorder(BorderFactory.createEmptyBorder(0,5,0,5));
         this.addProductBtn.setEnabled(false);
@@ -274,6 +274,7 @@ public class RequestOrderMenu extends MenuComponent {
 
                                             mxGraphModel graphModel = (mxGraphModel) component.getGraph().getModel();
                                             Collection<Object> cells = graphModel.getCells().values();
+                                            
                                             for (Object c : cells) {
                                                 mxCell cell = (mxCell) c;
                                                 graphModel.setStyle(cell, "rounded=1;");
@@ -351,7 +352,7 @@ public class RequestOrderMenu extends MenuComponent {
 
         for (int i = 0; i < pendingWarehouseProductsToDelete.size(); i++)
             warehouse.products.remove(pendingWarehouseProductsToDelete.get(i) - i);
-
+        
         this.resetWarehouseProductsList();
     }
 }

@@ -1,21 +1,19 @@
-package proyecto1.estruturasdedatos;
+package com.proyecto1;
 
 import java.util.Enumeration;
 
 import javax.swing.JPanel;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.FontUIResource;
+
+import com.formdev.flatlaf.FlatDarculaLaf;
 import proyecto1.estruturasdedatos.gui.AssetsLoader;
 import proyecto1.estruturasdedatos.gui.MainPanel;
 import proyecto1.estruturasdedatos.utils.AssetsManager;
 import proyecto1.estruturasdedatos.utils.ImageAsset;
 import proyecto1.estruturasdedatos.utils.MusicAsset;
-
-import com.formdev.flatlaf.FlatDarculaLaf;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  * Clase main del programa, esta hereda la clase Jframe para inicializar
@@ -79,18 +77,18 @@ public class MainFrame extends javax.swing.JFrame {
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel(new FlatDarculaLaf());
-        } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        UIDefaults defaults = UIManager.getLookAndFeelDefaults();
-        // UIDefaults defaults = UIManager.getLookAndFeelDefaults();
-        Enumeration<Object> keys = defaults.keys();
-        while (keys.hasMoreElements()) {
-            Object key = keys.nextElement();
-            if ((key instanceof String) && (((String) key).endsWith(".font"))) {
-                FontUIResource font = (FontUIResource) UIManager.get(key);
-                defaults.put(key, new FontUIResource(font.getFontName(), font.getStyle(), 20));
+            UIDefaults defaults = UIManager.getLookAndFeelDefaults();
+            // UIDefaults defaults = UIManager.getLookAndFeelDefaults();
+            Enumeration<Object> keys = defaults.keys();
+            while (keys.hasMoreElements()) {
+                Object key = keys.nextElement();
+                if ((key instanceof String) && (((String) key).endsWith(".font"))) {
+                    FontUIResource font = (FontUIResource) UIManager.get(key);
+                    defaults.put(key, new FontUIResource(font.getFontName(), font.getStyle(), 20));
+                }
             }
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
         }
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {

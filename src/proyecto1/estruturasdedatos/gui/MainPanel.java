@@ -1,6 +1,6 @@
 package proyecto1.estruturasdedatos.gui;
 
-import proyecto1.estruturasdedatos.MainFrame;
+import com.proyecto1.MainFrame;
 import java.awt.*;
 
 import javax.swing.JButton;
@@ -55,30 +55,30 @@ public class MainPanel extends javax.swing.JPanel {
             this.addMenuComponent(new ShowStockMenu(this));
         });
 
-        JButton requestBtn = new JButton("Realizar pedido de producto");
+        JButton requestBtn = new JButton("Realizar pedido de productos");
         requestBtn.addActionListener(e -> {
             this.addMenuComponent(new RequestOrderMenu(this));
         });
 
-        JButton addWearhouseBtn = new JButton("Agregar almacen");
+        JButton addWearhouseBtn = new JButton("Agregar almacenes");
         addWearhouseBtn.addActionListener(e -> {
-            this.addMenuComponent(new AgregarAlmacen());
+            this.addMenuComponent(new AgregarAlmacen(this));
         });
 
-        JButton addPathBtn = new JButton("Agregar camino a almacen");
+        JButton addPathBtn = new JButton("Agregar caminos a almacen");
         addPathBtn.addActionListener(e -> {
-            this.addMenuComponent(new AgregarRuta());
+            this.addMenuComponent(new AgregarRuta(this));
         });
 
-        JButton manageStockBtn = new JButton("Gestionar stock de almacenes");
+        JButton manageStockBtn = new JButton("Gestionar stock de productos");
         manageStockBtn.addActionListener(e -> {
-            this.addMenuComponent(new ModificarStock());
+            this.addMenuComponent(new ModificarStock(this));
             
         });
 
         JButton addProdutsToWearhouseBtn = new JButton("Agregar producto");
         addProdutsToWearhouseBtn.addActionListener(e -> {
-            this.addMenuComponent(new AgregarProducto());
+            this.addMenuComponent(new AgregarProducto(this));
         });
 
         JButton showGraphBtn = new JButton("Mostrar mapa de almacenes");
