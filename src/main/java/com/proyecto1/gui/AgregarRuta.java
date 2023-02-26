@@ -10,8 +10,10 @@ import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
-// @author andresbucarello
-
+/**
+ * Clase con metodos privados para agregar un almacen nuevo
+ * @author andresbucarello
+*/
 public class AgregarRuta extends MenuComponent {
     
     Vector<Warehouse> almacenes;
@@ -23,6 +25,7 @@ public class AgregarRuta extends MenuComponent {
     
     /**
      * Creates new form AgregarRuta
+     * @param mainMenuPanel Panel principal
     **/
     public AgregarRuta(MainPanel mainMenuPanel){
         super(mainMenuPanel);
