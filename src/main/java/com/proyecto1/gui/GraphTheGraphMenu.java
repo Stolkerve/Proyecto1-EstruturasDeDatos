@@ -73,8 +73,8 @@ public class GraphTheGraphMenu extends MenuComponent {
             if (cell.isVertex()) {
                 geometry.setWidth(20);
                 geometry.setHeight(20);
-                geometry.setX((d.width - 200) / 2.0);
-                geometry.setY((d.height - 300) / 2.0);
+                geometry.setX((d.width - 300) / 2.0);
+                geometry.setY(100);
                 geometry.setOffset(new mxPoint(00, 00));
                 geometry.grow(10);
             }
@@ -89,6 +89,7 @@ public class GraphTheGraphMenu extends MenuComponent {
         // positioning via jgraphx layouts
         mxFastOrganicLayout layout = new mxFastOrganicLayout(jgxAdapter);
         layout.setUseBoundingBox(true);
+        layout.setForceConstant(200);
         layout.execute(jgxAdapter.getDefaultParent());
     }
 }
