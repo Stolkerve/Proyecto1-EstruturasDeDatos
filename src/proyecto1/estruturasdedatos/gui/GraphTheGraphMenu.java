@@ -69,7 +69,7 @@ public class GraphTheGraphMenu extends MenuComponent {
             cell.setAttribute(mxConstants.STYLE_ENDARROW, mxConstants.NONE);
             mxGeometry geometry = cell.getGeometry();
 
-            graphModel.setStyle(cell, "rounded=1;endArrow=none;spacing=20");
+            graphModel.setStyle(cell, "rounded=1;spacing=20");
             if (cell.isVertex()) {
                 geometry.setWidth(20);
                 geometry.setHeight(20);
