@@ -1,6 +1,7 @@
 package com.proyecto1.models;
 
 /**
+ * Vertices de un nodo
  * @author Andres
  */
 public class Edge {

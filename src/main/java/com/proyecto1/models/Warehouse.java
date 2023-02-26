@@ -3,6 +3,7 @@ package com.proyecto1.models;
 import com.proyecto1.containers.Vector;
 
 /**
+ * Almacen nodo
  * @author sebas
  */
 public class Warehouse {
