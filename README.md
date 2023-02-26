@@ -6,6 +6,9 @@
 
 # Version de Java: 11
 
+# Diagrama UML
+![Diagrama UML](./UML.png)
+
 # Equipo:
 - [Sebastian Gonzalez](https://github.com/Stolkerve)
 - [Andres Bucarello](https://github.com/andresbucarello)
