@@ -70,7 +70,7 @@ public class MainPanel extends javax.swing.JPanel {
             this.addMenuComponent(new AgregarRuta(this));
         });
 
-        JButton manageStockBtn = new JButton("Gestionar stock de almacenes");
+        JButton manageStockBtn = new JButton("Gestionar stock de productos");
         manageStockBtn.addActionListener(e -> {
             this.addMenuComponent(new ModificarStock(this));
             

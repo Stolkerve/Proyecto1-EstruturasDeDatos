@@ -238,6 +238,8 @@ public class ModificarStock extends MenuComponent {
         this.listaProductos.setEnabled(true);
         this.fieldCantidad.setEnabled(true);
         this.modificarBtn.setEnabled(true);
+
+        this.productoSeleccionadoP = this.products.get(0);
     }//GEN-LAST:event_listaAlmacenesActionPerformed
 
     private void listaProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaProductosActionPerformed
