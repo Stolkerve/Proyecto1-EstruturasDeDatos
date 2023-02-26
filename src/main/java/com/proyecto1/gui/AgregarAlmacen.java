@@ -7,9 +7,10 @@ import com.proyecto1.models.Warehouse;
 import java.awt.Color;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-
-// @author andresbucarello
-
+/**
+ * Clase con metodos privados para agregar un almacen nuevo
+ * @author andresbucarello
+*/
 public class AgregarAlmacen extends MenuComponent {
     
     Vector<Warehouse> almacenes;
@@ -17,10 +18,11 @@ public class AgregarAlmacen extends MenuComponent {
     String nombre;
     DefaultListModel<String> disponibles = new DefaultListModel<>();
     DefaultListModel<String> agregadas = new DefaultListModel<>();
-    /**
-     * Creates new form Prubea
-     */
     
+    /**
+     * Creates new form AgregarAlmacen
+     * @param mainMenuPanel Panel principal
+     */
     public AgregarAlmacen(MainPanel mainMenuPanel) {
         super(mainMenuPanel);
         initComponents();
@@ -30,6 +32,7 @@ public class AgregarAlmacen extends MenuComponent {
         almacenes= Graph.getInstance().warehouses;
         cargarDisponibles();
     }
+    
     /**
      * Este metodo privado carga la lista de almacenes disponibles para establecer rutas.
     **/
