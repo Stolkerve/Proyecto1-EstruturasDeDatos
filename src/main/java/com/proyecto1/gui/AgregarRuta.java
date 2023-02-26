@@ -29,7 +29,14 @@ public class AgregarRuta extends MenuComponent {
         rutasDisponibles.setModel(disponibles);
         rutasAgregadas.setModel(agregadas);
         almacenes= Graph.getInstance().warehouses;
-        cargarCombo(listaAlmacenes);
+
+        DefaultComboBoxModel<String> dispo = new DefaultComboBoxModel();
+        for (Warehouse almacen: almacenes) {
+            dispo.addElement(almacen.name);
+        }
+        this.listaAlmacenes.setModel(dispo);
+        this.listaAlmacenes.setSelectedIndex(-1);
+
 //        cargarDisponibles();
     }
   
@@ -202,8 +209,10 @@ public class AgregarRuta extends MenuComponent {
     }//GEN-LAST:event_botonRetroceder1ActionPerformed
 
     private void listaAlmacenesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaAlmacenesActionPerformed
-        String almacenSeleccionado=listaAlmacenes.getSelectedItem().toString();
-        almacenSeleccionadoW=buscarWearhouse(almacenes, almacenSeleccionado);
+        int wIndex = listaAlmacenes.getSelectedIndex();
+        if (wIndex < 0) return;
+        almacenSeleccionadoW = this.almacenes.get(wIndex);
+
         disponibles.clear();
         agregadas.clear();
         
@@ -265,12 +274,4 @@ public class AgregarRuta extends MenuComponent {
     private javax.swing.JLabel titulo3;
     private javax.swing.JLabel titulo4;
     // End of variables declaration//GEN-END:variables
-
-    private void cargarCombo(JComboBox c) {
-        DefaultComboBoxModel<String> dispo = new DefaultComboBoxModel();
-        c.setModel(dispo);
-        for (Warehouse almacen: almacenes) {
-            dispo.addElement(almacen.name);
-        }
-    }
 }
